@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rampguide — Compliance as code. Your ATO package, compiled.</title>
+<meta name="description" content="rampguide is a deterministic compiler for FedRAMP documentation. Define your security solutions once; compile policy docs, machine-readable OSCAL, and a computed document inventory from the same source.">
+<meta property="og:title" content="rampguide — Compliance as code.">
+<meta property="og:description" content="Your ATO package, compiled. A deterministic compiler for FedRAMP documentation. Coming soon.">
+<meta property="og:url" content="https://rampguide.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --manila: #e7ddc2;
+    --paper: #f4eedd;
+    --ink: #26251c;
+    --ink-soft: #5b584a;
+    --rule: #cfc3a0;
+    --stamp-red: #b3282d;
+    --navy: #1f3a5f;
+    --diff-green: #2e6b3e;
+    --diff-green-bg: #e2ecdc;
+    --diff-red-bg: #f3dcd6;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--manila);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    /* faint paper grain via layered gradients */
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(255,255,255,.35), transparent 55%),
+      repeating-linear-gradient(0deg, transparent 0 2px, rgba(38,37,28,.012) 2px 3px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .sheet {
+    width: min(46rem, 100% - 2.5rem);
+    margin: 0 auto;
+    flex: 1;
+  }
+
+  /* ---------- form-header masthead ---------- */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1.4rem 0 .8rem;
+    border-bottom: 2px solid var(--ink);
+  }
+  .wordmark {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: .02em;
+  }
+  .wordmark::before { content: "▛ "; color: var(--stamp-red); }
+  .form-no {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .72rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+
+  /* ---------- hero ---------- */
+  main { padding: 3.2rem 0 3rem; }
+  h1 {
+    font-family: "IBM Plex Serif", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 5.5vw, 3.1rem);
+    line-height: 1.12;
+    letter-spacing: -.01em;
+    max-width: 15ch;
+  }
+  h1 .compiled { color: var(--navy); }
+  .lede {
+    margin-top: 1.2rem;
+    max-width: 36rem;
+    color: var(--ink-soft);
+  }
+  .lede strong { color: var(--ink); font-weight: 500; }
+
+  /* ---------- status line ---------- */
+  .status {
+    margin-top: 2rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .8rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .status a { color: var(--navy); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  .status a:focus-visible, footer a:focus-visible {
+    outline: 3px solid var(--stamp-red);
+    outline-offset: 2px;
+  }
+
+  /* ---------- the dossier: compile-diff demo ---------- */
+  .dossier {
+    position: relative;
+    margin-top: 3.4rem;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    box-shadow: 5px 6px 0 rgba(38,37,28,.16);
+  }
+  .dossier-tab {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .55rem .9rem;
+    border-bottom: 1.5px solid var(--ink);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .dossier pre {
+    margin: 0;
+    padding: 1rem 0;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .82rem;
+    line-height: 1.65;
+    overflow-x: auto;
+  }
+  .dossier pre code { display: block; min-width: max-content; }
+  .line { padding: 0 1.1rem; display: block; }
+  .cm { color: var(--ink-soft); }
+  .del { background: var(--diff-red-bg); }
+  .del::before { content: "- "; color: var(--stamp-red); font-weight: 600; }
+  .add { background: var(--diff-green-bg); }
+  .add::before { content: "+ "; color: var(--diff-green); font-weight: 600; }
+  .ctx::before, .cm::before { content: "  "; }
+  .arrow { color: var(--navy); font-weight: 600; }
+  .hl { background: var(--diff-green-bg); border-bottom: 1.5px solid var(--diff-green); }
+
+  .stamp {
+    position: absolute;
+    right: 1rem;
+    bottom: .8rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    font-size: .8rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--stamp-red);
+    border: 2.5px solid var(--stamp-red);
+    border-radius: 3px;
+    padding: .28rem .6rem .24rem;
+    transform: rotate(-7deg);
+    opacity: .9;
+    mask-image: repeating-conic-gradient(rgba(0,0,0,1) 0% 3%, rgba(0,0,0,.82) 3% 6%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .stamp {
+      animation: thunk .38s cubic-bezier(.2, 1.6, .4, 1) .9s backwards;
+    }
+    @keyframes thunk {
+      from { transform: rotate(-16deg) scale(2.4); opacity: 0; }
+      to   { transform: rotate(-7deg) scale(1); opacity: .9; }
+    }
+    .add, .hl { animation: settle 1.2s ease .6s backwards; }
+    @keyframes settle { from { background: transparent; } }
+  }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid var(--rule);
+    margin-top: 3rem;
+    padding: 1.1rem 0 1.6rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .72rem;
+    letter-spacing: .03em;
+    color: var(--ink-soft);
+  }
+  footer .row {
+    width: min(46rem, 100% - 2.5rem);
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem 1.6rem;
+    justify-content: space-between;
+  }
+  footer a { color: var(--navy); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  footer .legal { flex-basis: 100%; margin-top: .5rem; }
+</style>
+</head>
+<body>
+  <div class="sheet">
+    <header>
+      <div class="wordmark">rampguide</div>
+      <div class="form-no">Form RG-0 · Pre-release</div>
+    </header>
+
+    <main>
+      <h1>Compliance as&nbsp;code. Your ATO package, <span class="compiled">compiled.</span></h1>
+
+      <p class="lede">
+        rampguide is a <strong>deterministic compiler</strong> for FedRAMP
+        documentation. Define each security solution once — its parameters, its
+        prose — and compile human-readable policy docs, machine-readable OSCAL,
+        and a computed document inventory from the same source. Change one
+        parameter, and every dependent control, document, word count, and
+        last-updated date is correct on the next build.
+      </p>
+
+      <p class="status">In development · <a href="https://www.npmjs.com/package/rampguide">npm: rampguide</a></p>
+
+      <figure class="dossier" aria-label="Example: one parameter change propagating through a rampguide build">
+        <div class="dossier-tab">
+          <span>solutions/okta/solution.yaml</span>
+          <span>rampguide build</span>
+        </div>
+        <pre><code><span class="line cm"># one line changes…</span>
+<span class="line ctx">params:</span>
+<span class="line del">  priv_inactive_disable_days: 35</span>
+<span class="line add">  priv_inactive_disable_days: 30</span>
+<span class="line cm"> </span>
+<span class="line cm"># …the package recompiles</span>
+<span class="line"><span class="arrow">→</span> docs/AC.md         "…disabled after <span class="hl">30 days</span>…"</span>
+<span class="line"><span class="arrow">→</span> oscal/ssp.json     12 implemented-requirements updated</span>
+<span class="line"><span class="arrow">→</span> inventory.json     word counts + last_updated recomputed</span></code></pre>
+        <div class="stamp">Recompiled</div>
+      </figure>
+    </main>
+  </div>
+
+  <footer>
+    <div class="row">
+      <span>© 2026 Spider Strategies, Inc.</span>
+      <span><a href="https://www.npmjs.com/package/rampguide">npm: rampguide</a></span>
+      <span class="legal">FedRAMP® is a registered mark of the U.S. General
+        Services Administration. rampguide is not affiliated with or endorsed
+        by GSA or the FedRAMP program.</span>
+    </div>
+  </footer>
+</body>
+</html>
