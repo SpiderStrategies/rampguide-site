@@ -108,6 +108,17 @@ svg .fserif{font-family:var(--serif)}
 .stg.on .pillbox{fill:var(--amber); stroke:var(--amber)} .stg.on .pilltxt{fill:#122517}
 .stg.done .pillbox{fill:rgba(122,198,138,.08); stroke:rgba(122,198,138,.45)} .stg.done .pilltxt{fill:#8fbf9a}
 
+#tracks{margin-top:10px; pointer-events:auto; display:flex; align-items:center; gap:0}
+.tbtn{font-family:var(--mono); font-size:clamp(8px,.9vmin+3px,10px); letter-spacing:.08em;
+  padding:5px 11px 6px; cursor:pointer; border:1px solid rgba(207,195,160,.4);
+  background:transparent; color:#b3ab93; transition:background .18s,color .18s}
+.tbtn:first-child{border-radius:6px 0 0 6px}
+.tbtn+.tbtn{border-left:none; border-radius:0 6px 6px 0}
+.tbtn.on{background:var(--paper); color:var(--ink); border-color:var(--paper); font-weight:600}
+#trackNote{font-family:var(--serif); font-style:italic; font-size:clamp(8.5px,1vmin+3.5px,12px);
+  color:var(--rule); margin-left:12px; opacity:0; transition:opacity .5s ease}
+#trackNote.show{opacity:.85}
+
 @keyframes hintPulse{0%,100%{opacity:.4}50%{opacity:.95}}
 .hint{animation:hintPulse 2.6s ease-in-out infinite; font-style:italic}
 
@@ -120,6 +131,10 @@ svg .fserif{font-family:var(--serif)}
   <div class="kicker">RAMPGUIDE — A COMPILER FOR COMPLIANCE PAPERWORK</div>
   <h1>Every fact lives in one file. The&nbsp;documents are <span class="compiled">compiled.</span></h1>
   <div class="sub">Flip the highlighted fact below and watch one edit rebuild every document that depends on it.</div>
+  <div id="tracks">
+    <button class="tbtn on" data-track="rev5">REV 5 · 323 CONTROLS</button><button class="tbtn" data-track="x20">20X · 46 INDICATORS</button>
+    <span id="trackNote">same facts — different paperwork dialect</span>
+  </div>
 </header>
 
 <div id="stage">
@@ -199,7 +214,12 @@ const TIP = {
   ac25:{k:'SOURCE FILE — YOU EDIT THIS', t:'statements/ac/ac-2.5.md', b:'The answer to AC-2(5): log people out after a period of inactivity. It leans on the same BadgeKeeper facts as AC-2(3).'},
   au2:{k:'SOURCE FILE — YOU EDIT THIS', t:'statements/au/au-2.md', b:'The answer to AU-2 — Audit family, control 2: which events NestPortal records in its logs. It never references BadgeKeeper, so a BadgeKeeper change passes it by untouched.'},
   family:{k:'SOURCE FILE — YOU EDIT THIS', t:'families/ac.yaml', b:'Metadata for the Access Control chapter: its plain-English purpose, scope, and roles table. Feeds the chapter preambles of <code>policies.md</code> and <code>procedures.md</code>.'},
-  base:{k:'SHIPPED WITH THE TOOL', t:'FedRAMP Moderate baseline', b:'The government’s own requirement list — 323 controls on the classic track (the newer track uses 46 “key security indicators”). FedRAMP is the US program that approves cloud software for government use. RampGuide ships this list; you never edit it.'},
+  base:{k:'SHIPPED WITH THE TOOL', t:'FedRAMP Moderate baseline', b:'The government’s own requirement list — 323 controls on the classic track. FedRAMP is the US program that approves cloud software for government use. RampGuide ships this list; you never edit it.'},
+  base20:{k:'SHIPPED WITH THE TOOL', t:'FedRAMP 20x baseline', b:'The government’s requirement list for the NEW track: 46 key security indicators instead of 323 controls — broader questions, with an official map of which classic controls each one absorbs. RampGuide ships this list; you never edit it.'},
+  ksi1:{k:'SOURCE FILE — YOU EDIT THIS', t:'statements/iam/ksi-iam-aam.md', b:'The answer to Key Security Indicator IAM-AAM: account lifecycles are managed by automation. One broad indicator absorbs several classic controls — the government publishes that mapping — and it leans on the very same BadgeKeeper facts. New on this track: validation and evidence references.'},
+  ksi2:{k:'SOURCE FILE — YOU EDIT THIS', t:'statements/mla/ksi-mla-let.md', b:'The answer to KSI-MLA-LET: which event types NestPortal logs. It never references BadgeKeeper, so a BadgeKeeper change passes it by — same lesson, new dialect.'},
+  iamk:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'IAM.md', b:'The Identity &amp; Access chapter auditors read on the 20x track: one narrative per indicator, from the statement files. Nobody types in this file — it is built.', out:1},
+  sdrk:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'sdr.json', b:'The same machine-readable report as the classic track — one government schema serves both. On 20x it carries the keySecurityIndicators section: status, implementation, validation, and typed evidence references.', out:1},
   comp:{k:'THE COMPILER', t:'rampguide build', b:'Validates every file, resolves every <code>{{reference}}</code> to its one true value — tracking provenance, i.e. which sources fed which output — and emits every document at once. Identical input, byte-identical output.'},
   acmd:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'AC.md', b:'The Access Control chapter auditors read: one narrative per requirement, straight from the statement files. Nobody types in this file — it is built.', out:1},
   pol:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'policies.md', b:'The external rulebook: every statement’s one-line policy tier, collected. “We do X” — no how, no tooling detail.', out:1},
@@ -222,28 +242,38 @@ function addNode(def){
 
 addNode({id:'params', layer:0, x:56,  y:296, w:232, h:104});
 addNode({id:'bk',     layer:0, x:56,  y:500, w:232, h:160});
-addNode({id:'ac23',   layer:1, x:420, y:240, w:240, h:96});
-addNode({id:'ac25',   layer:1, x:420, y:372, w:240, h:96});
-addNode({id:'au2',    layer:1, x:420, y:504, w:240, h:96});
+addNode({id:'ac23',   layer:1, x:420, y:240, w:240, h:96,  tr:'rev5'});
+addNode({id:'ac25',   layer:1, x:420, y:372, w:240, h:96,  tr:'rev5'});
+addNode({id:'au2',    layer:1, x:420, y:504, w:240, h:96,  tr:'rev5'});
+addNode({id:'ksi1',   layer:1, x:420, y:276, w:240, h:110, tr:'x20'});
+addNode({id:'ksi2',   layer:1, x:420, y:452, w:240, h:96,  tr:'x20'});
 addNode({id:'family', layer:1, x:420, y:636, w:240, h:84});
 addNode({id:'base',   layer:1, x:420, y:756, w:240, h:58});
 addNode({id:'comp',   layer:2, x:790, y:460, w:220, h:140});
-addNode({id:'acmd',   layer:3, x:1230, y:240, w:260, h:132});
+addNode({id:'acmd',   layer:3, x:1230, y:240, w:260, h:132, tr:'rev5'});
+addNode({id:'iamk',   layer:3, x:1230, y:240, w:260, h:132, tr:'x20'});
 addNode({id:'pol',    layer:3, x:1230, y:396, w:260, h:132});
 addNode({id:'proc',   layer:3, x:1230, y:552, w:260, h:132});
-addNode({id:'sdr',    layer:3, x:1230, y:708, w:260, h:132});
+addNode({id:'sdr',    layer:3, x:1230, y:708, w:260, h:132, tr:'rev5'});
+addNode({id:'sdrk',   layer:3, x:1230, y:708, w:260, h:132, tr:'x20'});
 addNode({id:'inv',    layer:3, x:1230, y:864, w:260, h:132});
 
 /* ---------- edges ---------- */
 const edges = [
-  {s:'params', t:'ac23'}, {s:'params', t:'ac25'}, {s:'params', t:'au2'},
-  {s:'bk', t:'ac23'}, {s:'bk', t:'ac25'},
+  {s:'params', t:'ac23', tr:'rev5'}, {s:'params', t:'ac25', tr:'rev5'}, {s:'params', t:'au2', tr:'rev5'},
+  {s:'bk', t:'ac23', tr:'rev5'}, {s:'bk', t:'ac25', tr:'rev5'},
+  {s:'params', t:'ksi1', tr:'x20'}, {s:'params', t:'ksi2', tr:'x20'},
+  {s:'bk', t:'ksi1', tr:'x20'},
   {s:'bk', t:'comp', sweep:true},
-  {s:'ac23', t:'comp'}, {s:'ac25', t:'comp'}, {s:'au2', t:'comp'},
+  {s:'ac23', t:'comp', tr:'rev5'}, {s:'ac25', t:'comp', tr:'rev5'}, {s:'au2', t:'comp', tr:'rev5'},
+  {s:'ksi1', t:'comp', tr:'x20'}, {s:'ksi2', t:'comp', tr:'x20'},
   {s:'family', t:'comp'}, {s:'base', t:'comp'},
-  {s:'comp', t:'acmd'}, {s:'comp', t:'pol'}, {s:'comp', t:'proc'},
-  {s:'comp', t:'sdr'}, {s:'comp', t:'inv'},
+  {s:'comp', t:'acmd', tr:'rev5'}, {s:'comp', t:'iamk', tr:'x20'},
+  {s:'comp', t:'pol'}, {s:'comp', t:'proc'},
+  {s:'comp', t:'sdr', tr:'rev5'}, {s:'comp', t:'sdrk', tr:'x20'}, {s:'comp', t:'inv'},
 ];
+let track = 'rev5';
+const onTrack = o => !o.tr || o.tr === track;
 const EMAP = {};
 for (const e of edges){
   e.sn = N[e.s]; e.tn = N[e.t];
@@ -253,11 +283,11 @@ const E = (s, t) => EMAP[s + '->' + t];
 
 function assignPorts(){
   for (const n of nodesArr){
-    const outs = edges.filter(e => e.sn === n && !e.sweep)
+    const outs = edges.filter(e => e.sn === n && !e.sweep && onTrack(e))
       .sort((a,b) => (a.tn.y + a.tn.h/2) - (b.tn.y + b.tn.h/2));
     const so = outs.length, spo = Math.min(22, (n.h - 26)/Math.max(1, so - 1));
     outs.forEach((e,i) => e.sy = n.h/2 + (i - (so-1)/2)*spo);
-    const ins = edges.filter(e => e.tn === n && !e.sweep)
+    const ins = edges.filter(e => e.tn === n && !e.sweep && onTrack(e))
       .sort((a,b) => (a.sn.y + a.sn.h/2) - (b.sn.y + b.sn.h/2));
     const si = ins.length, spi = Math.min(22, (n.h - 26)/Math.max(1, si - 1));
     ins.forEach((e,i) => e.ty = n.h/2 + (i - (si-1)/2)*spi);
@@ -271,14 +301,14 @@ for (const e of edges){
   e.dot = el('g', null, gFx);
   e.dot.style.opacity = '0';
   el('circle', {r:'10', fill:'url(#halo)'}, e.dot);
-  el('circle', {r:'3', fill:'#ffd489'}, e.dot);
+  el('circle', {r:'3', fill:'#b6e4c1'}, e.dot);
 }
 
 /* ---------- column labels ---------- */
 function colLabel(x, main, sub){
-  el('text', {x, y:206, 'font-size':'10', 'letter-spacing':'2.2', fill:'#66717d',
+  el('text', {x, y:206, 'font-size':'10', 'letter-spacing':'2.2', fill:'#9a9179',
     'font-weight':'600', text:main}, gLabels);
-  el('text', {x, y:222, 'font-size':'8.5', fill:'#4f5963', text:sub}, gLabels);
+  el('text', {x, y:222, 'font-size':'8.5', fill:'#6a6250', text:sub}, gLabels);
 }
 colLabel(56,  'FACTS & FRAGMENTS', 'you edit these — each fact lives here once');
 colLabel(420, 'STATEMENTS', 'one answer per requirement');
@@ -311,18 +341,18 @@ function rowText(g, x, y, size, segs, family){
 function buildChip(n, o){
   const g = baseGroup(n);
   el('rect', {width:n.w, height:n.h, rx:'12', fill:'var(--panel)',
-    stroke: o.dashed ? 'rgba(159,176,192,.38)' : 'var(--line)',
+    stroke: o.dashed ? 'rgba(207,195,160,.4)' : 'var(--line)',
     'stroke-dasharray': o.dashed ? '5 4' : 'none'}, g);
-  el('text', {x:14, y:22, 'font-size':'10.5', fill:'#dce4ed',
+  el('text', {x:14, y:22, 'font-size':'10.5', fill:'#efe8d6',
     class:'fmono', text:o.file}, g);
   if (o.pill){
     const pw = 8 + o.pill.length*5.4;
     el('rect', {x:n.w - pw - 12, y:9, width:pw, height:17, rx:'8.5',
-      fill:'rgba(159,176,192,.08)', stroke:'rgba(159,176,192,.22)'}, g);
-    el('text', {x:n.w - pw/2 - 12, y:21, 'font-size':'8.5', fill:'#9fb0c0',
+      fill:'rgba(207,195,160,.08)', stroke:'rgba(207,195,160,.25)'}, g);
+    el('text', {x:n.w - pw/2 - 12, y:21, 'font-size':'8.5', fill:'#cfc3a0',
       class:'fmono', 'text-anchor':'middle', text:o.pill}, g);
   }
-  if (o.sub) el('text', {x:14, y:37, 'font-size':'8.5', fill:'#67727d',
+  if (o.sub) el('text', {x:14, y:37, 'font-size':'8.5', fill:'#7c745f',
     'font-style':'italic', text:o.sub}, g);
   if (o.rows){
     let y = o.rowY || 56;
@@ -402,13 +432,33 @@ buildChip(N.family, {
     [{t:'purpose: ',c:'ck'},{t:'who signs in, what they reach',c:'cv'}],
   ], rowY:42,
 });
+buildChip(N.ksi1, {
+  file:'statements/iam/ksi-iam-aam.md', pill:'KSI-IAM-AAM',
+  sub:'one indicator — absorbs AC-2(2), AC-2(3), AC-2(13)…',
+  rows:[
+    [{t:'policy:     ',c:'ck'},{t:'accounts are automated',c:'cv'}],
+    [{t:'narrative:  ',c:'ck'},{t:'{{ bk.idle_rule }}',c:'cr'},{t:' …',c:'cd'}],
+    [{t:'validation: ',c:'ck'},{t:'audit vs roster monthly',c:'cv'}],
+    [{t:'evidence:   ',c:'ck'},{t:'s3://…/deactivations.json',c:'cr'}],
+  ],
+});
+buildChip(N.ksi2, {
+  file:'statements/mla/ksi-mla-let.md', pill:'KSI-MLA-LET',
+  sub:'logging event types — no BadgeKeeper here',
+  rows:[
+    [{t:'policy:    ',c:'ck'},{t:'{{ org }}',c:'cr'},{t:' logs sign-ins,',c:'cv'}],
+    [{t:'  privileged actions, config changes',c:'cv'}],
+    [{t:'validation: ',c:'ck'},{t:'weekly SIEM review',c:'cv'}],
+  ],
+});
+
 (function buildBaseline(){
   const n = N.base;
   const g = buildChip(n, {file:'', dashed:true});
   g.querySelector('text').remove();
-  el('text', {x:14, y:24, 'font-size':'10.5', fill:'#c3cedb', 'font-weight':'600',
+  n.baseTitle = el('text', {x:14, y:24, 'font-size':'10.5', fill:'#e7ddc2', 'font-weight':'600',
     text:'FedRAMP Moderate baseline'}, g);
-  el('text', {x:14, y:42, 'font-size':'8.5', fill:'#67727d',
+  n.baseSub = el('text', {x:14, y:42, 'font-size':'8.5', fill:'#7c745f',
     text:'323 requirements · ships with the tool'}, g);
 })();
 
@@ -418,10 +468,10 @@ const stagePills = [];
   const n = N.comp;
   const g = baseGroup(n);
   el('rect', {width:n.w, height:n.h, rx:'14', fill:'var(--panel2)',
-    stroke:'rgba(255,255,255,.11)', filter:'url(#softsh)'}, g);
+    stroke:'rgba(231,221,194,.13)', filter:'url(#softsh)'}, g);
   el('rect', {x:'4', y:'4', width:n.w-8, height:n.h-8, rx:'11',
     fill:'none', stroke:'rgba(255,255,255,.05)'}, g);
-  el('text', {x:n.w/2, y:34, 'font-size':'13.5', fill:'#f0eadb', 'font-weight':'600',
+  el('text', {x:n.w/2, y:34, 'font-size':'13.5', fill:'#f4eedd', 'font-weight':'600',
     class:'fmono', 'text-anchor':'middle', text:'rampguide build'}, g);
   el('line', {x1:'16', y1:'46', x2:n.w-16, y2:'46', stroke:'rgba(255,255,255,.08)'}, g);
   const names = ['validate','resolve','emit'];
@@ -432,9 +482,9 @@ const stagePills = [];
       'text-anchor':'middle', text:nm}, p);
     stagePills.push(p);
   });
-  el('text', {x:n.w/2, y:104, 'font-size':'8.5', fill:'#67727d', 'text-anchor':'middle',
+  el('text', {x:n.w/2, y:104, 'font-size':'8.5', fill:'#7c745f', 'text-anchor':'middle',
     text:'every {{reference}} → its one true value'}, g);
-  el('text', {x:n.w/2, y:120, 'font-size':'8.5', fill:'#67727d', 'text-anchor':'middle',
+  el('text', {x:n.w/2, y:120, 'font-size':'8.5', fill:'#7c745f', 'text-anchor':'middle',
     text:'same input → byte-identical output'}, g);
 })();
 
@@ -465,10 +515,10 @@ function buildPaper(n, o){
     y += o.mono ? 11 : 10.5;
   }
   /* file label beneath the card */
-  const lab = el('text', {x:0, y:n.h + 16, 'font-size':'9.5', fill:'#8d9aa8',
+  const lab = el('text', {x:0, y:n.h + 16, 'font-size':'9.5', fill:'#9a9179',
     class:'fmono'}, g);
   el('tspan', {text:o.file}, lab);
-  el('tspan', {text:'  ' + o.role}, lab).setAttribute('fill', '#5f6a75');
+  el('tspan', {text:'  ' + o.role}, lab).setAttribute('fill', '#7c745f');
   return g;
 }
 buildPaper(N.acmd, {file:'AC.md', role:'— the chapter auditors read', docTitle:'Access Control (AC)',
@@ -519,6 +569,28 @@ buildPaper(N.inv, {file:'inventory.json', role:'— every tool, with settings', 
     [{t:'  "config": { "disable_days": '},{t:'35', val:1},{t:' },'}],
     [{t:'  "source":'}],
     [{t:'    "solutions/badgekeeper/solution.yaml"'}],
+    [{t:'}'}],
+  ]});
+
+buildPaper(N.iamk, {file:'IAM.md', role:'— the chapter auditors read', docTitle:'Identity & Access (KSI-IAM)',
+  lines:[
+    [{t:'Purpose — automate every account lifecycle', i:1}],
+    [{t:'on NestPortal. Owner: IT Security.', i:1}],
+    [{t:'KSI-IAM-AAM · Automating account management', b:1}],
+    [{t:'All accounts authenticate through BadgeKeeper SSO.'}],
+    [{t:'Accounts with no sign-in for '},{t:'35', val:1},{t:' days are'}],
+    [{t:'disabled automatically by the identity provider.'}],
+    [{t:'Validated monthly against the HR roster.'}],
+  ]});
+buildPaper(N.sdrk, {file:'sdr.json', role:'— machine-readable answers', docTitle:'Structured Digital Report', mono:1,
+  lines:[
+    [{t:'{'}],
+    [{t:'  "ksiId": "KSI-IAM-AAM",'}],
+    [{t:'  "ksiImplementationStatus": "Implemented",'}],
+    [{t:'  "ksiImplementation": [ "disabled after'}],
+    [{t:'      '},{t:'35', val:1},{t:' days of inactivity" ],'}],
+    [{t:'  "ksiEvidence": [ { "evidenceType": "Report",'}],
+    [{t:'      "evidenceLocation": "s3://…" } ]'}],
     [{t:'}'}],
   ]});
 
@@ -580,6 +652,7 @@ function frame(now){
     else if (n.g.style.opacity !== '') n.g.style.opacity = '';
   }
   for (const e of edges){
+    if (!onTrack(e)) continue;
     let d;
     const s = e.sn, t = e.tn;
     if (e.sweep){
@@ -695,8 +768,10 @@ function settle(){
   animating = false;
 }
 
-const DOCS = ['acmd','pol','proc','sdr','inv'];
+const TRACK_STMTS = { rev5:['ac23','ac25'], x20:['ksi1'] };
+const TRACK_DOCS = { rev5:['acmd','pol','proc','sdr','inv'], x20:['iamk','pol','proc','sdrk','inv'] };
 function runPropagation(v){
+  const SRC = TRACK_STMTS[track], DOCS = TRACK_DOCS[track];
   animating = true; countN = 0; setCount(0);
   light(N.bk);
   /* pop the segmented control */
@@ -707,7 +782,7 @@ function runPropagation(v){
   }, done:() => sr.removeAttribute('transform')});
 
   if (RM){
-    at(80,  () => { light(N.ac23); light(N.ac25); });
+    at(80,  () => { for (const id of SRC) light(N[id]); });
     at(200, () => { light(N.comp); stagePills.forEach(p => p.classList.add('done')); });
     DOCS.forEach((id, i) => at(340 + i*80, () => {
       light(N[id]); swapDoc(N[id], v); showCounter(); setCount(++countN);
@@ -715,11 +790,12 @@ function runPropagation(v){
     at(2000, settle);
     return;
   }
-  pulse(E('bk','ac23'), {delay:260, dur:640, arrive:() => { light(N.ac23); rippleAtEnd(E('bk','ac23')); }});
-  pulse(E('bk','ac25'), {delay:360, dur:640, arrive:() => { light(N.ac25); rippleAtEnd(E('bk','ac25')); }});
+  SRC.forEach((id, i) => {
+    pulse(E('bk', id), {delay:260 + i*100, dur:640,
+      arrive:() => { light(N[id]); rippleAtEnd(E('bk', id)); }});
+    at(1050 + i*100, () => pulse(E(id,'comp'), {dur:620, arrive:() => rippleAtEnd(E(id,'comp'))}));
+  });
   pulse(E('bk','comp'), {delay:260, dur:1150, arrive:() => rippleAtEnd(E('bk','comp'))});
-  at(1050, () => pulse(E('ac23','comp'), {dur:620, arrive:() => rippleAtEnd(E('ac23','comp'))}));
-  at(1150, () => pulse(E('ac25','comp'), {dur:620, arrive:() => rippleAtEnd(E('ac25','comp'))}));
   at(1430, () => { light(N.comp); stageFlash(0); });
   at(1690, () => stageFlash(1));
   at(1940, () => stageFlash(2));
@@ -730,6 +806,52 @@ function runPropagation(v){
     }}));
   });
   at(4700, settle);
+}
+
+/* ---------- track switch ---------- */
+function applyTrack(next){
+  if (animating || next === track) return;
+  track = next;
+  assignPorts();
+  computeReach();
+  unfocus();
+  for (const n of nodesArr){
+    const show = !n.tr || n.tr === track;
+    n.g.style.display = show ? '' : 'none';
+  }
+  for (const e of edges){
+    const show = onTrack(e);
+    e.base.style.display = show ? '' : 'none';
+    e.glow.style.display = show ? '' : 'none';
+    e.lastD = null;
+  }
+  const is20 = track === 'x20';
+  N.base.baseTitle.textContent = is20 ? 'FedRAMP 20x baseline' : 'FedRAMP Moderate baseline';
+  N.base.baseSub.textContent = is20
+    ? '46 key security indicators · ships with the tool'
+    : '323 requirements · ships with the tool';
+  TIP.base = TIP[is20 ? 'base20' : 'baseSaved'] ?? TIP.base;
+  document.getElementById('trackNote').classList.toggle('show', is20);
+  for (const b of document.querySelectorAll('.tbtn')){
+    b.classList.toggle('on', b.dataset.track === (is20 ? 'x20' : 'rev5'));
+  }
+  /* newly revealed documents show the currently selected fact, quietly */
+  for (const id of TRACK_DOCS[track]){
+    for (const vt of N[id].vals) vt.sp.textContent = String(bkValue);
+  }
+}
+TIP.baseSaved = TIP.base;
+for (const b of document.querySelectorAll('.tbtn')){
+  b.addEventListener('click', () => applyTrack(b.dataset.track));
+}
+applyTrackInit();
+function applyTrackInit(){
+  for (const n of nodesArr){
+    if (n.tr && n.tr !== track) n.g.style.display = 'none';
+  }
+  for (const e of edges){
+    if (!onTrack(e)){ e.base.style.display = 'none'; e.glow.style.display = 'none'; }
+  }
 }
 
 /* ---------- toggle ---------- */
@@ -751,15 +873,19 @@ window.__rg = { toggle(v){ segEls[v] && segEls[v].dispatchEvent(new Event('click
 /* ---------- hover: tooltip + provenance focus ---------- */
 function reach(id, dir, acc){
   for (const e of edges){
+    if (!onTrack(e)) continue;
     if (dir === 'up'   && e.t === id && !acc.has(e.s)){ acc.add(e.s); reach(e.s, dir, acc); }
     if (dir === 'down' && e.s === id && !acc.has(e.t)){ acc.add(e.t); reach(e.t, dir, acc); }
   }
   return acc;
 }
-for (const n of nodesArr){
-  n.up = reach(n.id, 'up', new Set());
-  n.down = reach(n.id, 'down', new Set());
+function computeReach(){
+  for (const n of nodesArr){
+    n.up = reach(n.id, 'up', new Set());
+    n.down = reach(n.id, 'down', new Set());
+  }
 }
+computeReach();
 const tip = document.getElementById('tip');
 function showTip(n){
   const t = TIP[n.id]; if (!t) return;
