@@ -248,8 +248,8 @@ addNode({id:'bk',     layer:0, x:56,  y:500, w:232, h:160});
 addNode({id:'ac23',   layer:1, x:420, y:240, w:240, h:96,  tr:'rev5'});
 addNode({id:'ac25',   layer:1, x:420, y:372, w:240, h:96,  tr:'rev5'});
 addNode({id:'au2',    layer:1, x:420, y:504, w:240, h:96,  tr:'rev5'});
-addNode({id:'ksi1',   layer:1, x:420, y:276, w:240, h:126, tr:'x20'});
-addNode({id:'ksi2',   layer:1, x:420, y:452, w:240, h:96,  tr:'x20'});
+addNode({id:'ksi1',   layer:1, x:420, y:276, w:288, h:126, tr:'x20'});
+addNode({id:'ksi2',   layer:1, x:420, y:452, w:288, h:96,  tr:'x20'});
 addNode({id:'family', layer:1, x:420, y:636, w:240, h:84, tr:'rev5'});
 addNode({id:'famk',   layer:1, x:420, y:636, w:240, h:84, tr:'x20'});
 addNode({id:'base',   layer:1, x:420, y:756, w:240, h:58});
@@ -591,24 +591,24 @@ buildPaper(N.sdr, {file:'sdr.json', role:'— machine-readable answers', docTitl
 buildPaper(N.inv, {file:'inventory.json', role:'— every document, dates computed', docTitle:'Document Inventory', mono:1,
   lines:[
     [{t:'[ { "file": "docs/AC.md",'}],
-    [{t:'    "words": 214, "audience": "internal",'}],
+    [{t:'    "word_count": 214, "audience": "internal",'}],
     [{t:'    "version": "'},{t:'2c9061f', val:1, map:{35:'2c9061f',45:'8e41d0b'}},{t:'",'}],
-    [{t:'    "updated": "2026-08-20" },'}],
+    [{t:'    "last_updated": "2026-08-20" },'}],
     [{t:'  { "file": "docs/policies.md",'}],
-    [{t:'    "words": 380, "audience": "external",'}],
+    [{t:'    "word_count": 380, "audience": "external",'}],
     [{t:'    "version": "'},{t:'2c9061f', val:1, map:{35:'2c9061f',45:'8e41d0b'}},{t:'",'}],
-    [{t:'    "updated": "2026-08-20" }, … ]'}],
+    [{t:'    "last_updated": "2026-08-20" }, … ]'}],
   ]});
 buildPaper(N.invk, {file:'inventory.json', role:'— every document, dates computed', docTitle:'Document Inventory', mono:1,
   lines:[
     [{t:'[ { "file": "docs/IAM.md",'}],
-    [{t:'    "words": 231, "audience": "internal",'}],
+    [{t:'    "word_count": 231, "audience": "internal",'}],
     [{t:'    "version": "'},{t:'2c9061f', val:1, map:{35:'2c9061f',45:'8e41d0b'}},{t:'",'}],
-    [{t:'    "updated": "2026-08-20" },'}],
+    [{t:'    "last_updated": "2026-08-20" },'}],
     [{t:'  { "file": "docs/policies.md",'}],
-    [{t:'    "words": 380, "audience": "external",'}],
-    [{t:'    "version": "2c9061f",'}],
-    [{t:'    "updated": "2026-08-19" }, … ]'}],
+    [{t:'    "word_count": 380, "audience": "external",'}],
+    [{t:'    "version": "a41f09c",'}],
+    [{t:'    "last_updated": "2026-08-19" }, … ]'}],
   ]});
 
 buildPaper(N.iamk, {file:'IAM.md', role:'— the chapter auditors read', docTitle:'Identity & Access (KSI-IAM)',
