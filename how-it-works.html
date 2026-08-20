@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How RampGuide works</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1b1913; --panel:#242019; --panel2:#282318;
+  --line:rgba(231,221,194,.09);
+  --cool:#b3ab93; --cool-dim:#857d67; --cool-faint:#5d5748; --cool-bright:#e7ddc2;
+  --warm:#f4eedd; --warm-dim:#c4bba3;
+  --amber:#7ac68a; --amber-soft:#5ea36e; --amber-deep:#2e6b3e;
+  --paper:#f4eedd; --ink:#26251c; --ink-dim:#5b584a;
+  --stamp-red:#c0393d; --navy-lt:#8fa9cc; --rule:#cfc3a0;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --serif:"IBM Plex Serif",Georgia,"Iowan Old Style",serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; overflow:hidden;
+  background:#1b1913;
+  background:radial-gradient(1300px 900px at 42% 36%, #26251c 0%, #1b1913 55%, #12110c 100%);
+  color:var(--warm); font-family:var(--sans);
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+::selection{background:var(--amber); color:#122517}
+
+#stage{position:fixed; inset:0}
+#stage svg{width:100%; height:100%; display:block}
+@media (max-width:900px){
+  body{overflow:auto}
+  #stage{position:static; overflow-x:auto; height:100vh}
+  #stage svg{min-width:1150px; height:100vh}
+}
+
+header{position:fixed; top:clamp(12px,2.4vmin,26px); left:clamp(14px,3vmin,38px);
+  z-index:3; pointer-events:none; max-width:560px}
+.kicker{font-family:var(--mono); font-size:clamp(7.5px,.9vmin + 3px,10.5px); letter-spacing:.24em; color:var(--cool-dim); font-weight:600}
+.kicker::before{content:"▛ "; color:var(--stamp-red)}
+h1{font-family:var(--serif); font-size:clamp(13px,2.1vmin + 6px,25px); line-height:1.24; margin:.35em 0 .3em;
+  color:var(--warm); font-weight:600; letter-spacing:0; text-wrap:balance}
+h1 .compiled{color:var(--navy-lt)}
+.sub{font-size:clamp(9.5px,1.2vmin + 4px,13.5px); color:var(--cool); max-width:44ch; line-height:1.5}
+
+#corner{position:fixed; left:clamp(14px,3vmin,38px); bottom:clamp(12px,2.4vmin,26px);
+  z-index:3; pointer-events:none}
+#legend{font-size:clamp(8.5px,1vmin + 4px,11.5px); color:#9a9179;
+  display:flex; flex-direction:column; gap:7px}
+#legend .row{display:flex; align-items:center; gap:9px}
+.sw{display:inline-block; width:15px; height:11px; border-radius:3px; flex:none}
+.sw.src{background:var(--panel); border:1px solid rgba(231,221,194,.22)}
+.sw.bas{background:transparent; border:1px dashed rgba(207,195,160,.55)}
+.sw.pap{background:var(--paper); border:1px solid rgba(0,0,0,.4)}
+.sw.pul{width:9px; height:9px; border-radius:50%; background:var(--amber);
+  box-shadow:0 0 8px 2px rgba(122,198,138,.55); margin:0 3px}
+#legend .use{margin-top:5px; color:#7c745f; font-style:italic}
+
+#foot{margin-top:11px; color:#6a6350; font-size:clamp(8px,.9vmin + 3.5px,10.5px);
+  line-height:1.55; max-width:340px}
+
+#tip{position:fixed; z-index:9; width:296px; padding:13px 15px 14px;
+  background:rgba(30,27,20,.97); border:1px solid rgba(231,221,194,.13); border-radius:10px;
+  box-shadow:0 14px 44px rgba(0,0,0,.55); backdrop-filter:blur(6px);
+  opacity:0; transform:translateY(5px); transition:opacity .16s ease, transform .16s ease;
+  pointer-events:none}
+#tip.show{opacity:1; transform:none}
+#tip .tk{font-family:var(--mono); font-size:9px; letter-spacing:.15em; color:#9a9179; margin-bottom:6px}
+#tip .tk.out{color:#cfc3a0}
+#tip .tt{font-family:var(--mono); font-size:11.5px; color:#f4eedd; margin-bottom:7px}
+#tip .tb{font-size:12px; color:#b9b19c; line-height:1.55}
+#tip .tb code{font-family:var(--mono); font-size:11px; color:#e0d6b8}
+
+/* ---- SVG ---- */
+svg text{font-family:var(--sans); white-space:pre}
+svg .fmono{font-family:var(--mono)}
+svg .fserif{font-family:var(--serif)}
+.node{transition:opacity .28s ease}
+.scene.focused .node:not(.keep){opacity:.26}
+.ebase{fill:none; stroke:#cfc3a0; stroke-opacity:.17; stroke-width:1.3;
+  transition:stroke-opacity .25s ease, stroke-width .25s ease, stroke .25s ease;
+  pointer-events:none}
+.scene.focused .ebase:not(.keep){stroke-opacity:.045}
+.scene.focused .ebase.keep{stroke:#e7ddc2; stroke-opacity:.55; stroke-width:1.8}
+.eglow{fill:none; stroke:var(--amber); stroke-width:1.8; stroke-linecap:round;
+  opacity:0; pointer-events:none}
+.fx{pointer-events:none}
+.glowrect{opacity:0; transition:opacity .45s ease; pointer-events:none}
+.glowrect.on{opacity:1}
+
+.ck{fill:#9a8f72} .cv{fill:#f0e9d6} .cr{fill:#d9cfae} .cd{fill:#6a6252}
+
+.seg{cursor:pointer}
+.segbox{fill:rgba(122,198,138,.05); stroke:rgba(122,198,138,.42); transition:fill .18s, stroke .18s}
+.segtxt{fill:rgba(158,214,170,.8); font-weight:600; transition:fill .18s}
+.segOn .segbox{fill:var(--amber); stroke:var(--amber)}
+.segOn .segtxt{fill:#122517}
+.seg.frozen{cursor:default}
+
+.pillbox{fill:#2a2620; stroke:rgba(231,221,194,.12); transition:fill .18s, stroke .18s}
+.pilltxt{fill:#a89e82; transition:fill .18s}
+.stg.on .pillbox{fill:var(--amber); stroke:var(--amber)} .stg.on .pilltxt{fill:#122517}
+.stg.done .pillbox{fill:rgba(122,198,138,.08); stroke:rgba(122,198,138,.45)} .stg.done .pilltxt{fill:#8fbf9a}
+
+@keyframes hintPulse{0%,100%{opacity:.4}50%{opacity:.95}}
+.hint{animation:hintPulse 2.6s ease-in-out infinite; font-style:italic}
+
+@media (prefers-reduced-motion: reduce){ .hint{animation:none; opacity:.7} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">RAMPGUIDE — A COMPILER FOR COMPLIANCE PAPERWORK</div>
+  <h1>Every fact lives in one file. The&nbsp;documents are <span class="compiled">compiled.</span></h1>
+  <div class="sub">Flip the highlighted fact below and watch one edit rebuild every document that depends on it.</div>
+</header>
+
+<div id="stage">
+  <svg id="scene" viewBox="0 0 1560 1040" preserveAspectRatio="xMidYMid meet"
+       role="img" aria-label="Dependency graph: source files flow through the rampguide build compiler into compiled documents"></svg>
+</div>
+
+<div id="corner">
+  <div id="legend">
+    <div class="row"><span class="sw src"></span> source file — humans edit these</div>
+    <div class="row"><span class="sw bas"></span> baseline — ships with the tool</div>
+    <div class="row"><span class="sw pap"></span> compiled document — never edited by hand</div>
+    <div class="row"><span class="sw pul"></span> a change, propagating</div>
+    <div class="use">Hover any node for its plain-English story.</div>
+  </div>
+  <div id="foot">
+    Fictional demo — ACME&nbsp;Corp · NestPortal · BadgeKeeper.<br>
+    FedRAMP is the US government's approval program for cloud software.<br>
+    <a href="/" style="color:var(--navy-lt); pointer-events:auto">← rampguide.com</a>
+  </div>
+</div>
+
+<div id="tip"></div>
+
+<script>
+'use strict';
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NS = 'http://www.w3.org/2000/svg';
+const SVG = document.getElementById('scene');
+const AMBER = '#7ac68a';
+
+function el(name, attrs, parent){
+  const e = document.createElementNS(NS, name);
+  if (attrs) for (const k in attrs){
+    if (k === 'text') e.textContent = attrs[k];
+    else e.setAttribute(k, attrs[k]);
+  }
+  if (parent) parent.appendChild(e);
+  return e;
+}
+const easeIO = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2;
+const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+/* ---------- tween engine ---------- */
+let tweens = [];
+function tween(o){ o._start = performance.now() + (o.delay || 0); tweens.push(o); return o; }
+/* schedule on the animation clock, so a hidden tab pauses the whole
+   sequence coherently instead of desynchronizing timers from tweens */
+function at(ms, fn){ tween({delay:ms, dur:1, step:() => {}, done:fn}); }
+
+/* ---------- defs ---------- */
+const defs = el('defs', null, SVG);
+const halo = el('radialGradient', {id:'halo'}, defs);
+el('stop', {offset:'0', 'stop-color':'#7ac68a', 'stop-opacity':'.5'}, halo);
+el('stop', {offset:'1', 'stop-color':'#7ac68a', 'stop-opacity':'0'}, halo);
+const paperG = el('linearGradient', {id:'paperG', x1:'0', y1:'0', x2:'0', y2:'1'}, defs);
+el('stop', {offset:'0', 'stop-color':'#f4eedd'}, paperG);
+el('stop', {offset:'1', 'stop-color':'#e7ddc2'}, paperG);
+const fsh = el('filter', {id:'softsh', x:'-30%', y:'-30%', width:'160%', height:'170%'}, defs);
+el('feDropShadow', {dx:'0', dy:'3', stdDeviation:'5', 'flood-color':'#000', 'flood-opacity':'.45'}, fsh);
+const fgl = el('filter', {id:'nodeGlow', x:'-40%', y:'-40%', width:'180%', height:'180%'}, defs);
+el('feDropShadow', {dx:'0', dy:'0', stdDeviation:'7', 'flood-color':AMBER, 'flood-opacity':'.55'}, fgl);
+
+/* ---------- layers ---------- */
+const sceneRoot = el('g', {class:'scene'}, SVG);
+const gEdges  = el('g', null, sceneRoot);
+const gEGlow  = el('g', null, sceneRoot);
+const gNodes  = el('g', null, sceneRoot);
+const gLabels = el('g', null, sceneRoot);
+const gFx     = el('g', {class:'fx'}, sceneRoot);
+
+/* ---------- tooltip copy ---------- */
+const TIP = {
+  params:{k:'SOURCE FILE — YOU EDIT THIS', t:'params.yaml', b:'The global facts: the company is <code>ACME Corp</code>, the system is called <code>NestPortal</code>. Values that appear in nearly every document live here exactly once — everything else refers to them.'},
+  bk:{k:'SOURCE FILE — YOU EDIT THIS', t:'solutions/badgekeeper/solution.yaml', b:'Everything about BadgeKeeper, the single-sign-on tool: its settings (<code>disable_days</code>) and reusable sentence fragments with <code>{{holes}}</code>. Statements quote these fragments instead of restating the facts. This miniature shows one fragment feeding two statements — in a real repo, a single tool like this is referenced by dozens of statements, and one sentence can otherwise live in six hand-maintained copies across three documents.'},
+  ac23:{k:'SOURCE FILE — YOU EDIT THIS', t:'statements/ac/ac-2.3.md', b:'The company’s answer to requirement AC-2(3) — Access Control family, control 2, enhancement 3: disable accounts that go stale. Three tiers of detail (a policy one-liner, a narrative, procedure steps), assembled almost entirely from references.'},
+  ac25:{k:'SOURCE FILE — YOU EDIT THIS', t:'statements/ac/ac-2.5.md', b:'The answer to AC-2(5): log people out after a period of inactivity. It leans on the same BadgeKeeper facts as AC-2(3).'},
+  au2:{k:'SOURCE FILE — YOU EDIT THIS', t:'statements/au/au-2.md', b:'The answer to AU-2 — Audit family, control 2: which events NestPortal records in its logs. It never references BadgeKeeper, so a BadgeKeeper change passes it by untouched.'},
+  family:{k:'SOURCE FILE — YOU EDIT THIS', t:'families/ac.yaml', b:'Metadata for the Access Control chapter: its plain-English purpose, scope, and roles table. Feeds the chapter preambles of <code>policies.md</code> and <code>procedures.md</code>.'},
+  base:{k:'SHIPPED WITH THE TOOL', t:'FedRAMP Moderate baseline', b:'The government’s own requirement list — 323 controls on the classic track (the newer track uses 46 “key security indicators”). FedRAMP is the US program that approves cloud software for government use. RampGuide ships this list; you never edit it.'},
+  comp:{k:'THE COMPILER', t:'rampguide build', b:'Validates every file, resolves every <code>{{reference}}</code> to its one true value — tracking provenance, i.e. which sources fed which output — and emits every document at once. Identical input, byte-identical output.'},
+  acmd:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'AC.md', b:'The Access Control chapter auditors read: one narrative per requirement, straight from the statement files. Nobody types in this file — it is built.', out:1},
+  pol:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'policies.md', b:'The external rulebook: every statement’s one-line policy tier, collected. “We do X” — no how, no tooling detail.', out:1},
+  proc:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'procedures.md', b:'The internal manual: every statement’s step-by-step procedure tier, collected for the people who operate the system.', out:1},
+  sdr:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'sdr.json', b:'The machine-readable answers — a structured digital report in the format the government’s systems ingest. Same facts as the prose, from the same sources, never retyped.', out:1},
+  inv:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'inventory.json', b:'The machine-readable list of every tool in the system. BadgeKeeper appears with its exact settings, pulled straight from its solution file — which is why even a one-line settings change updates it.', out:1},
+};
+
+/* ---------- node geometry ---------- */
+const nodesArr = [];
+const N = {};
+function addNode(def){
+  def.oy = 0; def.ek = RM ? 1 : 0; def.curTy = def.y;
+  const i = nodesArr.length;
+  def.spd = 0.45 + ((i*37) % 20)/40;
+  def.ph = i * 2.39;
+  nodesArr.push(def); N[def.id] = def;
+  return def;
+}
+
+addNode({id:'params', layer:0, x:56,  y:296, w:232, h:104});
+addNode({id:'bk',     layer:0, x:56,  y:500, w:232, h:160});
+addNode({id:'ac23',   layer:1, x:420, y:240, w:240, h:96});
+addNode({id:'ac25',   layer:1, x:420, y:372, w:240, h:96});
+addNode({id:'au2',    layer:1, x:420, y:504, w:240, h:96});
+addNode({id:'family', layer:1, x:420, y:636, w:240, h:84});
+addNode({id:'base',   layer:1, x:420, y:756, w:240, h:58});
+addNode({id:'comp',   layer:2, x:790, y:460, w:220, h:140});
+addNode({id:'acmd',   layer:3, x:1230, y:240, w:260, h:132});
+addNode({id:'pol',    layer:3, x:1230, y:396, w:260, h:132});
+addNode({id:'proc',   layer:3, x:1230, y:552, w:260, h:132});
+addNode({id:'sdr',    layer:3, x:1230, y:708, w:260, h:132});
+addNode({id:'inv',    layer:3, x:1230, y:864, w:260, h:132});
+
+/* ---------- edges ---------- */
+const edges = [
+  {s:'params', t:'ac23'}, {s:'params', t:'ac25'}, {s:'params', t:'au2'},
+  {s:'bk', t:'ac23'}, {s:'bk', t:'ac25'},
+  {s:'bk', t:'comp', sweep:true},
+  {s:'ac23', t:'comp'}, {s:'ac25', t:'comp'}, {s:'au2', t:'comp'},
+  {s:'family', t:'comp'}, {s:'base', t:'comp'},
+  {s:'comp', t:'acmd'}, {s:'comp', t:'pol'}, {s:'comp', t:'proc'},
+  {s:'comp', t:'sdr'}, {s:'comp', t:'inv'},
+];
+const EMAP = {};
+for (const e of edges){
+  e.sn = N[e.s]; e.tn = N[e.t];
+  EMAP[e.s + '->' + e.t] = e;
+}
+const E = (s, t) => EMAP[s + '->' + t];
+
+function assignPorts(){
+  for (const n of nodesArr){
+    const outs = edges.filter(e => e.sn === n && !e.sweep)
+      .sort((a,b) => (a.tn.y + a.tn.h/2) - (b.tn.y + b.tn.h/2));
+    const so = outs.length, spo = Math.min(22, (n.h - 26)/Math.max(1, so - 1));
+    outs.forEach((e,i) => e.sy = n.h/2 + (i - (so-1)/2)*spo);
+    const ins = edges.filter(e => e.tn === n && !e.sweep)
+      .sort((a,b) => (a.sn.y + a.sn.h/2) - (b.sn.y + b.sn.h/2));
+    const si = ins.length, spi = Math.min(22, (n.h - 26)/Math.max(1, si - 1));
+    ins.forEach((e,i) => e.ty = n.h/2 + (i - (si-1)/2)*spi);
+  }
+}
+assignPorts();
+
+for (const e of edges){
+  e.base = el('path', {class:'ebase'}, gEdges);
+  e.glow = el('path', {class:'eglow'}, gEGlow);
+  e.dot = el('g', null, gFx);
+  e.dot.style.opacity = '0';
+  el('circle', {r:'10', fill:'url(#halo)'}, e.dot);
+  el('circle', {r:'3', fill:'#ffd489'}, e.dot);
+}
+
+/* ---------- column labels ---------- */
+function colLabel(x, main, sub){
+  el('text', {x, y:206, 'font-size':'10', 'letter-spacing':'2.2', fill:'#66717d',
+    'font-weight':'600', text:main}, gLabels);
+  el('text', {x, y:222, 'font-size':'8.5', fill:'#4f5963', text:sub}, gLabels);
+}
+colLabel(56,  'FACTS & FRAGMENTS', 'you edit these — each fact lives here once');
+colLabel(420, 'STATEMENTS', 'one answer per requirement');
+colLabel(790, 'THE COMPILER', 'resolves references, tracks provenance');
+colLabel(1230,'COMPILED DOCUMENTS', 'rebuilt every run — never edited by hand');
+
+/* ---------- node builders ---------- */
+function baseGroup(n){
+  n.g = el('g', {class:'node'}, gNodes);
+  n.g.setAttribute('transform', `translate(${n.x},${n.y})`);
+  n.glowEl = el('rect', {class:'glowrect', x:'-1', y:'-1', width:n.w+2, height:n.h+2,
+    rx:'13', fill:'none', stroke:AMBER, 'stroke-width':'1.6', filter:'url(#nodeGlow)'}, n.g);
+  return n.g;
+}
+function rowText(g, x, y, size, segs, family){
+  const t = el('text', {x, y, 'font-size':size}, g);
+  if (family) t.setAttribute('class', family);
+  const made = [];
+  for (const s of segs){
+    const sp = el('tspan', {text:s.t}, t);
+    if (s.c) sp.setAttribute('class', s.c);
+    if (s.fill) sp.setAttribute('fill', s.fill);
+    if (s.b) sp.setAttribute('font-weight', '700');
+    if (s.i) sp.setAttribute('font-style', 'italic');
+    made.push({sp, seg:s, textEl:t});
+  }
+  return made;
+}
+
+function buildChip(n, o){
+  const g = baseGroup(n);
+  el('rect', {width:n.w, height:n.h, rx:'12', fill:'var(--panel)',
+    stroke: o.dashed ? 'rgba(159,176,192,.38)' : 'var(--line)',
+    'stroke-dasharray': o.dashed ? '5 4' : 'none'}, g);
+  el('text', {x:14, y:22, 'font-size':'10.5', fill:'#dce4ed',
+    class:'fmono', text:o.file}, g);
+  if (o.pill){
+    const pw = 8 + o.pill.length*5.4;
+    el('rect', {x:n.w - pw - 12, y:9, width:pw, height:17, rx:'8.5',
+      fill:'rgba(159,176,192,.08)', stroke:'rgba(159,176,192,.22)'}, g);
+    el('text', {x:n.w - pw/2 - 12, y:21, 'font-size':'8.5', fill:'#9fb0c0',
+      class:'fmono', 'text-anchor':'middle', text:o.pill}, g);
+  }
+  if (o.sub) el('text', {x:14, y:37, 'font-size':'8.5', fill:'#67727d',
+    'font-style':'italic', text:o.sub}, g);
+  if (o.rows){
+    let y = o.rowY || 56;
+    for (const segs of o.rows){
+      rowText(g, 14, y, '9.5', segs, 'fmono');
+      y += 14;
+    }
+  }
+  return g;
+}
+
+/* -- layer 1 : facts -- */
+buildChip(N.params, {
+  file:'params.yaml', sub:'facts used in nearly every document',
+  rows:[
+    [{t:'org: ',c:'ck'},{t:'"ACME Corp"',c:'cv'}],
+    [{t:'system: ',c:'ck'},{t:'"NestPortal"',c:'cv'}],
+    [{t:'review_cycle: ',c:'ck'},{t:'quarterly',c:'cv'}],
+  ], rowY:58,
+});
+
+/* badgekeeper chip with the toggle */
+let bkValue = 35, animating = false;
+const segEls = {};
+(function buildBK(){
+  const n = N.bk;
+  const g = buildChip(n, {
+    file:'badgekeeper/solution.yaml', sub:'one tool — its facts & fragments',
+  });
+  rowText(g, 14, 58, '9.5', [{t:'name: ',c:'ck'},{t:'BadgeKeeper SSO',c:'cv'}], 'fmono');
+  rowText(g, 14, 89, '9.5', [{t:'disable_days:',c:'ck'}], 'fmono');
+  const segRow = el('g', {class:'segrow'}, g);
+  n.segRow = segRow;
+  const mk = (v, x) => {
+    const s = el('g', {class:'seg', 'data-v':String(v), transform:`translate(${x},74)`}, segRow);
+    el('rect', {class:'segbox', width:'36', height:'22', rx:'6'}, s);
+    el('text', {class:'segtxt fmono', x:'18', y:'15.5', 'font-size':'11',
+      'text-anchor':'middle', text:String(v)}, s);
+    segEls[v] = s; return s;
+  };
+  mk(35, 110); mk(45, 152);
+  rowText(g, 14, 118, '9.5', [{t:'fragments:',c:'ck'}], 'fmono');
+  rowText(g, 14, 132, '9.5', [{t:'  idle_rule: ',c:'ck'},{t:'"disabled after',c:'cv'}], 'fmono');
+  rowText(g, 14, 146, '9.5', [{t:'    ',c:'ck'},{t:'{{disable_days}}',c:'cr'},{t:' days"',c:'cv'}], 'fmono');
+})();
+
+/* -- layer 2 : statements -- */
+buildChip(N.ac23, {
+  file:'statements/ac/ac-2.3.md', pill:'AC-2(3)', sub:'the answer: stale accounts get disabled',
+  rows:[
+    [{t:'policy:    ',c:'ck'},{t:'{{ bk.idle_rule }}',c:'cr'}],
+    [{t:'narrative: ',c:'ck'},{t:'{{ org }}',c:'cr'},{t:' uses ',c:'cv'},{t:'{{ bk.name }}',c:'cr'},{t:' …',c:'cd'}],
+    [{t:'procedure: ',c:'ck'},{t:'verify ',c:'cv'},{t:'{{ bk.disable_days }}',c:'cr'}],
+  ],
+});
+buildChip(N.ac25, {
+  file:'statements/ac/ac-2.5.md', pill:'AC-2(5)', sub:'the answer: idle sessions log out',
+  rows:[
+    [{t:'policy:    ',c:'ck'},{t:'{{ bk.logout_rule }}',c:'cr'}],
+    [{t:'narrative: ',c:'ck'},{t:'sessions on ',c:'cv'},{t:'{{ system }}',c:'cr'},{t:' …',c:'cd'}],
+    [{t:'procedure: ',c:'ck'},{t:'confirm 15-min lock',c:'cv'}],
+  ],
+});
+buildChip(N.au2, {
+  file:'statements/au/au-2.md', pill:'AU-2', sub:'the answer: what gets logged',
+  rows:[
+    [{t:'policy:    ',c:'ck'},{t:'{{ org }}',c:'cr'},{t:' logs sign-ins,',c:'cv'}],
+    [{t:'  privileged actions, config changes',c:'cv'}],
+    [{t:'procedure: ',c:'ck'},{t:'review log feed weekly',c:'cv'}],
+  ],
+});
+buildChip(N.family, {
+  file:'families/ac.yaml',
+  rows:[
+    [{t:'family: ',c:'ck'},{t:'Access Control (AC)',c:'cv'}],
+    [{t:'owner: ',c:'ck'},{t:'IT Security team',c:'cv'}],
+    [{t:'purpose: ',c:'ck'},{t:'who signs in, what they reach',c:'cv'}],
+  ], rowY:42,
+});
+(function buildBaseline(){
+  const n = N.base;
+  const g = buildChip(n, {file:'', dashed:true});
+  g.querySelector('text').remove();
+  el('text', {x:14, y:24, 'font-size':'10.5', fill:'#c3cedb', 'font-weight':'600',
+    text:'FedRAMP Moderate baseline'}, g);
+  el('text', {x:14, y:42, 'font-size':'8.5', fill:'#67727d',
+    text:'323 requirements · ships with the tool'}, g);
+})();
+
+/* -- layer 3 : compiler -- */
+const stagePills = [];
+(function buildCompiler(){
+  const n = N.comp;
+  const g = baseGroup(n);
+  el('rect', {width:n.w, height:n.h, rx:'14', fill:'var(--panel2)',
+    stroke:'rgba(255,255,255,.11)', filter:'url(#softsh)'}, g);
+  el('rect', {x:'4', y:'4', width:n.w-8, height:n.h-8, rx:'11',
+    fill:'none', stroke:'rgba(255,255,255,.05)'}, g);
+  el('text', {x:n.w/2, y:34, 'font-size':'13.5', fill:'#f0eadb', 'font-weight':'600',
+    class:'fmono', 'text-anchor':'middle', text:'rampguide build'}, g);
+  el('line', {x1:'16', y1:'46', x2:n.w-16, y2:'46', stroke:'rgba(255,255,255,.08)'}, g);
+  const names = ['validate','resolve','emit'];
+  names.forEach((nm, i) => {
+    const p = el('g', {class:'stg', transform:`translate(${14 + i*66},58)`}, g);
+    el('rect', {class:'pillbox', width:'60', height:'22', rx:'11'}, p);
+    el('text', {class:'pilltxt', x:'30', y:'15', 'font-size':'9',
+      'text-anchor':'middle', text:nm}, p);
+    stagePills.push(p);
+  });
+  el('text', {x:n.w/2, y:104, 'font-size':'8.5', fill:'#67727d', 'text-anchor':'middle',
+    text:'every {{reference}} → its one true value'}, g);
+  el('text', {x:n.w/2, y:120, 'font-size':'8.5', fill:'#67727d', 'text-anchor':'middle',
+    text:'same input → byte-identical output'}, g);
+})();
+
+/* -- layer 4 : paper documents -- */
+function buildPaper(n, o){
+  const g = baseGroup(n);
+  n.vals = [];
+  el('rect', {width:n.w, height:n.h, rx:'4', fill:'url(#paperG)',
+    stroke:'rgba(0,0,0,.35)', filter:'url(#softsh)'}, g);
+  const F = 15;
+  el('path', {d:`M ${n.w-F} 0 L ${n.w} ${F} L ${n.w-F} ${F} Z`, fill:'#cfc6b1'}, g);
+  el('path', {d:`M ${n.w-F} 0 L ${n.w-F} ${F} L ${n.w} ${F}`, fill:'none',
+    stroke:'rgba(0,0,0,.18)'}, g);
+  el('text', {x:14, y:23, 'font-size':'9.5', fill:'var(--ink)', 'font-weight':'700',
+    class:'fserif', 'letter-spacing':'.06em',
+    text:o.docTitle.toUpperCase()}, g);
+  el('line', {x1:'14', y1:'30', x2:n.w-24, y2:'30', stroke:'rgba(57,51,42,.35)',
+    'stroke-width':'.7'}, g);
+  const fam = o.mono ? 'fmono' : 'fserif';
+  const size = o.mono ? '7' : '7.5';
+  let y = 44;
+  for (const segs of o.lines){
+    const made = rowText(g, 14, y, size, segs.map(s => ({
+      t:s.t, b:s.b, i:s.i,
+      fill: s.b ? '#2e2921' : (s.i ? 'var(--ink-dim)' : 'var(--ink)'),
+    })), fam);
+    segs.forEach((s, idx) => { if (s.val) n.vals.push(made[idx]); });
+    y += o.mono ? 11 : 10.5;
+  }
+  /* file label beneath the card */
+  const lab = el('text', {x:0, y:n.h + 16, 'font-size':'9.5', fill:'#8d9aa8',
+    class:'fmono'}, g);
+  el('tspan', {text:o.file}, lab);
+  el('tspan', {text:'  ' + o.role}, lab).setAttribute('fill', '#5f6a75');
+  return g;
+}
+buildPaper(N.acmd, {file:'AC.md', role:'— the chapter auditors read', docTitle:'Access Control (AC)',
+  lines:[
+    [{t:'Purpose — govern who may sign in to NestPortal', i:1}],
+    [{t:'and what they may reach. Owner: IT Security.', i:1}],
+    [{t:'AC-2(3) · Inactive accounts', b:1}],
+    [{t:'All accounts authenticate through BadgeKeeper SSO.'}],
+    [{t:'Accounts with no sign-in for '},{t:'35', val:1},{t:' days are'}],
+    [{t:'disabled automatically by the identity provider.'}],
+    [{t:'AC-2(5) · Inactivity logout', b:1}],
+    [{t:'Sessions end after 15 idle minutes.'}],
+  ]});
+buildPaper(N.pol, {file:'policies.md', role:'— the external rulebook', docTitle:'Information Security Policy',
+  lines:[
+    [{t:'§4 · Access', b:1}],
+    [{t:'Accounts with no sign-in for '},{t:'35', val:1},{t:' days are'}],
+    [{t:'disabled.'}],
+    [{t:'Sessions lock after 15 minutes of inactivity.'}],
+    [{t:'Access rights are reviewed quarterly.'}],
+    [{t:'§5 · Audit', b:1}],
+    [{t:'Sign-ins and privileged actions are logged.'}],
+  ]});
+buildPaper(N.proc, {file:'procedures.md', role:'— the internal manual', docTitle:'Operations Runbook',
+  lines:[
+    [{t:'Monthly stale-account check', b:1}],
+    [{t:'1.  Open the BadgeKeeper admin console.'}],
+    [{t:'2.  Confirm the idle-account timer is set'}],
+    [{t:'     to '},{t:'35', val:1},{t:' days.'}],
+    [{t:'3.  Export the disabled-accounts report.'}],
+    [{t:'4.  File it in the quarterly audit folder.'}],
+  ]});
+buildPaper(N.sdr, {file:'sdr.json', role:'— machine-readable answers', docTitle:'Structured Digital Report', mono:1,
+  lines:[
+    [{t:'{'}],
+    [{t:'  "requirement": "ac-2.3",'}],
+    [{t:'  "status": "implemented",'}],
+    [{t:'  "params": { "disable_after": "'},{t:'35', val:1},{t:' days" },'}],
+    [{t:'  "provenance": [ "badgekeeper/solution.yaml",'}],
+    [{t:'                  "statements/ac/ac-2.3.md" ]'}],
+    [{t:'}'}],
+  ]});
+buildPaper(N.inv, {file:'inventory.json', role:'— every tool, with settings', docTitle:'System Inventory', mono:1,
+  lines:[
+    [{t:'{'}],
+    [{t:'  "component": "BadgeKeeper SSO",'}],
+    [{t:'  "type": "identity-provider",'}],
+    [{t:'  "config": { "disable_days": '},{t:'35', val:1},{t:' },'}],
+    [{t:'  "source":'}],
+    [{t:'    "solutions/badgekeeper/solution.yaml"'}],
+    [{t:'}'}],
+  ]});
+
+/* ---------- counter ---------- */
+const counterG = el('g', null, gLabels);
+counterG.style.opacity = '0';
+el('rect', {x:'760', y:'656', width:'280', height:'36', rx:'18', fill:'#221f18',
+  stroke:'rgba(122,198,138,.4)'}, counterG);
+const ctext = el('text', {x:'900', y:'679', 'font-size':'12.5', 'text-anchor':'middle',
+  fill:'#b3ab93', class:'fmono'}, counterG);
+el('tspan', {text:'1', fill:AMBER, 'font-weight':'700'}, ctext);
+el('tspan', {text:' line changed'}, ctext);
+el('tspan', {text:'  →  ', fill:'#7c745f'}, ctext);
+const countSpan = el('tspan', {text:'0', fill:AMBER, 'font-weight':'700'}, ctext);
+el('tspan', {text:' documents updated'}, ctext);
+let counterShown = false, countN = 0;
+function showCounter(){
+  if (counterShown) return; counterShown = true;
+  tween({dur:450, ease:easeOut, step:k => counterG.style.opacity = String(k)});
+}
+let stamped = false;
+function stampRecompiled(){
+  if (stamped) return; stamped = true;
+  const g = el('g', {transform:'translate(1075,674) rotate(-7)'}, gLabels);
+  el('rect', {x:'-74', y:'-16', width:'148', height:'32', rx:'3', fill:'none',
+    stroke:'var(--stamp-red)', 'stroke-width':'2'}, g);
+  el('rect', {x:'-70', y:'-12', width:'140', height:'24', rx:'2', fill:'none',
+    stroke:'var(--stamp-red)', 'stroke-width':'.8', opacity:'.7'}, g);
+  el('text', {x:'0', y:'4.5', 'text-anchor':'middle', class:'fmono', 'font-size':'13',
+    'font-weight':'700', 'letter-spacing':'.22em', fill:'var(--stamp-red)',
+    text:'RECOMPILED'}, g);
+  g.style.opacity = '0';
+  g.style.transformOrigin = '1075px 674px';
+  tween({dur:RM ? 1 : 300, ease:easeOut, step:k => {
+    g.style.opacity = String(.92 * k);
+    const sc = 1.5 - .5 * k;
+    g.setAttribute('transform', `translate(1075,674) rotate(-7) scale(${sc})`);
+  }, done:() => g.setAttribute('transform', 'translate(1075,674) rotate(-7)')});
+}
+function setCount(v){
+  countSpan.textContent = String(v);
+  if (v >= 5) at(220, stampRecompiled);
+}
+
+/* ---------- hint ---------- */
+const hint = el('text', {x:172, y:700, 'font-size':'11.5', fill:'var(--amber-soft)',
+  'text-anchor':'middle', class:'hint', text:'↑ flip the fact — watch it propagate'}, gLabels);
+hint.style.opacity = '0';
+at(2100, () => { if (hint.parentNode) hint.style.opacity = ''; });
+
+/* ---------- frame loop: drift + edge redraw + tweens ---------- */
+function frame(now){
+  for (const n of nodesArr){
+    if (!RM) n.oy = Math.sin(now/1000 * n.spd + n.ph) * 2.4;
+    const ty = n.y + n.oy + (1 - n.ek) * 18;
+    n.curTy = ty;
+    n.g.setAttribute('transform', `translate(${n.x},${ty})`);
+    if (n.ek < 1) n.g.style.opacity = String(n.ek);
+    else if (n.g.style.opacity !== '') n.g.style.opacity = '';
+  }
+  for (const e of edges){
+    let d;
+    const s = e.sn, t = e.tn;
+    if (e.sweep){
+      const px = s.x + s.w - 30, py = s.curTy + s.h, qx = t.x + 40, qy = t.curTy + t.h;
+      d = `M ${px} ${py} C ${px+150} ${py+215}, ${qx-170} ${qy+235}, ${qx} ${qy}`;
+    } else {
+      const px = s.x + s.w, py = s.curTy + e.sy, qx = t.x, qy = t.curTy + e.ty;
+      const c = Math.max(56, (qx - px) * 0.44);
+      d = `M ${px} ${py} C ${px+c} ${py}, ${qx-c} ${qy}, ${qx} ${qy}`;
+    }
+    if (d !== e.lastD){ e.base.setAttribute('d', d); e.glow.setAttribute('d', d); e.lastD = d; }
+  }
+  const pending = tweens; tweens = [];
+  for (const tw of pending){
+    if (now < tw._start){ tweens.push(tw); continue; }
+    const k = (now - tw._start) / tw.dur;
+    if (k >= 1){ tw.step(1); if (tw.done) tw.done(); }
+    else { tw.step((tw.ease || easeIO)(k)); tweens.push(tw); }
+  }
+}
+function loop(now){ frame(now); requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+/* hidden tabs never fire rAF; keep time flowing at a low rate so an
+   in-progress propagation completes instead of freezing mid-flight */
+setInterval(() => { if (document.hidden) frame(performance.now()); }, 300);
+
+/* ---------- entrance ---------- */
+if (!RM){
+  for (const n of nodesArr){
+    tween({dur:750, delay:150 + n.layer*140, ease:easeOut, step:k => n.ek = k});
+  }
+  at(30, () => {  /* after first frame computed d */
+    edges.forEach((e, i) => {
+      const L = e.base.getTotalLength();
+      e.base.style.strokeDasharray = `${L}`;
+      e.base.style.strokeDashoffset = String(L);
+      tween({dur:900, delay:520 + e.sn.layer*150 + i*18, ease:easeOut,
+        step:k => e.base.style.strokeDashoffset = String(L * (1 - k)),
+        done:() => { e.base.style.strokeDasharray = ''; e.base.style.strokeDashoffset = ''; }});
+    });
+  });
+}
+
+/* ---------- pulses ---------- */
+function pulse(e, opt){
+  const dur = opt.dur || 650;
+  tween({delay:opt.delay || 0, dur, ease:easeIO,
+    step:k => {
+      const path = e.glow;
+      const L = path.getTotalLength();
+      const pt = path.getPointAtLength(k * L);
+      e.dot.setAttribute('transform', `translate(${pt.x},${pt.y})`);
+      e.dot.style.opacity = String(k < .08 ? k/.08 : k > .92 ? (1-k)/.08 : 1);
+      const seg = Math.max(30, L * .2);
+      path.style.strokeDasharray = `${seg} ${L + seg}`;
+      path.style.strokeDashoffset = String(seg - k * (L + seg));
+      path.style.opacity = String(k < .1 ? k * 9 : .9);
+    },
+    done:() => {
+      e.dot.style.opacity = '0';
+      e.glow.style.strokeDasharray = 'none';
+      e.glow.style.strokeDashoffset = '0';
+      e.glow.style.opacity = '.3';
+      if (opt.arrive) opt.arrive();
+    }});
+}
+function ripple(x, y){
+  const c = el('circle', {cx:x, cy:y, r:'3', fill:'none', stroke:AMBER, 'stroke-width':'2'}, gFx);
+  tween({dur:520, ease:easeOut,
+    step:k => { c.setAttribute('r', String(3 + 15*k)); c.style.opacity = String(.8*(1-k)); },
+    done:() => c.remove()});
+}
+function rippleAtEnd(e){
+  if (e.sweep) ripple(e.tn.x + 40, e.tn.curTy + e.tn.h);
+  else ripple(e.tn.x, e.tn.curTy + e.ty);
+}
+function light(n){ n.glowEl.classList.add('on'); }
+function stageFlash(i){
+  const p = stagePills[i];
+  p.classList.add('on');
+  at(260, () => { p.classList.remove('on'); p.classList.add('done'); });
+}
+
+/* rewrite the value inside a document card, with highlight flash + lasting underline */
+function swapDoc(n, v){
+  for (const vt of n.vals){
+    vt.sp.textContent = String(v);
+    let bb;
+    try { bb = vt.sp.getBBox(); } catch(_) { bb = vt.textEl.getBBox(); }
+    const fl = el('rect', {x:bb.x-2, y:bb.y-1, width:bb.width+4, height:bb.height+2,
+      rx:'2', fill:'#b9d8ad'});
+    n.g.insertBefore(fl, vt.textEl);
+    fl.style.opacity = '.95';
+    tween({dur:900, delay:150, step:k => fl.style.opacity = String(.95*(1-k)),
+      done:() => fl.remove()});
+    if (!vt.ul){
+      vt.ul = el('rect', {height:'1.3', fill:'#2e6b3e', opacity:'.75'});
+      n.g.insertBefore(vt.ul, vt.textEl);
+    }
+    vt.ul.setAttribute('x', String(bb.x));
+    vt.ul.setAttribute('y', String(bb.y + bb.height + 1));
+    vt.ul.setAttribute('width', String(bb.width));
+  }
+}
+
+function settle(){
+  for (const n of nodesArr) n.glowEl.classList.remove('on');
+  for (const p of stagePills) p.classList.remove('on','done');
+  for (const e of edges){
+    const o0 = parseFloat(e.glow.style.opacity) || 0;
+    if (o0 > 0) tween({dur:700, step:k => e.glow.style.opacity = String(o0*(1-k))});
+  }
+  animating = false;
+}
+
+const DOCS = ['acmd','pol','proc','sdr','inv'];
+function runPropagation(v){
+  animating = true; countN = 0; setCount(0);
+  light(N.bk);
+  /* pop the segmented control */
+  const sr = N.bk.segRow;
+  tween({dur:420, step:k => {
+    const s = 1 + .13 * Math.sin(Math.PI * k);
+    sr.setAttribute('transform', `translate(133,85) scale(${s}) translate(-133,-85)`);
+  }, done:() => sr.removeAttribute('transform')});
+
+  if (RM){
+    at(80,  () => { light(N.ac23); light(N.ac25); });
+    at(200, () => { light(N.comp); stagePills.forEach(p => p.classList.add('done')); });
+    DOCS.forEach((id, i) => at(340 + i*80, () => {
+      light(N[id]); swapDoc(N[id], v); showCounter(); setCount(++countN);
+    }));
+    at(2000, settle);
+    return;
+  }
+  pulse(E('bk','ac23'), {delay:260, dur:640, arrive:() => { light(N.ac23); rippleAtEnd(E('bk','ac23')); }});
+  pulse(E('bk','ac25'), {delay:360, dur:640, arrive:() => { light(N.ac25); rippleAtEnd(E('bk','ac25')); }});
+  pulse(E('bk','comp'), {delay:260, dur:1150, arrive:() => rippleAtEnd(E('bk','comp'))});
+  at(1050, () => pulse(E('ac23','comp'), {dur:620, arrive:() => rippleAtEnd(E('ac23','comp'))}));
+  at(1150, () => pulse(E('ac25','comp'), {dur:620, arrive:() => rippleAtEnd(E('ac25','comp'))}));
+  at(1430, () => { light(N.comp); stageFlash(0); });
+  at(1690, () => stageFlash(1));
+  at(1940, () => stageFlash(2));
+  DOCS.forEach((id, i) => {
+    at(2030 + i*110, () => pulse(E('comp', id), {dur:720, arrive:() => {
+      light(N[id]); rippleAtEnd(E('comp', id));
+      swapDoc(N[id], v); showCounter(); setCount(++countN);
+    }}));
+  });
+  at(4700, settle);
+}
+
+/* ---------- toggle ---------- */
+function setSeg(v){
+  segEls[35].classList.toggle('segOn', v === 35);
+  segEls[45].classList.toggle('segOn', v === 45);
+}
+setSeg(35);
+for (const v of [35, 45]){
+  segEls[v].addEventListener('click', () => {
+    if (animating || v === bkValue) return;
+    bkValue = v; setSeg(v);
+    if (hint.parentNode) hint.remove();
+    runPropagation(v);
+  });
+}
+window.__rg = { toggle(v){ segEls[v] && segEls[v].dispatchEvent(new Event('click')) } };
+
+/* ---------- hover: tooltip + provenance focus ---------- */
+function reach(id, dir, acc){
+  for (const e of edges){
+    if (dir === 'up'   && e.t === id && !acc.has(e.s)){ acc.add(e.s); reach(e.s, dir, acc); }
+    if (dir === 'down' && e.s === id && !acc.has(e.t)){ acc.add(e.t); reach(e.t, dir, acc); }
+  }
+  return acc;
+}
+for (const n of nodesArr){
+  n.up = reach(n.id, 'up', new Set());
+  n.down = reach(n.id, 'down', new Set());
+}
+const tip = document.getElementById('tip');
+function showTip(n){
+  const t = TIP[n.id]; if (!t) return;
+  tip.innerHTML = `<div class="tk${t.out ? ' out' : ''}">${t.k}</div>` +
+    `<div class="tt">${t.t}</div><div class="tb">${t.b}</div>`;
+  tip.classList.add('show');
+  const r = n.g.getBoundingClientRect();
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  let left = r.right + 14;
+  if (r.left + r.width/2 > innerWidth * .62) left = r.left - tw - 14;
+  left = Math.max(10, Math.min(innerWidth - tw - 10, left));
+  const top = Math.max(12, Math.min(innerHeight - th - 12, r.top + r.height/2 - th/2));
+  tip.style.left = left + 'px'; tip.style.top = top + 'px';
+}
+function focus(n){
+  if (animating) return;
+  sceneRoot.classList.add('focused');
+  for (const m of nodesArr){
+    m.g.classList.toggle('keep', m === n || n.up.has(m.id) || n.down.has(m.id));
+  }
+  const inUp = id => id === n.id || n.up.has(id);
+  const inDn = id => id === n.id || n.down.has(id);
+  for (const e of edges){
+    e.base.classList.toggle('keep',
+      (inUp(e.s) && inUp(e.t)) || (inDn(e.s) && inDn(e.t)));
+  }
+}
+function unfocus(){
+  sceneRoot.classList.remove('focused');
+  for (const m of nodesArr) m.g.classList.remove('keep');
+  for (const e of edges) e.base.classList.remove('keep');
+}
+for (const n of nodesArr){
+  n.g.addEventListener('pointerenter', () => { showTip(n); focus(n); });
+  n.g.addEventListener('pointerleave', () => { tip.classList.remove('show'); unfocus(); });
+}
+</script>
+</body>
+</html>
