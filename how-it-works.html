@@ -214,6 +214,7 @@ const TIP = {
   ac25:{k:'SOURCE FILE — YOU EDIT THIS', t:'statements/ac/ac-2.5.md', b:'The answer to AC-2(5): log people out after a period of inactivity. It leans on the same BadgeKeeper facts as AC-2(3).'},
   au2:{k:'SOURCE FILE — YOU EDIT THIS', t:'statements/au/au-2.md', b:'The answer to AU-2 — Audit family, control 2: which events NestPortal records in its logs. It never references BadgeKeeper, so a BadgeKeeper change passes it by untouched.'},
   family:{k:'SOURCE FILE — YOU EDIT THIS', t:'families/ac.yaml', b:'Metadata for the Access Control chapter: its plain-English purpose, scope, and roles table. Feeds the chapter preambles of <code>policies.md</code> and <code>procedures.md</code>.'},
+  famk:{k:'SOURCE FILE — YOU EDIT THIS', t:'families/iam.yaml', b:'The 20x track groups requirements differently — ten indicator families instead of eighteen control families — so its chapter file is <code>iam.yaml</code>. Same owner, same kind of content: purpose, scope, roles. Much of the prose carries over.'},
   base:{k:'SHIPPED WITH THE TOOL', t:'FedRAMP Moderate baseline', b:'The government’s own requirement list — 323 controls on the classic track. FedRAMP is the US program that approves cloud software for government use. RampGuide ships this list; you never edit it.'},
   base20:{k:'SHIPPED WITH THE TOOL', t:'FedRAMP 20x baseline', b:'The government’s requirement list for the NEW track: 46 key security indicators instead of 323 controls — broader questions, with an official map of which classic controls each one absorbs. RampGuide ships this list; you never edit it.'},
   ksi1:{k:'SOURCE FILE — YOU EDIT THIS', t:'statements/iam/ksi-iam-aam.md', b:'The answer to Key Security Indicator IAM-AAM: account lifecycles are managed by automation. One broad indicator absorbs several classic controls — the government publishes that mapping — and it leans on the very same BadgeKeeper facts. New on this track: validation and evidence references.'},
@@ -247,7 +248,8 @@ addNode({id:'ac25',   layer:1, x:420, y:372, w:240, h:96,  tr:'rev5'});
 addNode({id:'au2',    layer:1, x:420, y:504, w:240, h:96,  tr:'rev5'});
 addNode({id:'ksi1',   layer:1, x:420, y:276, w:240, h:110, tr:'x20'});
 addNode({id:'ksi2',   layer:1, x:420, y:452, w:240, h:96,  tr:'x20'});
-addNode({id:'family', layer:1, x:420, y:636, w:240, h:84});
+addNode({id:'family', layer:1, x:420, y:636, w:240, h:84, tr:'rev5'});
+addNode({id:'famk',   layer:1, x:420, y:636, w:240, h:84, tr:'x20'});
 addNode({id:'base',   layer:1, x:420, y:756, w:240, h:58});
 addNode({id:'comp',   layer:2, x:790, y:460, w:220, h:140});
 addNode({id:'acmd',   layer:3, x:1230, y:240, w:260, h:132, tr:'rev5'});
@@ -267,7 +269,7 @@ const edges = [
   {s:'bk', t:'comp', sweep:true},
   {s:'ac23', t:'comp', tr:'rev5'}, {s:'ac25', t:'comp', tr:'rev5'}, {s:'au2', t:'comp', tr:'rev5'},
   {s:'ksi1', t:'comp', tr:'x20'}, {s:'ksi2', t:'comp', tr:'x20'},
-  {s:'family', t:'comp'}, {s:'base', t:'comp'},
+  {s:'family', t:'comp', tr:'rev5'}, {s:'famk', t:'comp', tr:'x20'}, {s:'base', t:'comp'},
   {s:'comp', t:'acmd', tr:'rev5'}, {s:'comp', t:'iamk', tr:'x20'},
   {s:'comp', t:'pol'}, {s:'comp', t:'proc'},
   {s:'comp', t:'sdr', tr:'rev5'}, {s:'comp', t:'sdrk', tr:'x20'}, {s:'comp', t:'inv'},
@@ -430,6 +432,14 @@ buildChip(N.family, {
     [{t:'family: ',c:'ck'},{t:'Access Control (AC)',c:'cv'}],
     [{t:'owner: ',c:'ck'},{t:'IT Security team',c:'cv'}],
     [{t:'purpose: ',c:'ck'},{t:'who signs in, what they reach',c:'cv'}],
+  ], rowY:42,
+});
+buildChip(N.famk, {
+  file:'families/iam.yaml',
+  rows:[
+    [{t:'family: ',c:'ck'},{t:'Identity & Access (IAM)',c:'cv'}],
+    [{t:'owner: ',c:'ck'},{t:'IT Security team',c:'cv'}],
+    [{t:'purpose: ',c:'ck'},{t:'automate the account lifecycle',c:'cv'}],
   ], rowY:42,
 });
 buildChip(N.ksi1, {
