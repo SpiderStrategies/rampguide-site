@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome — RampGuide</title>
+<meta name="description" content="Your RampGuide library key.">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2317160f'/%3E%3Cpath d='M8 8h11v4H12v3h6v4h-6v5H8z' fill='%23e7ddc2'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/NebulaSans-Book.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
+<style>
+  main { min-height: 70vh; }
+  .welcome { padding: clamp(40px, 6vw, 80px) 0; }
+  .welcome .wrap { max-width: 760px; }
+  .state { display: none; }
+  .state.on { display: block; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 1rem; }
+  .steps li { position: relative; padding-left: 2.6rem; color: var(--ink-2); }
+  .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: 0.05em; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 700; font-size: 0.85rem; display: grid; place-items: center; }
+  .steps li b { color: var(--ink); font-weight: 500; }
+  .steps pre { margin: 0.5rem 0 0; }
+  .copy { font: inherit; font-size: 0.85rem; font-weight: 500; background: transparent; color: var(--term-green); border: 1px solid rgba(122, 198, 138, 0.5); border-radius: 100px; padding: 0.35em 0.9em; cursor: pointer; float: right; margin: -2px 0 0 1rem; }
+  .copy:hover { background: rgba(122, 198, 138, 0.12); }
+  .spin { display: inline-block; width: 1em; height: 1em; border: 2px solid var(--line); border-top-color: var(--ink); border-radius: 50%; animation: spin 0.9s linear infinite; vertical-align: -0.15em; margin-right: 0.5em; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="wordmark" href="/">rampguide</a>
+    <nav class="nav-links">
+      <a href="product.html">Product tour</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="welcome">
+  <div class="wrap">
+
+    <div id="loading" class="state on">
+      <span class="kicker">One moment</span>
+      <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);margin:1rem 0">Confirming your payment…</h1>
+      <p class="lede"><span class="spin"></span>Stripe is telling us about your purchase. This usually takes a second or two.</p>
+    </div>
+
+    <div id="revealed" class="state">
+      <span class="kicker">Welcome</span>
+      <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);margin:1rem 0">Here is your library key.</h1>
+      <p class="lede">It is shown <strong>once</strong>. We keep only a hash of it, so we cannot show it again — copy it now into your password manager or secrets store.</p>
+      <div class="keybox" style="margin:1.4rem 0">
+        <button class="copy" type="button" id="copy">Copy</button>
+        <div class="p"># <span id="customer"></span> · <span id="tier"></span> plan</div>
+        <div>export RAMPGUIDE_LIBRARY=https://api.rampguide.com/v1</div>
+        <div>export RAMPGUIDE_LIBRARY_KEY=<span class="k" id="key"></span></div>
+      </div>
+      <div class="notice good">A receipt is on its way from Stripe. Manage or cancel the subscription from the link in that email.</div>
+      <h2 style="font-size:1.4rem;margin:2.2rem 0 0.4rem">Next: install your first pack</h2>
+      <ol class="steps">
+        <li><b>Put the two lines above in your shell</b> (or your CI secrets). The key is only ever sent at <code>add</code> time — builds never touch the network.</li>
+        <li><b>See the menu, with your gaps counted.</b> From your content repo:
+          <pre class="term" style="font-size:12.5px"><code>rampguide add --list --content .</code></pre></li>
+        <li><b>Install a pack and answer its questions.</b>
+          <pre class="term" style="font-size:12.5px"><code>rampguide add sso --content .
+rampguide build --content . --out dist</code></pre></li>
+        <li><b>Diff <code>dist/</code>.</b> That's your package, updated. Your own wording in <code>overrides/</code> survives every future pack update.</li>
+      </ol>
+      <p class="muted" style="margin-top:1.6rem">No content repo yet? <code>rampguide init my-compliance</code> asks four questions and gives you one that builds. Have an existing SSP? <code>rampguide-import your-ssp.docx --out my-compliance</code>. <a href="how-it-works.html" style="text-decoration:underline;text-underline-offset:3px">See exactly how it works →</a></p>
+    </div>
+
+    <div id="pending" class="state">
+      <span class="kicker">Almost</span>
+      <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);margin:1rem 0">Payment is still processing.</h1>
+      <p class="lede">Your bank hasn't confirmed the payment yet. Keep this page open — we check every few seconds — or come back to this link once Stripe's receipt arrives.</p>
+      <div class="notice"><span class="spin"></span>Waiting for confirmation…</div>
+    </div>
+
+    <div id="revealed-already" class="state">
+      <span class="kicker">Already shown</span>
+      <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);margin:1rem 0">This key was already revealed.</h1>
+      <p class="lede">Keys are shown exactly once, and this one has been. If you copied it, you're set. If it never reached you, email <a href="mailto:hello@rampguide.com" style="text-decoration:underline;text-underline-offset:3px">hello@rampguide.com</a> from the address you paid with; we'll revoke it and issue a fresh one.</p>
+    </div>
+
+    <div id="error" class="state">
+      <span class="kicker">Hmm</span>
+      <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);margin:1rem 0">We couldn't find that purchase.</h1>
+      <p class="lede">This page needs the link Stripe sent you to after checkout. If you paid and landed here anyway, email <a href="mailto:hello@rampguide.com" style="text-decoration:underline;text-underline-offset:3px">hello@rampguide.com</a> with your receipt and we'll sort it out by hand.</p>
+      <div class="notice bad" id="error-detail" hidden></div>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program.</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var params = new URLSearchParams(location.search)
+    var session = params.get('session_id') || ''
+    var local = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+    var api = local ? (params.get('api') || 'http://127.0.0.1:8787') : 'https://api.rampguide.com'
+    var states = ['loading', 'revealed', 'pending', 'revealed-already', 'error']
+    function show(id) { states.forEach(function (s) { document.getElementById(s).classList.toggle('on', s === id) }) }
+
+    // Keep the session id out of the address bar and history once we have it.
+    if (session && history.replaceState) {
+      try { sessionStorage.setItem('rg-session', session) } catch (e) {}
+      history.replaceState(null, '', location.pathname)
+    } else if (!session) {
+      try { session = sessionStorage.getItem('rg-session') || '' } catch (e) {}
+    }
+    if (!/^cs_(test|live)_[A-Za-z0-9]+$/.test(session)) { show('error'); return }
+
+    var attempts = 0
+    function claim() {
+      attempts++
+      fetch(api + '/v1/claim', {
+        method: 'POST',
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ session: session }).toString()
+      }).then(function (r) { return r.json().then(function (j) { return { status: r.status, body: j } }) })
+        .then(function (res) {
+          if (res.status === 200) {
+            document.getElementById('key').textContent = res.body.key
+            document.getElementById('customer').textContent = res.body.customer
+            document.getElementById('tier').textContent = res.body.tier
+            try { sessionStorage.removeItem('rg-session') } catch (e) {}
+            show('revealed')
+          } else if (res.status === 402) {
+            show('pending')
+            if (attempts < 40) setTimeout(claim, 3000)
+          } else if (res.status === 410) {
+            show('revealed-already')
+          } else {
+            show('error')
+          }
+        })
+        .catch(function () {
+          if (attempts < 5) setTimeout(claim, 2000)
+          else {
+            var d = document.getElementById('error-detail')
+            d.hidden = false
+            d.textContent = 'The key service could not be reached. Check your connection and reload this page.'
+            show('error')
+          }
+        })
+    }
+    claim()
+
+    document.getElementById('copy').addEventListener('click', function () {
+      var text = 'export RAMPGUIDE_LIBRARY=https://api.rampguide.com/v1\nexport RAMPGUIDE_LIBRARY_KEY=' + document.getElementById('key').textContent + '\n'
+      var btn = this
+      navigator.clipboard.writeText(text).then(function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy' }, 1800) })
+    })
+  })()
+</script>
+</body>
+</html>
