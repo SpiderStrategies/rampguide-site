@@ -1,11 +1,41 @@
 # rampguide-site
 
-The rampguide.com website. Currently a single static placeholder page —
-no build step, no framework, no dependencies.
+The rampguide.com website: static pages, no build step, no framework,
+no trackers, no external JavaScript. Typeface: Nebula Sans, self-hosted
+in `fonts/` (SIL OFL — license alongside).
 
-- `index.html` — the whole site.
+- `index.html` — the marketing page: hero, the animated build
+  storyboard, before/after, the three product mocks, why, the library,
+  the alternatives, a pricing strip, the closing call to action.
+- `pricing.html` — the three plans and the signup forms. Each form
+  posts (`tier`, `org`, `cso`) to `https://api.rampguide.com/v1/checkout`
+  (rampguide-api), which redirects to Stripe's hosted Checkout. Card
+  data never touches this site.
+- `welcome.html` — Stripe's success page. Reads `session_id` from the
+  URL, calls `/v1/claim` once, and shows the library key exactly once.
+- `product.html` — the product tour: five real `rampguide ui` screenshots
+  (`img/ui-*.png`, captured from a fictional ACME repo with a few fields
+  left open), the command line underneath, and the interactive
+  walkthrough embedded.
+- `trust-center.html` — product two, described from the design memo as
+  *coming*; honest about status.
+- `how-it-works.html` — the interactive dependency-graph demo (canonical;
+  the workspace `rampguide-depgraph.html` is a derived copy).
+- `terms.html`, `privacy.html` — DRAFTS, `noindex`, not linked from any
+  nav until approved (see LAUNCH.md).
+- `site.css` — shared styles. `fonts/` — Nebula Sans woff2 + license.
+- `LAUNCH.md` — the human gates and the exact test→live steps.
 - `CNAME` — created automatically by GitHub when the custom domain is set;
   leave it committed.
+
+Local preview: `python3 -m http.server 4173 --bind 127.0.0.1` here, and
+`node tools/dev-server.ts --port 8787 --site http://127.0.0.1:4173` in
+rampguide-api. When served from localhost, the forms and the welcome
+page target that dev API (override with `?api=http://host:port`).
+
+All example content is fictional (ACME Corp, NestPortal). No customer
+names, no pack prose — the library catalog on the page is names,
+variants, and control counts only.
 
 ## Deployment (GitHub Pages)
 

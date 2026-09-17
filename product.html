@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product tour — RampGuide</title>
+<meta name="description" content="A tour of RampGuide: the interview that fills the gaps in your FedRAMP package, the documents lighting up as you answer, the reader, review and commit, findings, and the command line underneath.">
+<meta property="og:title" content="RampGuide, up close">
+<meta property="og:description" content="The interview, the ripple, the reader, review and commit, findings, and the command line underneath.">
+<meta property="og:url" content="https://rampguide.com/product.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://rampguide.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232457a6'/%3E%3Cpath d='M8 8h11v4H12v3h6v4h-6v5H8z' fill='%23ffffff'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/NebulaSans-Book.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/NebulaSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
+<style>
+  .tour-hero { padding: clamp(44px, 6vw, 84px) 0 clamp(24px, 3vw, 40px); position: relative; overflow: hidden; }
+  .tour-hero .aurora { position: absolute; inset: -20% -10% -10% -10%; z-index: -1; pointer-events: none;
+    background: radial-gradient(38% 42% at 80% 20%, rgba(36, 87, 166, 0.18), transparent 70%), radial-gradient(28% 30% at 55% 100%, rgba(31, 138, 76, 0.14), transparent 70%); }
+  .tour-hero h1 { margin: 1rem 0 1.2rem; font-size: clamp(2.4rem, 5vw, 4.2rem); }
+  .shot { display: grid; grid-template-columns: 1.35fr 0.65fr; gap: clamp(22px, 4vw, 56px); align-items: center; padding: clamp(28px, 4.5vw, 64px) 0; border-top: 1px solid var(--line); }
+  .shot:first-of-type { border-top: 0; padding-top: 0; }
+  .shot.flip .shot-img { order: 2; }
+  @media (max-width: 900px) { .shot { grid-template-columns: 1fr; gap: 20px; } .shot.flip .shot-img { order: 0; } }
+  .shot-img { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--blue-line); box-shadow: var(--shadow-lg); background: #fff; }
+  .shot-img img { width: 100%; height: auto; display: block; }
+  .shot-img .cap { position: absolute; left: 12px; top: 12px; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue-deep); background: rgba(230, 238, 249, 0.92); border: 1px solid var(--blue-line); border-radius: 100px; padding: 0.4em 0.75em; }
+  .shot .n { font-family: var(--mono); font-size: clamp(2.6rem, 5vw, 4.4rem); font-weight: 700; letter-spacing: -0.06em; line-height: 1; color: var(--gold); opacity: 0.55; }
+  .shot h3 { font-size: clamp(1.45rem, 2.3vw, 1.9rem); letter-spacing: -0.03em; margin: 0.35rem 0 0.8rem; }
+  .shot p { color: var(--ink-2); font-size: 1.02rem; }
+  .shot .notes { list-style: none; padding: 0; margin: 0.6rem 0 0; display: grid; gap: 0.45rem; }
+  .shot .notes li { position: relative; padding-left: 1.4em; color: var(--ink-2); font-size: 0.95rem; }
+  .shot .notes li::before { content: '▸'; position: absolute; left: 0; color: var(--gold); }
+  .shot .notes li b { color: var(--ink); font-weight: 500; }
+  .cli { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.4vw, 28px); margin-top: 22px; }
+  @media (max-width: 900px) { .cli { grid-template-columns: 1fr; } }
+  .cli .term pre { font-size: 12.5px; }
+  .cli h3 { font-size: 1.05rem; margin: 0.9rem 0 0.3rem; }
+  .cli p { color: var(--ink-2); font-size: 0.95rem; margin: 0; }
+  .embed { border: 1px solid var(--blue-line); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-lg); background: #1b1913; margin-top: 22px; }
+  .embed iframe { display: block; width: 100%; height: 640px; border: 0; }
+  @media (max-width: 700px) { .embed iframe { height: 480px; } }
+  .embed .bar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 10px 14px; background: var(--blue-soft); font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-deep); }
+  .embed .bar a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; text-transform: none; letter-spacing: 0; font-family: var(--sans); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<div class="wrap topstrip"><span>rampguide · compliance as code</span><span>Form RG-4 · product tour · rev 2026-09</span></div>
+<header class="nav">
+  <div class="wrap">
+    <a class="wordmark" href="/">rampguide</a>
+    <nav class="nav-links">
+      <a href="/#minute">What it is</a>
+      <a href="product.html" aria-current="page">Product tour</a>
+      <a href="trust-center.html">Trust center</a>
+      <a href="pricing.html">Pricing</a>
+      <a class="btn" href="pricing.html">Get the library <span class="arrow">→</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="tour-hero">
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="section-head" style="max-width:52rem">
+      <span class="kicker">Product tour</span>
+      <h1>The product, <span class="grad">up close.</span></h1>
+      <p class="lede">The interview that fills the gaps in your package, the documents lighting up as you answer, the reader, review and commit, the findings, and the command line underneath. Shown on a fictional program, ACME's RoadRunner, with a few fields left open.</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="formrow reveal"><span class="no">01</span><span>The interview</span><span class="meta">rampguide ui · runs on your own computer</span></div>
+
+    <div class="shot reveal">
+      <div class="shot-img"><span class="cap">The interview</span><img src="img/ui-interview.png" alt="The RampGuide interview: a question card for control AC-2(3) showing the official control text with its blank highlighted, the program's own narrative for context, and an answer field. The left rail lists the documents; the right rail shows progress per control family." width="1440" height="900"></div>
+      <div>
+        <div class="n">01</div>
+        <h3>It asks you only what the program still needs.</h3>
+        <p>Open the ui on your repo and it shows one question at a time: a control whose official text has a blank you have not filled, or a placeholder left over from setup. The official wording is right there with its bracket highlighted, and your own narrative sits underneath for context.</p>
+        <ul class="notes">
+          <li><b>Nothing leaves your machine.</b> The page is served on your own computer; closing the terminal stops it.</li>
+          <li><b>Every answer writes to a file</b> in your repo. The card tells you which one.</li>
+          <li><b>"Doesn't apply?"</b> marks the control not applicable and asks for the justification the program requires instead.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="shot flip reveal">
+      <div class="shot-img"><span class="cap">The ripple</span><img src="img/ui-ripple.png" alt="After answering, the answered control compresses into a stack, the next question rises, and in the left rail the documents that answer feeds are highlighted: the AC family narrative, the policies document, and the procedures document." width="1440" height="900" loading="lazy"></div>
+      <div>
+        <div class="n">02</div>
+        <h3>Answer, and watch what it touches light up.</h3>
+        <p>The documents in the left rail pulse when an answer feeds them. That is not a guess: it is computed from the same dependency graph the build uses, so what lights up is exactly what will change on the next rebuild.</p>
+        <ul class="notes">
+          <li><b>Progress per family</b> in the right rail, with the families you have finished ticked off.</li>
+          <li><b>Answered questions</b> compress into a stack above the current one; click any to change your mind.</li>
+          <li><b>The touched documents keep a dot</b> for the rest of the session, so you always know what your work changed.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="shot reveal">
+      <div class="shot-img"><span class="cap">The reader</span><img src="img/ui-reader.png" alt="The reader drawer open over the interview, showing the AC family narrative compiled from the statements, with a provenance line explaining it was compiled just now from the statement files and should not be edited directly." width="1440" height="900" loading="lazy"></div>
+      <div>
+        <div class="n">03</div>
+        <h3>Read any document as it would be generated right now.</h3>
+        <p>Click a document in the rail and the reader compiles it on the spot from your current files. The line at the top says where it came from and reminds you that the files are the thing to edit, never the output.</p>
+        <ul class="notes">
+          <li><b>Narratives, policies, procedures, the crypto-module table</b> all read this way.</li>
+          <li><b>The machine-readable files</b> get a plain-language explainer instead of a wall of JSON.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="shot flip reveal">
+      <div class="shot-img"><span class="cap">Review &amp; commit</span><img src="img/ui-commit.png" alt="The review and commit drawer showing the actual git diff of the statement file changed by the answer, a prefilled commit message, and the list of files that will be committed." width="1440" height="900" loading="lazy"></div>
+      <div>
+        <div class="n">04</div>
+        <h3>Your session becomes one commit, after you read the diff.</h3>
+        <p>The receipt in the corner counts what you changed. Click it and you see the real diff of your content files, a commit message you can edit, and one button. It records a local commit and nothing else: the ui never pushes and never uploads.</p>
+        <ul class="notes">
+          <li><b>History, review, blame.</b> Compliance changes get the same paper trail as code.</li>
+          <li><b>Edits made outside the tab</b> (a teammate, your editor) are picked up too, and the message says so.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="shot reveal">
+      <div class="shot-img"><span class="cap">Findings</span><img src="img/ui-findings.png" alt="The findings drawer listing the live validation report for the repo: a leftover scaffold placeholder in a statement and a leveraged package id not found in the vendored FedRAMP marketplace index." width="1440" height="900" loading="lazy"></div>
+      <div>
+        <div class="n">05</div>
+        <h3>The validator's report, live, in plain sentences.</h3>
+        <p>Everything the build would complain about is listed here as you work: a placeholder you forgot, a solution a statement references that does not exist, a control in your baseline with no statement yet. Errors block the build; warnings do not.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="formrow reveal"><span class="no">02</span><span>The command line underneath</span><span class="meta">the ui is a face; these are the hands</span></div>
+    <div class="section-head reveal"><h2>Everything the ui does, a command does too.</h2>
+      <p class="lede">Scripts, CI, a locked-down build server: the same engine runs anywhere Node runs, with no network and no account.</p></div>
+    <div class="cli">
+      <div class="reveal"><div class="term"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>start</span></div>
+<pre><code><span class="p">$</span> rampguide-import ssp-appendix-a.docx --out acme-compliance
+<span class="ok">✓</span> imported 323 controls → acme-compliance/
+  (12 with warnings — see import-report.md)
+
+<span class="p">$</span> rampguide validate --content acme-compliance
+<span class="ok">✓</span> 323 statements, 2 solutions, 0 errors</code></pre></div>
+        <h3>Start from what you have</h3><p>Word Appendix A, Appendix Q, or an OSCAL export. Every word preserved; the report lists what needs a human.</p></div>
+      <div class="reveal d1"><div class="term"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>build</span></div>
+<pre><code><span class="p">$</span> rampguide build --content . --out dist
+<span class="ok">✓</span> built 18 docs, policies, procedures, crypto-modules,
+  fedramp/sdr.json, fedramp/cpo.json, oscal/ssp.json,
+  inventory.json → dist/
+
+<span class="p">$</span> rampguide affected --content . --since main
+<span class="dim">requirements affected since main:</span>  ac-2.3  ac-2.5</code></pre></div>
+        <h3>Generate the package, see what a change touches</h3><p>Same facts in, same bytes out. The blast-radius report belongs on every pull request.</p></div>
+      <div class="reveal"><div class="term"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>library</span></div>
+<pre><code><span class="p">$</span> rampguide add sso --content .
+<span class="dim">? Which variant?</span> okta
+<span class="dim">? After how many days without a sign-in is an</span>
+<span class="dim">  account automatically disabled?</span> (35) 30
+<span class="ok">✓</span> assembled sso (okta) → solutions/sso/solution.yaml
+  answers 12 requirement(s) missing statements: …</code></pre></div>
+        <h3>Install pre-written answers</h3><p>A pack asks a few questions and dozens of requirements gain solid language. Your overrides survive every update.</p></div>
+      <div class="reveal d1"><div class="term"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>stay authorized</span></div>
+<pre><code><span class="p">$</span> rampguide ocr --content . --since 2026-q2
+<span class="ok">✓</span> ocr with 14 change entries since 2026-q2 → dist/fedramp/ocr.json
+<span class="p">$</span> rampguide scn --content . --since main
+<span class="ok">✓</span> Adaptive change, 1 commit(s), 2 impacted requirement(s)
+<span class="p">$</span> rampguide vdr scans/2026-08-vdr.json
+  4 vulnerabilities: 2 still active, 1 fully mitigated, 1 false positive
+<span class="ok">✓</span> 1 file(s) pass</code></pre></div>
+        <h3>Continuous monitoring from the same repo</h3><p>Quarterly report from your commits, change notification from a branch, vulnerability reports checked before submission.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="formrow reveal"><span class="no">03</span><span>Try the mechanism</span><span class="meta">interactive · flip a fact, watch the documents</span></div>
+    <div class="section-head reveal"><h2>One fact, every document it feeds.</h2>
+      <p class="lede">This is the whole idea in one picture. Flip the highlighted fact and watch the change travel through the pipeline. Switch tracks to see the same facts produce the other FedRAMP dialect.</p></div>
+    <div class="embed reveal">
+      <div class="bar"><span>how-it-works · interactive</span><a href="how-it-works.html">Open full screen →</a></div>
+      <iframe src="how-it-works.html" title="Interactive walkthrough: the dependency graph from source files to generated documents" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="tight" style="padding-bottom:clamp(56px,8vw,112px)">
+  <div class="wrap">
+    <div class="sheet reveal" style="padding:clamp(28px,4vw,48px);text-align:center;background:radial-gradient(60% 80% at 20% 0%, rgba(36,87,166,.12), transparent 60%), #fff">
+      <h2>Want to see it on your own program?</h2>
+      <p class="lede" style="margin:1rem auto 1.4rem">Complete-tier onboarding starts with your existing documents. Or get the library and run the engine yourself today.</p>
+      <div style="display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center">
+        <a class="btn lg" href="pricing.html">See pricing</a>
+        <a class="btn lg ghost" href="mailto:hello@rampguide.com?subject=Show%20me%20RampGuide">Talk to a human <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div><div class="wordmark">rampguide</div><div class="faint" style="margin-top:.4rem">Compliance as code. Your ATO package, compiled.</div></div>
+      <nav>
+        <a href="/#minute">What it is</a>
+        <a href="product.html">Product tour</a>
+        <a href="trust-center.html">Trust center</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="mailto:hello@rampguide.com">Contact</a>
+      </nav>
+    </div>
+    <p class="legal">FORM RG-4 · REV 2026-09 · © 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program. The program shown is fictional (ACME Corp, RoadRunner).</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var els = document.querySelectorAll('.reveal')
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in') }); return }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target) } })
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 })
+    els.forEach(function (e) { io.observe(e) })
+  })()
+</script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trust center — RampGuide</title>
+<meta name="description" content="The RampGuide trust center: the secure window where government customers request, review, and download your FedRAMP package, with every access logged. Required on the 20x track and on the classic track from 2027. Coming: deployable inside your own environment first, hosted later.">
+<meta property="og:title" content="The RampGuide trust center (coming)">
+<meta property="og:description" content="Where your FedRAMP package lives once it exists: agencies request access, you approve, they retrieve the current package, every access and denial logged. A rendering of your repo, not a platform's database.">
+<meta property="og:url" content="https://rampguide.com/trust-center.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://rampguide.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232457a6'/%3E%3Cpath d='M8 8h11v4H12v3h6v4h-6v5H8z' fill='%23ffffff'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/NebulaSans-Book.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/NebulaSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
+<style>
+  .tc-hero { padding: clamp(44px, 6vw, 84px) 0 clamp(32px, 4vw, 56px); position: relative; overflow: hidden; }
+  .tc-hero .aurora { position: absolute; inset: -20% -10% -10% -10%; z-index: -1; pointer-events: none;
+    background: radial-gradient(38% 42% at 82% 30%, rgba(217, 154, 30, 0.22), transparent 70%), radial-gradient(30% 34% at 60% 90%, rgba(36, 87, 166, 0.16), transparent 70%), radial-gradient(40% 40% at 8% 12%, rgba(230, 238, 249, 0.9), transparent 70%); }
+  .tc-hero .wrap { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+  @media (max-width: 900px) { .tc-hero .wrap { grid-template-columns: 1fr; } }
+  .tc-hero h1 { margin: 1rem 0 1.2rem; font-size: clamp(2.4rem, 5vw, 4.2rem); }
+  .status { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-deep); background: var(--gold-soft); border: 1px solid rgba(217, 154, 30, 0.35); border-radius: 100px; padding: 0.45em 0.9em; }
+  .status i { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(217, 154, 30, 0.2); }
+
+  .win { border: 1px solid var(--blue-line); border-radius: 12px; overflow: hidden; background: #fff; font-size: 0.88rem; box-shadow: var(--shadow-lg); }
+  .win .bar { display: flex; justify-content: space-between; padding: 10px 14px; background: var(--blue-soft); font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-deep); }
+  .win .row { display: flex; justify-content: space-between; gap: 1rem; padding: 11px 14px; border-top: 1px solid var(--line-soft); color: var(--ink-2); align-items: center; }
+  .win .row b { color: var(--ink); font-weight: 500; }
+  .win .row small { display: block; font-family: var(--mono); font-size: 0.68rem; color: var(--ink-3); margin-top: 2px; }
+  .win .row i { font-style: normal; font-family: var(--mono); font-size: 0.68rem; color: var(--green-deep); background: var(--green-soft); border-radius: 100px; padding: 0.3em 0.65em; white-space: nowrap; }
+  .win .row i.pend { color: var(--gold-deep); background: var(--gold-soft); }
+  .win .row i.deny { color: var(--red); background: var(--red-soft); }
+
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; align-items: stretch; margin-top: 22px; }
+  @media (max-width: 900px) { .flow { grid-template-columns: 1fr 1fr; } } @media (max-width: 560px) { .flow { grid-template-columns: 1fr; } }
+  .flow .sheet { padding: 20px 22px; display: grid; gap: 0.4rem; align-content: start; position: relative; }
+  .flow .n { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.2em; color: var(--gold-deep); font-weight: 700; }
+  .flow h3 { font-size: 1.1rem; }
+  .flow p { color: var(--ink-2); font-size: 0.93rem; margin: 0; }
+  .flow .sheet::after { content: '→'; position: absolute; right: -14px; top: 50%; transform: translateY(-50%); color: var(--blue); font-weight: 700; background: var(--bg); border-radius: 50%; width: 22px; height: 22px; display: grid; place-items: center; font-size: 0.8rem; }
+  .flow .sheet:last-child::after { display: none; }
+  @media (max-width: 900px) { .flow .sheet::after { display: none; } }
+
+  .req { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+  .req li { display: grid; grid-template-columns: 9.5rem 1fr; gap: 1rem; padding: 0.8rem 0; border-top: 1px solid var(--line-soft); }
+  .req li b { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--blue); font-weight: 700; padding-top: 0.2em; }
+  .req li span { color: var(--ink-2); }
+  .req li span strong { color: var(--ink); font-weight: 500; }
+  @media (max-width: 600px) { .req li { grid-template-columns: 1fr; gap: 0.3rem; } }
+
+  .modes { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.4vw, 28px); margin-top: 22px; }
+  @media (max-width: 800px) { .modes { grid-template-columns: 1fr; gap: 32px; } }
+  .modes .sheet { padding: clamp(22px, 2.8vw, 32px); display: grid; gap: 0.5rem; align-content: start; }
+  .modes h3 { font-size: 1.3rem; }
+  .modes p { color: var(--ink-2); margin: 0; }
+  .modes .when { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); }
+
+  .ask { background: radial-gradient(60% 80% at 20% 0%, rgba(217, 154, 30, 0.45), transparent 60%), radial-gradient(50% 70% at 90% 100%, rgba(36, 87, 166, 0.5), transparent 60%), var(--navy); color: var(--term-fg); border-radius: 18px; padding: clamp(36px, 6vw, 72px) clamp(24px, 5vw, 64px); text-align: center; box-shadow: var(--glow); }
+  .ask h2 { color: #fff; }
+  .ask p { color: #c6d1e3; max-width: 36em; margin: 1rem auto 1.6rem; }
+  .ask .btn.gold { box-shadow: 0 10px 30px -10px rgba(217, 154, 30, 0.8); }
+</style>
+</head>
+<body>
+
+<div class="wrap topstrip"><span>rampguide · compliance as code</span><span>Form RG-3 · trust center · design stage · rev 2026-09</span></div>
+<header class="nav">
+  <div class="wrap">
+    <a class="wordmark" href="/">rampguide</a>
+    <nav class="nav-links">
+      <a href="/#minute">What it is</a>
+      <a href="product.html">Product tour</a>
+      <a href="trust-center.html" aria-current="page">Trust center</a>
+      <a href="pricing.html">Pricing</a>
+      <a class="btn" href="pricing.html">Get the library <span class="arrow">→</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="tc-hero">
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <span class="status"><i></i>Coming · design stage · timing to be announced</span>
+      <h1>Where your package lives <span class="grad">once it exists.</span></h1>
+      <p class="lede">FedRAMP no longer wants your package emailed around. Agencies request access, you approve, they retrieve the current package, and every access and every denial is logged and reportable. That window is called a trust center. On the 20x track you need one from day one; on the classic track it becomes required in 2027.</p>
+      <p class="lede">RampGuide's trust center is that window, fed directly by your builds. It ships first as a stack you deploy inside your own environment, so nothing about your package leaves your boundary. A hosted version follows.</p>
+      <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.4rem">
+        <a class="btn gold" href="mailto:hello@rampguide.com?subject=Trust%20center">Tell me when it ships <span class="arrow">→</span></a>
+        <a class="btn ghost" href="#how">How it will work</a>
+      </div>
+    </div>
+    <div class="win reveal" aria-label="A trust center access log, illustrative and fictional">
+      <div class="bar"><span>ACME · NestPortal · package access</span><span>every event logged</span></div>
+      <div class="row"><div><b>Dept. of Example · authorizing official</b><small>request 2026-09-09 · approved by compliance owner</small></div><i>downloaded 2026-09-11</i></div>
+      <div class="row"><div><b>Agency reviewer · security</b><small>viewer since 2026-08-02</small></div><i>viewed policies.md</i></div>
+      <div class="row"><div><b>New request · procurement analyst</b><small>submitted 2026-09-12 08:41</small></div><i class="pend">pending approval</i></div>
+      <div class="row"><div><b>Unknown requester</b><small>no agency affiliation given</small></div><i class="deny">denied · reported</i></div>
+      <div class="row"><div><b>Current package</b><small>build 2026-09-12 · same bytes as the repo</small></div><i>14 changes since Q2</i></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="why">
+  <div class="wrap">
+    <div class="formrow reveal"><span class="no">01</span><span>Why you will need one</span><span class="meta">the program's own words, in plain English</span></div>
+    <div class="section-head reveal"><h2>The package used to be a file. Now it is a place.</h2>
+      <p class="lede">FedRAMP's 2026 rules describe how a cloud provider must share its certification package with the agencies that rely on it. Four things are required, and none of them is optional on the 20x track.</p></div>
+    <ul class="req reveal">
+      <li><b>Access on request</b><span><strong>An agency asks, you decide.</strong> Government customers and prospects request access; someone at your company approves or denies. Self-service signup is not allowed. Every viewer is a person you granted.</span></li>
+      <li><b>The current package</b><span><strong>What they retrieve is the real thing.</strong> The machine-readable package and the readable documents, at the version you have published, with an inventory of what is there: name, summary, size, version, last updated.</span></li>
+      <li><b>A log of everything</b><span><strong>Every access is recorded and reportable.</strong> Who requested, who approved, who viewed what, when. The grants list doubles as your access inventory.</span></li>
+      <li><b>Denials reported</b><span><strong>A refusal is an event, not silence.</strong> Denied requests are logged with a reason and reported to the program, the same way a rejected key is a log line and not a mystery in the RampGuide library service today.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="formrow reveal"><span class="no">02</span><span>How it will work</span><span class="meta">a rendering of your repo</span></div>
+    <div class="section-head reveal"><h2>Publish a build. That is the whole integration.</h2>
+      <p class="lede">Other platforms' trust centers render their database. RampGuide's renders your git repo: the package on the trust center is the same bytes your last build produced, with dates and word counts computed from your history.</p></div>
+    <div class="flow">
+      <div class="sheet reveal"><div class="n">01</div><h3>Build, as always</h3><p>Your facts in git; one command produces the package. Nothing leaves your computer while it runs.</p></div>
+      <div class="sheet reveal d1"><div class="n">02</div><h3>Publish the public slice</h3><p>An explicit second step pushes only what agencies are allowed to see: the machine-readable package, the readable policies, the document inventory.</p></div>
+      <div class="sheet reveal d2"><div class="n">03</div><h3>Approve viewers</h3><p>Requests land in a queue. Your compliance owner approves, and the viewer receives an invitation with multi-factor sign-in. Revoke the same way.</p></div>
+      <div class="sheet reveal d3"><div class="n">04</div><h3>Every event logged</h3><p>Views, downloads, approvals, denials, with the package version each viewer saw. The change history is the quarterly report you already generate.</p></div>
+    </div>
+    <p class="muted" style="margin-top:1.6rem;max-width:60em">Two things fall out of building it this way. The inventory FedRAMP asks for already comes out of every build, word counts and last-updated dates included. And the readable documents and the machine-readable package can never disagree on the trust center, because both came out of the same build.</p>
+  </div>
+</section>
+
+<section class="alt" id="modes">
+  <div class="wrap">
+    <div class="formrow reveal"><span class="no">03</span><span>Two ways to run it</span><span class="meta">your boundary first</span></div>
+    <div class="modes">
+      <div class="sheet reveal"><span class="tab ink">First</span>
+        <div class="when">Deployable · inside your environment</div>
+        <h3>A stack you deploy into your own cloud boundary.</h3>
+        <p>Approval workflow, encrypted storage, an access-grants table, and audit logging, packaged for your own account, including government cloud regions. Your package never leaves the boundary you already had assessed. This is the version teams with strict boundaries will ask for anyway, and it is the one we build first.</p>
+      </div>
+      <div class="sheet reveal d1"><span class="tab gold">Later</span>
+        <div class="when">Hosted · trust.rampguide.com</div>
+        <h3>The same code, run by us, for everyone who would rather not.</h3>
+        <p>Most teams do not want to operate an approval workflow themselves. The hosted version adds a tenant per customer to the same stack. It waits on one thing: a hosted service that holds government-facing packages needs its own authorization, and we intend to earn it the way our customers do, by generating our own package with our own engine.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="formrow reveal"><span class="no">04</span><span>Honest status</span><span class="meta">what exists, what does not</span></div>
+    <div class="split">
+      <div class="reveal">
+        <h2 style="margin-bottom:1rem">Designed. Not yet built.</h2>
+        <p class="muted">The design is done and the pieces it needs already exist in the product: the build emits the document inventory the program requires, the quarterly change report is computed from your history, and the library service already runs the same approve-or-deny, log-everything pattern in miniature. What does not exist yet is the stack itself, the publish command, and a price.</p>
+        <p class="muted">If you are on the 20x track, or planning for the classic track's 2027 requirement, tell us. Early customers shape what ships first.</p>
+      </div>
+      <div class="ask reveal d1">
+        <h2>Want it early?</h2>
+        <p>One email. Tell us which track you are on and when you need the window open.</p>
+        <a class="btn gold lg" href="mailto:hello@rampguide.com?subject=Trust%20center">Tell us <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div><div class="wordmark">rampguide</div><div class="faint" style="margin-top:.4rem">Compliance as code. Your ATO package, compiled.</div></div>
+      <nav>
+        <a href="/#minute">What it is</a>
+        <a href="product.html">Product tour</a>
+        <a href="how-it-works.html">Interactive walkthrough</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="mailto:hello@rampguide.com">Contact</a>
+      </nav>
+    </div>
+    <p class="legal">FORM RG-3 · REV 2026-09 · © 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program. The trust center described here is in design; the access log shown is fictional (ACME Corp).</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var els = document.querySelectorAll('.reveal')
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in') }); return }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target) } })
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 })
+    els.forEach(function (e) { io.observe(e) })
+  })()
+</script>
+</body>
+</html>
