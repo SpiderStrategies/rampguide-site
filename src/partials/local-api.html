@@ -1,0 +1,8 @@
+<script>
+  // Local preview: talk to the dev API instead of production. Never runs on rampguide.com.
+  window.RG_API = (function () {
+    var h = location.hostname
+    if (h !== 'localhost' && h !== '127.0.0.1') return 'https://api.rampguide.com'
+    return new URLSearchParams(location.search).get('api') || 'http://127.0.0.1:8787'
+  })()
+</script>

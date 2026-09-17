@@ -1,21 +1,14 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Product tour — RampGuide</title>
-<meta name="description" content="A tour of RampGuide: the interview that fills the gaps in your FedRAMP package, the documents lighting up as you answer, the reader, review and commit, findings, and the command line underneath.">
-<meta property="og:title" content="RampGuide, up close">
-<meta property="og:description" content="The interview, the ripple, the reader, review and commit, findings, and the command line underneath.">
-<meta property="og:url" content="https://rampguide.com/product.html">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://rampguide.com/og.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="referrer" content="strict-origin-when-cross-origin">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232457a6'/%3E%3Cpath d='M8 8h11v4H12v3h6v4h-6v5H8z' fill='%23ffffff'/%3E%3C/svg%3E">
-<link rel="preload" href="fonts/NebulaSans-Book.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/NebulaSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="site.css">
+<!-- page {
+  "title": "Product tour — RampGuide",
+  "description": "A tour of RampGuide: the interview that fills the gaps in your FedRAMP package, the documents lighting up as you answer, the reader, review and commit, findings, and the command line underneath.",
+  "path": "product.html",
+  "og": {
+    "title": "RampGuide, up close",
+    "description": "The interview, the ripple, the reader, review and commit, findings, and the command line underneath."
+  },
+  "legal": "The program shown is fictional (ACME Corp, RoadRunner)."
+} -->
+<!-- include: head -->
 <style>
   .tour-hero { padding: clamp(44px, 6vw, 84px) 0 clamp(24px, 3vw, 40px); position: relative; overflow: hidden; }
   .tour-hero .aurora { position: absolute; inset: -20% -10% -10% -10%; z-index: -1; pointer-events: none;
@@ -49,18 +42,7 @@
 </head>
 <body>
 
-<header class="nav">
-  <div class="wrap">
-    <a class="wordmark" href="/">rampguide</a>
-    <nav class="nav-links">
-      <a href="/#minute">What it is</a>
-      <a href="product.html">Product tour</a>
-      <a href="trust-center.html">Trust center</a>
-      <a href="pricing.html">Pricing</a>
-      <a class="btn" href="pricing.html">Get the library <span class="arrow">→</span></a>
-    </nav>
-  </div>
-</header>
+<!-- include: nav -->
 
 <main>
 
@@ -215,37 +197,9 @@
 
 </main>
 
-<footer>
-  <div class="wrap">
-    <div class="row">
-      <div>
-        <div class="wordmark">rampguide</div>
-        <div class="faint" style="margin-top:.4rem">Compliance as code. Your ATO package, compiled.</div>
-      </div>
-      <nav>
-        <a href="/#minute">What it is</a>
-        <a href="product.html">Product tour</a>
-        <a href="how-it-works.html">Interactive walkthrough</a>
-        <a href="trust-center.html">Trust center</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="mailto:hello@rampguide.com">Contact</a>
-      </nav>
-    </div>
-    <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program. The program shown is fictional (ACME Corp, RoadRunner).</p>
-  </div>
-</footer>
+<!-- include: footer -->
 
-<script>
-  // Reveal-on-scroll. Zero dependencies; reduced motion handled in CSS.
-  (function () {
-    var els = document.querySelectorAll('.reveal')
-    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in') }); return }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target) } })
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 })
-    els.forEach(function (e) { io.observe(e) })
-  })();
-</script>
+<!-- include: reveal -->
 
 </body>
 </html>

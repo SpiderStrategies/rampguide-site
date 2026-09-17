@@ -1,16 +1,11 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Welcome — RampGuide</title>
-<meta name="description" content="Your RampGuide library key.">
-<meta name="referrer" content="no-referrer">
-<meta name="robots" content="noindex">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232457a6'/%3E%3Cpath d='M8 8h11v4H12v3h6v4h-6v5H8z' fill='%23ffffff'/%3E%3C/svg%3E">
-<link rel="preload" href="fonts/NebulaSans-Book.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/NebulaSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="site.css">
+<!-- page {
+  "title": "Welcome — RampGuide",
+  "description": "Your RampGuide library key.",
+  "path": "welcome.html",
+  "noindex": true,
+  "referrer": "no-referrer"
+} -->
+<!-- include: head -->
 <style>
   main { min-height: 70vh; }
   .welcome { padding: clamp(40px, 6vw, 80px) 0; }
@@ -30,15 +25,7 @@
 </head>
 <body>
 
-<header class="nav">
-  <div class="wrap">
-    <a class="wordmark" href="/">rampguide</a>
-    <nav class="nav-links">
-      <a href="product.html">Product tour</a>
-      <a href="pricing.html">Pricing</a>
-    </nav>
-  </div>
-</header>
+<!-- include: nav-slim -->
 
 <main>
 <section class="welcome">
@@ -98,20 +85,9 @@ rampguide build --content . --out dist</code></pre></li>
 </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program. </p>
-  </div>
-</footer>
+<!-- include: footer-slim -->
 
-<script>
-  // Local preview: talk to the dev API instead of production. Never runs on rampguide.com.
-  window.RG_API = (function () {
-    var h = location.hostname
-    if (h !== 'localhost' && h !== '127.0.0.1') return 'https://api.rampguide.com'
-    return new URLSearchParams(location.search).get('api') || 'http://127.0.0.1:8787'
-  })()
-</script>
+<!-- include: local-api -->
 <script>
   (function () {
     var params = new URLSearchParams(location.search)

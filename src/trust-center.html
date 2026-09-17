@@ -1,21 +1,14 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Trust center — RampGuide</title>
-<meta name="description" content="The RampGuide trust center: the secure window where government customers request, review, and download your FedRAMP package, with every access logged. Required on the 20x track and on the classic track from 2027. Coming: deployable inside your own environment first, hosted later.">
-<meta property="og:title" content="The RampGuide trust center (coming)">
-<meta property="og:description" content="Where your FedRAMP package lives once it exists: agencies request access, you approve, they retrieve the current package, every access and denial logged. A rendering of your repo, not a platform's database.">
-<meta property="og:url" content="https://rampguide.com/trust-center.html">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://rampguide.com/og.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="referrer" content="strict-origin-when-cross-origin">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232457a6'/%3E%3Cpath d='M8 8h11v4H12v3h6v4h-6v5H8z' fill='%23ffffff'/%3E%3C/svg%3E">
-<link rel="preload" href="fonts/NebulaSans-Book.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/NebulaSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="site.css">
+<!-- page {
+  "title": "Trust center — RampGuide",
+  "description": "The RampGuide trust center: the secure window where government customers request, review, and download your FedRAMP package, with every access logged. Required on the 20x track and on the classic track from 2027. Coming: deployable inside your own environment first, hosted later.",
+  "path": "trust-center.html",
+  "og": {
+    "title": "The RampGuide trust center (coming)",
+    "description": "Where your FedRAMP package lives once it exists: agencies request access, you approve, they retrieve the current package, every access and denial logged. A rendering of your repo, not a platform's database."
+  },
+  "legal": "The trust center described here is in design; the access log shown is fictional (ACME Corp)."
+} -->
+<!-- include: head -->
 <style>
   .tc-hero { padding: clamp(44px, 6vw, 84px) 0 clamp(32px, 4vw, 56px); position: relative; overflow: hidden; }
   .tc-hero .aurora { position: absolute; inset: -20% -10% -10% -10%; z-index: -1; pointer-events: none;
@@ -67,18 +60,7 @@
 </head>
 <body>
 
-<header class="nav">
-  <div class="wrap">
-    <a class="wordmark" href="/">rampguide</a>
-    <nav class="nav-links">
-      <a href="/#minute">What it is</a>
-      <a href="product.html">Product tour</a>
-      <a href="trust-center.html">Trust center</a>
-      <a href="pricing.html">Pricing</a>
-      <a class="btn" href="pricing.html">Get the library <span class="arrow">→</span></a>
-    </nav>
-  </div>
-</header>
+<!-- include: nav -->
 
 <main>
 
@@ -173,37 +155,9 @@
 
 </main>
 
-<footer>
-  <div class="wrap">
-    <div class="row">
-      <div>
-        <div class="wordmark">rampguide</div>
-        <div class="faint" style="margin-top:.4rem">Compliance as code. Your ATO package, compiled.</div>
-      </div>
-      <nav>
-        <a href="/#minute">What it is</a>
-        <a href="product.html">Product tour</a>
-        <a href="how-it-works.html">Interactive walkthrough</a>
-        <a href="trust-center.html">Trust center</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="mailto:hello@rampguide.com">Contact</a>
-      </nav>
-    </div>
-    <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program. The trust center described here is in design; the access log shown is fictional (ACME Corp).</p>
-  </div>
-</footer>
+<!-- include: footer -->
 
-<script>
-  // Reveal-on-scroll. Zero dependencies; reduced motion handled in CSS.
-  (function () {
-    var els = document.querySelectorAll('.reveal')
-    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in') }); return }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target) } })
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 })
-    els.forEach(function (e) { io.observe(e) })
-  })();
-</script>
+<!-- include: reveal -->
 
 </body>
 </html>

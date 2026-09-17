@@ -1,8 +1,23 @@
 # rampguide-site
 
-The rampguide.com website: static pages, no build step, no framework,
-no trackers, no external JavaScript. Typeface: Nebula Sans, self-hosted
-in `fonts/` (SIL OFL — license alongside).
+The rampguide.com website: static pages, no framework, no trackers, no
+external JavaScript. Typeface: Nebula Sans, self-hosted in `fonts/`
+(SIL OFL — license alongside).
+
+**Edit `src/`, not the root pages.** Each page in `src/` is plain HTML
+with a `<!-- page {…} -->` header (title, description, social text,
+noindex, the footer's extra legal sentence) and `<!-- include: nav -->`
+markers that pull the shared head, navs, footers, and scripts from
+`src/partials/`. Then:
+
+```sh
+node tools/build.ts          # writes the root *.html (commit them too —
+                             # GitHub Pages serves the repo as is)
+node tools/build.ts --check  # fails if a root page is stale
+```
+
+No dependencies; Node ≥ 22 runs the script directly. `how-it-works.html`
+is not built — it is a self-contained page and stays edited by hand.
 
 - `index.html` — the marketing page: hero, the animated build
   storyboard, before/after, the three product mocks, why, the library,
