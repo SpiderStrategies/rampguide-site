@@ -52,7 +52,7 @@ function derived(page: Page): Record<string, string> {
     robots: page.noindex ? '<meta name="robots" content="noindex">' : '',
     referrer: page.referrer ?? 'strict-origin-when-cross-origin',
     canonical: page.path === '' ? `<link rel="canonical" href="${SITE}">` : '',
-    legal: page.legal ?? '',
+    legal: page.legal ? ` ${page.legal}` : '',
     title: esc(page.title),
     description: esc(page.description),
   }
