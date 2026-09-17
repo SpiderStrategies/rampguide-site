@@ -200,7 +200,7 @@
       </details>
       <details>
         <summary>More than a few offerings, a purchase order, or a reseller?</summary>
-        <p>Email <a href="mailto:hello@rampguide.com" style="text-decoration:underline;text-underline-offset:3px">hello@rampguide.com</a>. Multi-offering pricing and invoicing are handled by a human.</p>
+        <p>Email <a href="mailto:nathan@spiderstrategies.com" style="text-decoration:underline;text-underline-offset:3px">nathan@spiderstrategies.com</a>. Multi-offering pricing and invoicing are handled by a human.</p>
       </details>
     </div>
   </div>
@@ -221,7 +221,7 @@
         <a href="how-it-works.html">Interactive walkthrough</a>
         <a href="trust-center.html">Trust center</a>
         <a href="pricing.html">Pricing</a>
-        <a href="mailto:hello@rampguide.com">Contact</a>
+        <a href="mailto:nathan@spiderstrategies.com">Contact</a>
       </nav>
     </div>
     <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program. Payments are processed by Stripe; card details never touch this site.</p>
@@ -252,9 +252,9 @@
   (function () {
     document.querySelectorAll('form[data-checkout]').forEach(function (f) { f.action = window.RG_API + '/v1/checkout' })
     var reasons = {
-      unavailable: 'Online checkout is not open yet. Email hello@rampguide.com and we will set you up by hand.',
+      unavailable: 'Online checkout is not open yet. Email nathan@spiderstrategies.com and we will set you up by hand.',
       form: 'Something was missing from the form. Organization and offering names are required, up to 80 characters each.',
-      stripe: 'Our payment provider did not answer. Nothing was charged. Try again in a minute, or email hello@rampguide.com.'
+      stripe: 'Our payment provider did not answer. Nothing was charged. Try again in a minute, or email nathan@spiderstrategies.com.'
     }
     var reason = reasons[new URLSearchParams(location.search).get('error')]
     if (!reason) return
