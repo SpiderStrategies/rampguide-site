@@ -123,6 +123,10 @@ rampguide build --content . --out dist</code></pre></li>
           } else if (res.status === 402) {
             show('pending')
             if (attempts < 40) setTimeout(claim, 3000)
+          } else if (res.status === 502 && attempts < 5) {
+            // the key service could not reach the payment provider; try again shortly
+            show('pending')
+            setTimeout(claim, 4000)
           } else if (res.status === 410) {
             show('revealed-already')
           } else {
