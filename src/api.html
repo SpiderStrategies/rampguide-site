@@ -1,0 +1,147 @@
+<!-- page {
+  "title": "The trust center API — RampGuide",
+  "description": "Programmatic access to a provider's FedRAMP Certification Package on the RampGuide trust center: the OpenAPI document, three ways to authenticate, and every route, read from the service itself.",
+  "path": "api.html",
+  "og": {
+    "title": "The RampGuide trust center API",
+    "description": "Everything a person sees on a trust center, a program can fetch: the package index, every file with its hash, the public offering information. Documented from the service's own OpenAPI document."
+  },
+  "legal": "The example trust center (ACME Corp) is fictional."
+} -->
+<!-- include: head -->
+<style>
+  .api-hero { padding: clamp(44px, 6vw, 84px) 0 clamp(28px, 4vw, 48px); }
+  .api-hero h1 { margin: 1rem 0 1.2rem; font-size: clamp(2.2rem, 4.6vw, 3.8rem); }
+  .api-hero .lede a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+  .term .bar { display: flex; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid rgba(142, 160, 189, 0.22); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--term-dim); }
+  .term pre { margin: 0; padding: 18px 20px 22px; overflow-x: auto; white-space: pre; }
+  .term .p { color: var(--term-gold); }
+  .term .dim { color: var(--term-dim); }
+  .term .ok { color: var(--term-green); }
+
+  .ways { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+  .ways li { display: grid; grid-template-columns: 11rem 1fr; gap: 1rem; padding: 0.9rem 0; border-top: 1px solid var(--line-soft); }
+  .ways li b { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--blue); font-weight: 700; padding-top: 0.25em; text-transform: uppercase; }
+  .ways li span { color: var(--ink-2); }
+  .ways li span strong { color: var(--ink); font-weight: 500; }
+  .ways code { font-family: var(--mono); font-size: 0.86em; background: var(--blue-soft); color: var(--blue-deep); border-radius: 6px; padding: 0.1em 0.45em; }
+  @media (max-width: 600px) { .ways li { grid-template-columns: 1fr; gap: 0.3rem; } }
+
+  .routes { display: grid; gap: 0; margin-top: 1.4rem; border-top: 1px solid var(--line); }
+  .routes .r { display: grid; grid-template-columns: 5.2rem 1fr auto; gap: 0.4rem 1.2rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid var(--line-soft); font-size: 0.93rem; }
+  .routes .m { font-family: var(--mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; color: var(--ink-3); }
+  .routes .m.get { color: var(--green-deep); }
+  .routes .m.post, .routes .m.put, .routes .m.delete { color: var(--blue); }
+  .routes .path { font-family: var(--mono); font-size: 0.86rem; color: var(--ink); overflow-wrap: anywhere; }
+  .routes .sum { grid-column: 2; color: var(--ink-2); font-size: 0.9rem; }
+  .routes .sum i { font-style: normal; font-family: var(--mono); font-size: 0.68rem; color: var(--ink-3); margin-left: 0.5em; }
+  .routes .who { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
+  @media (max-width: 700px) { .routes .r { grid-template-columns: 4.4rem 1fr; } .routes .who { grid-column: 2; } }
+
+  .rules { display: grid; grid-template-columns: max-content 1fr; gap: 0.55rem 1.6rem; margin: 1.4rem 0 0; font-size: 0.93rem; }
+  .rules dt { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue); padding-top: 0.15em; }
+  .rules dd { margin: 0; color: var(--ink-2); }
+  @media (max-width: 600px) { .rules { grid-template-columns: 1fr; gap: 0.15rem 0; } .rules dd { margin-bottom: 0.7rem; } }
+  .fetching { color: var(--ink-3); font-family: var(--mono); font-size: 0.78rem; }
+</style>
+</head>
+<body>
+
+<!-- include: nav -->
+
+<main>
+
+<section class="api-hero">
+  <div class="wrap">
+    <div class="formrow reveal"><span class="no">01</span><span>Programmatic access</span><span class="meta">the trust center, for programs</span></div>
+    <div class="section-head">
+      <h1>Everything a person sees, <span class="grad">a program can fetch.</span></h1>
+      <p class="lede">A provider's trust center on RampGuide serves its FedRAMP Certification Package to people in a browser and to programs over HTTPS: the same index, the same files, the same hashes. FedRAMP is the Federal Risk and Authorization Management Program, and its 2026 rules ask a provider to document this programmatic access. The machine-readable form of everything on this page is the service's own OpenAPI document at <a href="https://trust.rampguide.com/v1/openapi.json">trust.rampguide.com/v1/openapi.json</a>; the routes and the rules below are read from it as you open this page, so the two can never disagree.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="formrow reveal"><span class="no">02</span><span>Fetch a file and check it</span><span class="meta">the key is a party key, minted on your access page</span></div>
+    <div class="term reveal" aria-label="A shell session fetching one file of a package and checking its hash">
+      <div class="bar"><span>your shell</span><span>ACME Corp, fictional</span></div>
+<pre><span class="p">$</span> export KEY=rgt_live_…            <span class="dim"># a party key, minted on your access page</span>
+<span class="p">$</span> curl -s -H "Authorization: Bearer $KEY" \
+    https://trust.rampguide.com/v1/t/acme/index.json | jq '.files[] | {path, tier, sha256}'
+<span class="p">$</span> curl -sL -H "Authorization: Bearer $KEY" -o sdr.json \
+    https://trust.rampguide.com/v1/t/acme/files/fedramp/sdr.json
+<span class="p">$</span> shasum -a 256 sdr.json
+<span class="ok">7396608116c9…</span>  sdr.json          <span class="dim"># the sha256 index.json promised</span></pre>
+    </div>
+    <p class="muted" style="margin-top:1.4rem;max-width:60em">A file request answers <code>302</code> to a link that works for sixty seconds, with a JSON body carrying the file's SHA-256 hash, its size and its tier. The same file is available inline at <code>/raw/</code> for viewers. Either answer is the logged access.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="formrow reveal"><span class="no">03</span><span>Three ways to authenticate</span><span class="meta">people, systems, the provider's pipeline</span></div>
+    <ul class="ways reveal">
+      <li><b>Session cookie</b><span><strong>For people.</strong> A passkey sign-in at the trust center sets it, the browser sends it on its own, and it lasts one hour idle and twelve hours in all.</span></li>
+      <li><b>Party API key</b><span><strong>For an agency's or an assessor's own systems.</strong> Minted by your team lead on your access page, scoped to one trust center and one tier, expiring within a year, every use logged; sent as <code>Authorization: Bearer rgt_live_…</code>.</span></li>
+      <li><b>Publish key</b><span><strong>For the provider's build pipeline only.</strong> It can publish and nothing else, and the trust center checks every uploaded file against the manifest.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="formrow reveal"><span class="no">04</span><span>Routes</span><span class="meta" id="routes-count">from the same table that serves them</span></div>
+    <div class="section-head reveal"><h2>Every route, as the service lists it.</h2>
+      <p class="lede">Public routes need nothing; the rest name what they need. A route's FedRAMP rule identifiers follow its summary.</p></div>
+    <div class="routes" id="routes"><p class="fetching">reading the OpenAPI document…</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="formrow reveal"><span class="no">05</span><span>Rules this service implements</span><span class="meta">FedRAMP Consolidated Rules for 2026 · Certification Data Sharing</span></div>
+    <dl class="rules" id="rules"><dt class="fetching">reading…</dt><dd></dd></dl>
+  </div>
+</section>
+
+</main>
+
+<!-- include: footer -->
+
+<!-- include: reveal -->
+<script>
+  // The routes and the rules, read from the service's own OpenAPI document,
+  // so this page and the service can never disagree. On a local preview,
+  // ?trust=http://localhost:8790 reads a local instance instead.
+  (function () {
+    var host = 'https://trust.rampguide.com'
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      host = new URLSearchParams(location.search).get('trust') || host
+    }
+    var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';' }) }
+    var words = { session: 'session', partyKey: 'party key', publishKey: 'publish key' }
+    var routes = document.getElementById('routes')
+    var rules = document.getElementById('rules')
+    fetch(host + '/v1/openapi.json').then(function (r) { return r.ok ? r.json() : Promise.reject(r.status) }).then(function (doc) {
+      var list = []
+      Object.keys(doc.paths).forEach(function (path) {
+        Object.keys(doc.paths[path]).forEach(function (method) {
+          var op = doc.paths[path][method]
+          var who = (op.security || []).map(function (s) { var k = Object.keys(s)[0]; return words[k] || k }).join(' or ') || 'anyone'
+          var ids = op['x-fedramp-rules'] ? '<i>' + esc(op['x-fedramp-rules'].join(' · ')) + '</i>' : ''
+          list.push('<div class="r"><span class="m ' + esc(method) + '">' + esc(method.toUpperCase()) + '</span><span class="path">' + esc(path).replace(/\//g, '/<wbr>') + '</span><span class="who">' + esc(who) + '</span><span class="sum">' + esc(op.summary) + ids + '</span></div>')
+        })
+      })
+      routes.innerHTML = list.join('')
+      document.getElementById('routes-count').textContent = list.length + ' routes · from the same table that serves them'
+      var r = doc['x-fedramp-rules'] || {}
+      rules.innerHTML = Object.keys(r).map(function (id) { return '<dt>' + esc(id) + '</dt><dd>' + esc(r[id]) + '</dd>' }).join('')
+    }).catch(function () {
+      routes.innerHTML = '<p class="fetching">The route list could not be read just now; the document itself is at <a href="' + esc(host) + '/v1/openapi.json">' + esc(host) + '/v1/openapi.json</a>.</p>'
+      rules.innerHTML = ''
+    })
+  })();
+</script>
+</body>
+</html>

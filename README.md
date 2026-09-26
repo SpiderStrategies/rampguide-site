@@ -34,6 +34,11 @@ is not built — it is a self-contained page and stays edited by hand.
   walkthrough embedded.
 - `trust-center.html` — product two, described from the design memo as
   *coming*; honest about status.
+- `api.html` — the trust center's API for programs: the OpenAPI document,
+  three ways to authenticate, and every route and rule, read live from
+  `trust.rampguide.com/v1/openapi.json` when the page opens (the trust
+  center's own `/docs` redirects here). `?trust=http://localhost:8790`
+  reads a local instance on a local preview.
 - `how-it-works.html` — the interactive dependency-graph demo (canonical;
   the workspace `rampguide-depgraph.html` is a derived copy).
 - `terms.html`, `privacy.html` — DRAFTS, `noindex`, not linked from any
