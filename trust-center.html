@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trust center — RampGuide</title>
-<meta name="description" content="The RampGuide trust center, live at trust.rampguide.com: the secure window where government customers request, review, and download your FedRAMP package, with every access logged. Required on the 20x track and on the classic track from 2027.">
+<meta name="description" content="The RampGuide trust center, live at trust.rampguide.com: the secure window where government customers request, review, and download your FedRAMP package, with every access logged. Required on the 20x track now, and on the classic Rev5 track for new certifications from 2027-01-01.">
 <meta property="og:title" content="The RampGuide trust center">
 <meta property="og:description" content="Where your FedRAMP package lives once it exists: agencies request access, you approve, they retrieve the current package, every access and denial logged. A rendering of your repo, not a platform's database.">
 <meta property="og:url" content="https://rampguide.com/trust-center.html">
@@ -54,6 +54,13 @@
   .req li b { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--blue); font-weight: 700; padding-top: 0.2em; }
   .req li span { color: var(--ink-2); }
   .req li span strong { color: var(--ink); font-weight: 500; }
+  .dates-head { margin-top: clamp(36px, 5vw, 64px); }
+  .dates-head h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); letter-spacing: -0.02em; }
+  .dates-head p, .dates-src { color: var(--ink-2); max-width: 60em; }
+  .dates-head p { margin: 0.6rem 0 0; }
+  .req time { white-space: nowrap; }
+  .dates-src { font-size: 0.85rem; margin-top: 1rem; }
+  .dates-src a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
   @media (max-width: 600px) { .req li { grid-template-columns: 1fr; gap: 0.3rem; } }
 
   .modes { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.4vw, 28px); margin-top: 22px; }
@@ -92,7 +99,7 @@
     <div>
       <span class="status live"><i></i>Live · trust.rampguide.com</span>
       <h1>Where your package lives <span class="grad">once it exists.</span></h1>
-      <p class="lede">FedRAMP no longer wants your package emailed around. Agencies request access, you approve, they retrieve the current package, and every access and every denial is logged and reportable. That window is called a trust center. On the 20x track you need one from day one; on the classic track it becomes required in 2027.</p>
+      <p class="lede">FedRAMP no longer wants your package emailed around. Agencies request access, you approve, they retrieve the current package, and every access and every denial is logged and reportable. That window is called a trust center. On the 20x track you need one from day one; on the classic Rev5 track, new certifications need one from 2027-01-01 and existing ones by 2027-08-01.</p>
       <p class="lede">RampGuide's trust center is that window, live at trust.rampguide.com and fed directly by your builds. It sits on the same host as the app your people build the package in, so publishing is one step, not an integration.</p>
       <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.4rem">
         <a class="btn gold" href="mailto:nathan@spiderstrategies.com?subject=Trust%20center">Talk to us <span class="arrow">→</span></a>
@@ -121,6 +128,18 @@
       <li><b>A log of everything</b><span><strong>Every access is recorded and reportable.</strong> Who requested, who approved, who viewed what, when. The grants list doubles as your access inventory.</span></li>
       <li><b>Denials reported</b><span><strong>A refusal is an event, not silence.</strong> Denied requests are logged with a reason. When the request came from a federal agency, FedRAMP must hear within five business days: the Access page gives you the report's text and the deadline, and keeps both in view until you record FedRAMP's ticket number.</span></li>
     </ul>
+    <div class="dates-head reveal" id="dates">
+      <h3>The dates, rule set by rule set.</h3>
+      <p>FedRAMP's 2026 rules take effect one rule set at a time. A new certification must follow a rule set once its date has passed; an existing one has a date to adopt it by and, after that, a grace period under a corrective action plan. The ones that matter most here:</p>
+    </div>
+    <ul class="req reveal" style="margin-top:1rem">
+      <li><b>VDR · VER</b><span><strong>Vulnerability Detection and Response, and Vulnerability Evaluation and Reporting: required <time datetime="2026-12-07">2026-12-07</time>,</strong> for new and existing certifications alike. An existing certification that misses it keeps going only under a corrective action plan, and only until <time datetime="2027-03-07">2027-03-07</time>. FedRAMP's notice on the Cybersecurity and Infrastructure Security Agency's Binding Operational Directive 26-04 (BOD 26-04) says a provider that follows these two rule sets meets the directive's timelines.</span></li>
+      <li><b>CDS</b><span><strong>Certification Data Sharing, the trust center rules: optional since <time datetime="2026-07-04">2026-07-04</time>.</strong> Required for a new Rev5 certification from <time datetime="2027-01-01">2027-01-01</time>. An existing certification should adopt them by <time datetime="2027-08-01">2027-08-01</time> and must by <time datetime="2028-02-01">2028-02-01</time>.</span></li>
+      <li><b>MAS</b><span><strong>Minimum Assessment Scope: required for a new Rev5 certification from <time datetime="2027-01-01">2027-01-01</time>.</strong> An existing certification adopts it at its first independent assessment started after <time datetime="2027-01-01">2027-01-01</time>.</span></li>
+      <li><b>SCN · CPO · SDR</b><span><strong>The machine-readable package: required for a new Rev5 certification from <time datetime="2027-01-01">2027-01-01</time>.</strong> An existing certification should adopt the Significant Change Notification rules by <time datetime="2027-01-01">2027-01-01</time> (must by <time datetime="2027-06-01">2027-06-01</time>), the Certification Package Overview by <time datetime="2027-07-01">2027-07-01</time> and the Security Decision Record by <time datetime="2027-08-01">2027-08-01</time> (each must by its first independent assessment started after that date).</span></li>
+      <li><b>20x</b><span><strong>On the 20x track, a new certification needs all of these now,</strong> except the vulnerability rules, which are required from <time datetime="2026-12-07">2026-12-07</time> there too.</span></li>
+    </ul>
+    <p class="dates-src reveal">From fedramp.gov, read 2026-09-28: the <a href="https://www.fedramp.gov/2026/providers/updating/deadlines/rev5/">Rev5 deadlines</a>, the <a href="https://www.fedramp.gov/2026/providers/updating/deadlines/20x/">20x deadlines</a>, and FedRAMP's <a href="https://www.fedramp.gov/notices/0014/">response to BOD 26-04</a>. FedRAMP changes these pages; check them before you plan around a date.</p>
   </div>
 </section>
 
@@ -166,7 +185,7 @@
         <h2 style="margin-bottom:1rem">Live. Not finished.</h2>
         <p class="muted">Live at trust.rampguide.com since 2026-09-23: passkey sign-in, requests and approvals, automatic entry for federal agency staff, tiers, the logged package, the access inventory and daily summaries, the denial report to FedRAMP, a snapshot per Ongoing Certification Report, and an <a href="api.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">API</a> for programs.</p>
         <p class="muted">Not built yet: the status page FedRAMP asks for at Class B and above (its rule allows it to be separate), an upload slot for FedRAMP's own certification reports, and sign-in with a government smart card (a Personal Identity Verification card or a Common Access Card). RampGuide itself is not FedRAMP authorized.</p>
-        <p class="muted">If you are on the 20x track, or planning for the classic track's 2027 requirement, tell us. Early customers shape what ships next.</p>
+        <p class="muted">If you are on the 20x track, or planning for the classic track's 2027 dates, tell us. Early customers shape what ships next.</p>
       </div>
       <div class="ask reveal d1">
         <h2>Want one for your offering?</h2>
