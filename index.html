@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RampGuide — Your FedRAMP paperwork, done and kept current</title>
-<meta name="description" content="RampGuide generates your FedRAMP documentation from a short list of facts about your system, using pre-written content for the tools you already run, and keeps it current when your facts or the rules change. The compiler is included, the content library is what you pay for, and the hosted trust center is live.">
+<meta name="description" content="RampGuide generates your FedRAMP documentation from a short list of facts about your system, using pre-written content for the tools you already run, and keeps it current when your facts or the rules change. One hosted app: the workbench, the content library and your trust center, one price per offering.">
 <meta property="og:title" content="RampGuide — Your FedRAMP paperwork, done and kept current">
-<meta property="og:description" content="Hundreds of pages of FedRAMP documentation, generated from the facts about your system and kept current as they change. The compiler is included; pre-written content library from $6,000 a year; the hosted trust center is live.">
+<meta property="og:description" content="Hundreds of pages of FedRAMP documentation, generated from the facts about your system and kept current as they change. One hosted app with the content library and your trust center inside, from $6,000 a year per offering.">
 <meta property="og:url" content="https://rampguide.com/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://rampguide.com/og.png">
@@ -41,31 +41,58 @@
   .hero .fine span::before { content: '✓ '; color: var(--green); }
   .hero-art { position: relative; min-height: 500px; }
   .hero-art .art-doc { position: absolute; right: 0; top: 0; width: 76%; transform: rotate(2.5deg); z-index: 1; }
-  .hero-art .art-term { position: absolute; left: 0; bottom: 0; width: 86%; z-index: 2; }
-  .hero-art .art-term .line { opacity: 0; animation: lineIn 0.5s var(--ease) forwards; }
-  .hero-art .art-term .line.l1 { animation-delay: 0.3s; } .hero-art .art-term .line.l2 { animation-delay: 1.5s; } .hero-art .art-term .line.l3 { animation-delay: 1.75s; }
-  .hero-art .art-term .line.l4 { animation-delay: 2.0s; } .hero-art .art-term .line.l5 { animation-delay: 2.9s; } .hero-art .art-term .line.l6 { animation-delay: 3.4s; }
-  .hero-art .art-term .line.l7 { animation-delay: 3.6s; } .hero-art .art-term .line.l8 { animation-delay: 3.8s; } .hero-art .art-term .line.l9 { animation-delay: 4.0s; }
+  .hero-art .art-app { position: absolute; left: 0; bottom: 0; width: 86%; z-index: 2; }
+  .hero-art .art-app .line { opacity: 0; animation: lineIn 0.5s var(--ease) forwards; }
+  .hero-art .art-app .line.l1 { animation-delay: 0.3s; } .hero-art .art-app .line.l2 { animation-delay: 1.2s; }
+  .hero-art .art-app .line.l3 { animation-delay: 2.1s; } .hero-art .art-app .line.l4 { animation-delay: 3.0s; }
   @keyframes lineIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-  .hero-art .art-stamp { position: absolute; right: 2%; top: 9%; z-index: 3; opacity: 0; animation: thunk 0.42s cubic-bezier(0.2, 1.6, 0.4, 1) 4.7s forwards; }
+  .hero-art .art-stamp { position: absolute; right: 2%; top: 9%; z-index: 3; opacity: 0; animation: thunk 0.42s cubic-bezier(0.2, 1.6, 0.4, 1) 3.8s forwards; }
   @media (max-width: 900px) {
     .hero .wrap { grid-template-columns: 1fr; }
     .hero .quilt { width: 120%; right: -30%; top: 30%; }
     .hero-art { min-height: 0; display: grid; gap: 18px; }
-    .hero-art .art-doc, .hero-art .art-term { position: static; width: 100%; transform: none; }
+    .hero-art .art-doc, .hero-art .art-app { position: static; width: 100%; transform: none; }
     .hero-art .art-stamp { right: 8px; top: 8px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .hero .aurora { animation: none; }
-    .hero-art .art-term .line { animation: none; opacity: 1; }
+    .hero-art .art-app .line { animation: none; opacity: 1; }
     .hero-art .art-stamp { animation: none; opacity: 0.92; }
   }
+
+  /* ---------- the app, drawn in the site's paper: the Publish steps and the review ---------- */
+  .app { background: #fff; border: 1px solid var(--blue-line); border-radius: var(--radius); box-shadow: var(--shadow-lg); overflow: hidden; font-size: 0.9rem; }
+  .app .bar { display: flex; justify-content: space-between; gap: 1rem; padding: 10px 16px; background: var(--blue-soft); font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-deep); }
+  .app .row { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 0.3rem 0.75rem; padding: 12px 16px; border-top: 1px solid var(--line-soft); }
+  .app .row i { font-style: normal; width: 20px; height: 20px; border-radius: 50%; background: var(--blue-soft); color: var(--blue); display: grid; place-items: center; font-size: 0.68rem; font-weight: 700; }
+  .app .row b { color: var(--ink); font-weight: 500; }
+  .app .row span { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-3); min-width: 0; overflow-wrap: anywhere; }
+  .app .live { padding: 16px 16px 18px; border-top: 1px solid var(--line-soft); text-align: center; }
+  .app .live b { display: block; font-size: 1.25rem; font-weight: 500; letter-spacing: -0.02em; }
+  .app .live b::before { content: '✓ '; color: var(--green); }
+  .app .live span { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-3); }
+  .app .body { padding: 14px 16px 16px; }
+  .app h4 { font-size: 1.05rem; font-weight: 500; margin: 0 0 0.2rem; letter-spacing: -0.01em; }
+  .app .sub { color: var(--ink-3); font-size: 0.8rem; margin: 0 0 0.9rem; }
+  .app .change { border-top: 1px solid var(--line-soft); padding: 0.75rem 0; }
+  .app .change b { font-weight: 500; }
+  .app .change p { margin: 0.2rem 0 0.25rem; color: var(--ink-2); font-size: 0.88rem; }
+  .app .change code { font-family: var(--mono); font-size: 0.68rem; color: var(--ink-3); }
+  .app s { background: var(--red-soft); color: var(--red); border-radius: 3px; padding: 0 0.2em; }
+  .app ins { text-decoration: none; background: var(--green-soft); color: var(--green-deep); border-radius: 3px; padding: 0 0.2em; }
+  .app .go { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.9rem; border-top: 1px solid var(--line-soft); padding-top: 0.9rem; font-size: 0.8rem; color: var(--ink-2); }
+  .app .go b { font-weight: 500; background: var(--blue); color: #fff; border-radius: 8px; padding: 0.55em 1em; font-size: 0.85rem; }
+  .app.files .row { grid-template-columns: 1fr auto; }
+  .app.files .row b { font-family: var(--mono); font-size: 0.78rem; }
+  .ui s { color: var(--ink-3); margin-right: 0.4em; }
 
   /* ---------- built on ---------- */
   .builton { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0.8rem; padding: 18px 0; }
   .builton .lbl { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); margin-right: 0.4rem; }
   .builton span:not(.lbl) { font-size: 0.82rem; color: var(--ink-2); background: #fff; border: 1px solid var(--line); border-radius: 100px; padding: 0.4em 0.85em; }
   .builton span b { color: var(--blue); font-weight: 500; }
+  .builton a { font-size: 0.82rem; color: var(--blue); font-weight: 500; padding: 0.4em 0.2em; }
+  .builton a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   /* ---------- storyboard: four frames on a 16s loop, pure CSS ---------- */
   .story { --T: 16s; --stage: 4s; overflow: hidden; border-radius: 14px; }
@@ -157,7 +184,11 @@
   /* ---------- library (dark) ---------- */
   .lib { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
   @media (max-width: 900px) { .lib { grid-template-columns: 1fr; } }
-  .lib .stats { margin: 1.6rem 0 2rem; }
+  .lib .stats { margin: 1.6rem 0 2rem; gap: 1.4rem 2.2rem; }
+  .lib .stats span { max-width: 10em; }
+  .lib-shot { margin: 0; }
+  .lib-shot img { width: 100%; height: auto; border-radius: 12px; box-shadow: var(--glow); background: #fff; }
+  .lib-shot figcaption { margin-top: 0.8rem; font-size: 0.85rem; color: var(--term-dim); }
   .index-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; border-top: 1px solid rgba(233, 238, 247, 0.25); padding-top: 1rem; margin-top: clamp(32px, 5vw, 64px); font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--term-dim); }
   .index-head b { color: var(--term-fg); }
   .index { list-style: none; margin: 1rem 0 0; padding: 0; columns: 3; column-gap: 2.4rem; font-family: var(--mono); font-size: 0.78rem; line-height: 1.45; }
@@ -173,7 +204,7 @@
   .versus .compare td { font-size: 0.92rem; }
 
   /* ---------- pricing strip ---------- */
-  .strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2.2vw, 28px); margin-top: 22px; }
+  .strip { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(16px, 2.2vw, 28px); margin-top: 22px; }
   @media (max-width: 900px) { .strip { grid-template-columns: 1fr; gap: 34px; } }
   .strip .sheet { padding: clamp(22px, 2.6vw, 30px); display: grid; gap: 0.4rem; align-content: start; }
   .strip .sheet.us { border-color: var(--blue); box-shadow: var(--shadow-lg); }
@@ -245,7 +276,8 @@
       <a href="product.html">Product tour</a>
       <a href="trust-center.html">Trust center</a>
       <a href="pricing.html">Pricing</a>
-      <a class="btn" href="pricing.html">Get the library <span class="arrow">→</span></a>
+      <a href="https://trust.rampguide.com/">Sign in</a>
+      <a class="btn" href="pricing.html">Get started <span class="arrow">→</span></a>
     </nav>
   </div>
 </header>
@@ -267,25 +299,19 @@
         <a class="btn lg" href="pricing.html">See pricing</a>
         <a class="btn lg ghost" href="#minute">What is RampGuide? <span class="arrow">→</span></a>
       </div>
-      <div class="fine"><span>Pay for the content, not seats</span><span>Start from your existing documents</span><span>Hosted, or inside your boundary</span><span>Founding customers: 50% off year one</span></div>
+      <div class="fine"><span>One price per offering, no seats</span><span>Start from your existing documents</span><span>Your trust center included</span><span>Founding customers: 50% off year one</span></div>
     </div>
-    <div class="hero-art" aria-label="A generated document, the build that produced it, and the change that propagated">
+    <div class="hero-art" aria-label="A generated document, and the app publishing the build that produced it">
       <div class="sheet doc art-doc"><span class="tab">docs/AC.md · generated</span>
         <div class="bar"><span></span><span>AC-2(3) · Rev5 Moderate</span></div>
         <div class="body"><p><span class="meta">Status: implemented · origination: service provider system specific</span></p><p>Inactive privileged accounts are disabled after <mark>30 days</mark> through automated functionality within Wingdings SSO, the centralized authentication platform. Accounts are immediately disabled when they have expired, are no longer associated with a user, or are in violation of organizational policy.</p><p><span class="meta">last_updated 2026-09-12 · 3 solutions · provenance: solutions/sso/solution.yaml</span></p></div>
       </div>
-      <div class="term art-term">
-        <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>acme-compliance — zsh</span></div>
-        <pre><code><span class="line l1"><span class="p">$</span> rampguide build --content . --out dist</span>
-<span class="line l2"><span class="ok">✓</span> built 18 docs, policies, procedures, crypto-modules,</span>
-<span class="line l3">  fedramp/sdr.json, fedramp/cpo.json, oscal/ssp.json,</span>
-<span class="line l4">  inventory.json → dist/</span>
-<span class="line l5"><span class="p">$</span> rampguide affected --content . --since main</span>
-<span class="line l6"><span class="dim">requirements affected since main:</span></span>
-<span class="line l7">  ac-2.3  ac-2.5</span>
-<span class="line l8"><span class="dim">documents that re-render:</span></span>
-<span class="line l9">  docs/AC.md  docs/policies.md  docs/procedures.md
-  fedramp/sdr.json  oscal/ssp.json  inventory.json<span class="caret"></span></span></code></pre>
+      <div class="app art-app">
+        <div class="bar"><span>Publish · ACME RoadRunner</span><span>trust.rampguide.com</span></div>
+        <div class="row line l1"><i>✓</i><b>Committed</b><span>a2f096a · AC-2(3): 35 → 30 days · Avery Collins</span></div>
+        <div class="row line l2"><i>✓</i><b>Built</b><span>a2f096a · 18 documents, SDR, CPO, OSCAL SSP</span></div>
+        <div class="row line l3"><i>✓</i><b>Published</b><span>2026-09-12 · every file hashed</span></div>
+        <div class="live line l4"><b>Live.</b><span>agencies read build a2f096a</span></div>
       </div>
       <span class="stamp big green art-stamp">Byte-identical</span>
     </div>
@@ -304,6 +330,7 @@
   <span><b>CR26</b> machine-readable package schemas</span>
   <span><b>NIST CMVP</b> cryptographic-module data</span>
   <span><b>OSCAL</b> System Security Plan</span>
+  <a href="pricing.html#frameworks">Which frameworks, today →</a>
 </div>
 
 <!-- ================= 01 IN ONE MINUTE ================= -->
@@ -313,9 +340,9 @@
     <div class="minute">
       <div class="reveal">
         <span class="lbl">What it is</span>
-        <h3>Software plus the writing.</h3>
-        <p>The <strong>engine</strong> is the compiler behind RampGuide: it runs in our hosted app, or on your own computers when your boundary requires it. Your people give it the facts about your system: which tools you use, how they are configured, who is responsible for what. It writes the whole FedRAMP package from those facts, and rewrites it whenever a fact changes.</p>
-        <p>The <strong>library</strong> is the writing, done. Professionally authored, assessor-ready answers for the tools everyone runs, kept current as FedRAMP changes. That is the part you pay for.</p>
+        <h3>One app, with the writing done.</h3>
+        <p>RampGuide is a <strong>hosted app</strong>. Your people give it the facts about your system in the workbench: which tools you use, how they are configured, who is responsible for what. Its compiler writes the whole FedRAMP package from those facts, and rewrites it whenever a fact changes.</p>
+        <p>The <strong>library</strong> is the writing, done: professionally authored, assessor-ready content for the tools everyone runs, kept current as FedRAMP changes. It comes with the app.</p>
       </div>
       <div class="reveal d1">
         <span class="lbl">Who it's for</span>
@@ -336,30 +363,30 @@
 <!-- ================= 02 THE OFFERING ================= -->
 <section class="alt" id="offering">
   <div class="wrap">
-    <div class="formrow reveal"><span class="no">02</span><span>What we sell</span><span class="meta">four things, one price that matters</span></div>
+    <div class="formrow reveal"><span class="no">02</span><span>What we sell</span><span class="meta">one app, everything in it</span></div>
     <div class="section-head reveal">
-      <h2>The compiler is included. The content is the product. The trust center is live.</h2>
+      <h2>One app, $6,000 a year per offering. Everything is in it.</h2>
     </div>
     <div class="offer">
       <div class="sheet reveal"><span class="tab">Software</span>
-        <div class="name">Engine</div><div class="price">INCLUDED</div>
-        <p>The compiler that generates the package: importer, builder, validators, and the ongoing-monitoring reports. It runs in our hosted app, where your people fill the gaps in the workbench, and as a command line for teams who must build inside their own boundary.</p>
+        <div class="name">Workbench</div><div class="price">INCLUDED</div>
+        <p>Where your people answer what the package still needs, read each change in plain sentences, and commit it under their own names. The compiler builds the whole package from those answers: narratives, policies, procedures and the machine-readable files.</p>
         <a class="more" href="product.html">See the product →</a>
       </div>
-      <div class="sheet us reveal d1"><span class="tab ink">Subscription</span>
-        <div class="name">Content library</div><div class="price">$6,000 / YEAR · PER OFFERING</div>
-        <p>Most of your package, already written. 33 answer packs for the tools everyone runs, mapped to the controls they answer, kept current as FedRAMP changes. Your own wording always wins.</p>
+      <div class="sheet us reveal d1"><span class="tab ink">Content</span>
+        <div class="name">Content library</div><div class="price">INCLUDED</div>
+        <p>Most of your package, already written. 33 packs for the tools everyone runs, mapped to the controls they answer, kept current as FedRAMP changes. Your own wording always wins.</p>
         <a class="more" href="#library">What's in it →</a>
       </div>
-      <div class="sheet reveal d2"><span class="tab gold">Service</span>
-        <div class="name">Complete</div><div class="price">$15,000 / YEAR · PER OFFERING</div>
-        <p>The library plus white-glove onboarding: we bring your existing documentation across, map it to the library, and stay on the line through your assessment.</p>
-        <a class="more" href="pricing.html">Pricing →</a>
-      </div>
-      <div class="sheet reveal d3"><span class="tab green">Live</span>
-        <div class="name">Trust center</div><div class="price">LIVE · PRICING: ASK US</div>
-        <p>The secure window where government customers request, review, and download your package, with every access logged. FedRAMP requires one on the 20x track now; on the classic Rev5 track, for new certifications from 2027-01-01 and existing ones by 2027-08-01. Live at trust.rampguide.com, beside the app that builds your package.</p>
+      <div class="sheet reveal d2"><span class="tab green">Live</span>
+        <div class="name">Trust center</div><div class="price">INCLUDED · LIVE</div>
+        <p>The secure window where government customers request, review, and download your package, with every access logged. FedRAMP requires one on the 20x track now; on the classic Rev5 track, for new certifications from 2027-01-01 and existing ones by 2027-08-01. Live at trust.rampguide.com, on the same host as the app.</p>
         <a class="more" href="trust-center.html">Read about it →</a>
+      </div>
+      <div class="sheet reveal d3"><span class="tab gold">Service</span>
+        <div class="name">Complete</div><div class="price">$15,000 / YEAR · PER OFFERING</div>
+        <p>Everything in the app, plus people: a call to bring your existing documentation across, your program mapped to the library, and someone on the line through your assessment.</p>
+        <a class="more" href="pricing.html">Pricing →</a>
       </div>
     </div>
   </div>
@@ -390,7 +417,7 @@
         <p class="pull">When one fact changes, someone hunts it down in dozens of places. They always miss some.</p>
         <p style="margin-top:1.4rem">Before an agency can use your cloud product, FedRAMP, the government's security approval program, makes you prove you keep their data safe. The proof runs hundreds of pages in a format that is picky on purpose, and it must stay current forever. Most companies still write it by hand, in Word.</p>
         <p>The target keeps moving. The program now wants the package machine-readable, not just printable. Rules get revised. Baselines transition. Cryptographic-module certificates lapse on a schedule nobody chose. Content that was right last quarter is quietly wrong this one.</p>
-        <p>RampGuide's answer: keep the facts in one place and generate everything else. The same facts always produce the same package, so a comparison of two builds is the complete list of what changed. No AI writes your documents and the build touches no network, so the compiler that runs in our hosted app can also run inside a locked-down government cloud.</p>
+        <p>RampGuide's answer: keep the facts in one place and generate everything else. The same facts always produce the same package, byte for byte, so a comparison of two builds is the complete list of what changed. No AI writes your documents.</p>
       </div>
       <svg class="fan reveal d1" viewBox="0 0 420 300" role="img" aria-label="One fact fans out into six generated documents">
         <rect class="src" x="10" y="122" width="132" height="56" rx="6"/>
@@ -418,7 +445,7 @@
       <li><b>FedRAMP</b><span>The U.S. government's security approval program for cloud products. No approval, no federal customers.</span></li>
       <li><b>ATO</b><span>Authority to Operate: the approval itself, granted after your package is assessed.</span></li>
       <li><b>SSP</b><span>System Security Plan: the big document describing how your system meets every security requirement. Usually hundreds of pages.</span></li>
-      <li><b>Rev5 / 20x</b><span>FedRAMP's two tracks. Rev5 is the classic baseline of 323 controls; 20x is the new, faster track built on 46 Key Security Indicators.</span></li>
+      <li><b>Rev5 / 20x</b><span>FedRAMP's two tracks. Rev5 is the classic one, built on NIST's 800-53 controls at three levels: Low (156), Moderate (323) and High (410); RampGuide builds Moderate today. 20x is the new, faster track built on 46 Key Security Indicators.</span></li>
       <li><b>Machine-readable package</b><span>The data files (JSON) FedRAMP now requires alongside the readable documents, so the government can process submissions automatically.</span></li>
       <li><b>ConMon</b><span>Continuous monitoring: the quarterly reports, change notifications, and vulnerability reports you owe the program after you are authorized.</span></li>
       <li><b>Assessor (3PAO)</b><span>The independent third party that checks your package and your system before authorization, and every year after.</span></li>
@@ -433,41 +460,37 @@
     <div class="section-head reveal" style="margin-bottom:clamp(24px,3vw,40px)">
       <h2>Change one fact. Every document updates.</h2>
     </div>
-    <div class="sheet story reveal" id="story" aria-label="Storyboard: a value changes, the package is rebuilt, dependent documents update, the change report lists what moved">
+    <div class="sheet story reveal" id="story" aria-label="Storyboard: a value changes in the workbench, the change is reviewed and committed, dependent documents update, agencies read the new package">
       <div class="rail">
         <div class="step-l"><i style="--i:0"></i>Change one fact</div>
-        <div class="step-l"><i style="--i:1"></i>Rebuild</div>
+        <div class="step-l"><i style="--i:1"></i>Review &amp; commit</div>
         <div class="step-l"><i style="--i:2"></i>Documents update</div>
-        <div class="step-l"><i style="--i:3"></i>See what moved</div>
+        <div class="step-l"><i style="--i:3"></i>Agencies read it</div>
         <div class="track"><b></b></div>
       </div>
       <div class="frames">
         <div class="frame" style="--i:0">
-          <div class="term"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>solutions/sso/solution.yaml</span></div>
-<pre><code>params:
-<span class="del">-  inactive_disable_days: 35</span>
-<span class="add">+  inactive_disable_days: 30</span>
-   session_timeout_minutes: 15
-   admin_group: the Identity Administrators group</code></pre></div>
+          <div class="sheet ui" style="padding:18px 20px;max-width:36rem;width:100%;margin:0 auto">
+            <div class="ctx">WORKBENCH · AC-2(3) · WINGDINGS SSO</div>
+            <div class="q">Days before an idle privileged account is disabled</div>
+            <div class="field"><span><s>35</s>30</span><b>Save</b></div>
+            <div class="ripple"><i>docs/AC.md</i><i>docs/policies.md</i><i>docs/procedures.md</i><i>fedramp/sdr.json</i><i>oscal/ssp.json</i><i>inventory.json</i></div>
+          </div>
         </div>
         <div class="frame" style="--i:1">
-          <div class="term"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>acme-compliance — zsh</span></div>
-<pre><code><span class="p">$</span> rampguide build --content . --out dist
-<span class="ok">✓</span> built 18 docs, policies, procedures, crypto-modules,
-  fedramp/sdr.json, fedramp/cpo.json, oscal/ssp.json,
-  inventory.json → dist/
-<span class="p">$</span> git diff --stat dist/
- docs/AC.md          | 2 +-
- docs/policies.md    | 2 +-
- docs/procedures.md  | 2 +-
- fedramp/sdr.json    | 4 ++--
- oscal/ssp.json      | 2 +-
- inventory.json      | 6 +++---</code></pre></div>
+          <div class="app" style="max-width:36rem;width:100%;margin:0 auto">
+            <div class="body">
+              <h4>Review &amp; commit changes</h4>
+              <p class="sub">What changed since the last commit, in words.</p>
+              <div class="change"><b>Wingdings SSO</b><p>days before an idle privileged account is disabled <s>35</s> <ins>30</ins></p><code>solutions/sso/solution.yaml</code></div>
+              <div class="go"><b>Commit these changes</b><span>1 file, one commit, authored as you</span></div>
+            </div>
+          </div>
         </div>
         <div class="frame two" style="--i:2">
           <div class="sheet doc"><div class="bar"><span>docs/AC.md</span><span>generated</span></div>
             <div class="body"><h4>AC-2(3)</h4><p><span class="meta">Status: implemented</span></p><p>Inactive privileged accounts are disabled after <mark>30 days</mark> through automated functionality within Wingdings SSO, the centralized authentication platform. Accounts are immediately disabled when they have expired, are no longer associated with a user, or are in violation of organizational policy.</p></div></div>
-          <div class="term"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>fedramp/sdr.json</span></div>
+          <div class="term"><div class="bar"><span>fedramp/sdr.json · generated</span></div>
 <pre><code>{
   "controlId": "AC-2(3)",
   "parameterValues": [
@@ -478,25 +501,21 @@
   …</code></pre></div>
         </div>
         <div class="frame" style="--i:3">
-          <div class="term"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>pull request #42 — compliance blast radius</span></div>
-<pre><code><span class="p">$</span> rampguide affected --content . --since origin/main
-<span class="dim">requirements affected since origin/main:</span>
-  ac-2.3
-  ac-2.5
-<span class="dim">documents that re-render:</span>
-  docs/AC.md
-  docs/policies.md
-  docs/procedures.md
-  fedramp/sdr.json
-  oscal/ssp.json
-  inventory.json</code></pre></div>
+          <div class="app files" style="max-width:36rem;width:100%;margin:0 auto">
+            <div class="bar"><span>ACME RoadRunner · agency tier</span><span>build a2f096a</span></div>
+            <div class="row"><b>docs/AC.md</b><span>2026-09-12 · sha256 3f9a…c21e</span></div>
+            <div class="row"><b>docs/policies.md</b><span>2026-09-12 · sha256 8b04…77d0</span></div>
+            <div class="row"><b>fedramp/sdr.json</b><span>2026-09-12 · sha256 e1c7…0a9b</span></div>
+            <div class="row"><b>oscal/ssp.json</b><span>2026-09-12 · sha256 52dd…f3e4</span></div>
+            <div class="row"><b>inventory.json</b><span>2026-09-12 · sha256 9a61…4b18</span></div>
+          </div>
         </div>
       </div>
       <div class="cap">
-        <p style="--i:0">One value changes: how many days an inactive account waits before it is disabled.</p>
-        <p style="--i:1">One command rebuilds the package. The same facts always produce the same files, so a diff of the output is the complete list of what changed.</p>
-        <p style="--i:2">The narrative, the machine-readable Security Decision Record, the policies, the procedures: every document that depends on the fact updates, with correct dates and word counts.</p>
-        <p style="--i:3">Every pull request can carry its compliance blast radius: which requirements and which documents the change touches, before it merges.</p>
+        <p style="--i:0">One value changes in the workbench: how many days an idle privileged account waits before it is disabled. The documents it feeds light up.</p>
+        <p style="--i:1">The change reads as a sentence, and one button commits it under your own name.</p>
+        <p style="--i:2">The build rewrites every document that depends on the fact: the narrative, the machine-readable Security Decision Record, the policies, the procedures, with correct dates and word counts. Same facts, same bytes, every time.</p>
+        <p style="--i:3">An owner publishes, and the agencies you let in read the new package in your trust center: every file hashed, every read logged.</p>
       </div>
     </div>
   </div>
@@ -511,31 +530,26 @@
     </div>
 
     <div class="step reveal">
-      <div class="step-art term"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>day one</span></div>
-<pre><code><span class="p">$</span> rampguide-import ssp-appendix-a.docx \
-    --out acme-compliance
-<span class="ok">✓</span> imported 323 controls → acme-compliance/
-  (12 with warnings — see import-report.md)
-  next: rampguide validate --content acme-compliance
-
-<span class="p">$</span> rampguide validate --content acme-compliance
-<span class="ok">✓</span> 323 statements, 2 solutions, 0 errors
-
-<span class="p">$</span> head -3 acme-compliance/import-report.md
-# Import report
-323 controls imported from 328 document
-record segments (5 table-of-contents rows
-skipped). Review order: warnings first…</code></pre></div>
+      <div class="step-art sheet doc"><span class="tab">day one</span>
+        <div class="bar"><span>import-report.md</span><span>NestPortal SSP · Appendix A</span></div>
+        <div class="body">
+          <h4>Import report</h4>
+          <p><span class="meta">323 controls imported from 328 document record segments · 5 table-of-contents rows skipped</span></p>
+          <p>Every word of the plan landed in the package as a statement for the control it answers. Nothing was silently dropped.</p>
+          <p><mark>12 with warnings</mark>: review those first.</p>
+          <p><span class="meta">323 statements · 2 solutions · 0 errors</span></p>
+        </div>
+      </div>
       <div>
         <div class="n">01</div>
         <h3>Start from what you have.</h3>
-        <p>Bring the System Security Plan you already maintain, as the Word Appendix A, the Appendix Q crypto table, or an OSCAL export. Every word lands as a statement file. Nothing is silently dropped; the import report lists what needs human eyes.</p>
-        <p>Starting fresh? Four questions produce a starter program that builds on the first try.</p>
+        <p>Bring the Moderate System Security Plan you already maintain, as the Word Appendix A, the Appendix Q crypto table, or its machine-readable OSCAL form. Every word lands in your package, nothing is silently dropped, and the import report lists what needs human eyes.</p>
+        <p>Starting fresh? Your package starts from the library's packs for the tools you run.</p>
       </div>
     </div>
 
     <div class="step flip reveal">
-      <div class="step-art term"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>dist/</span></div>
+      <div class="step-art term"><div class="bar"><span>the package · every build</span></div>
 <pre><code>docs/
   AC.md AT.md AU.md CA.md CM.md CP.md IA.md
   IR.md MA.md MP.md PE.md PL.md PS.md RA.md
@@ -567,25 +581,20 @@ inventory.json         <span class="dim">word counts, dates from git</span></cod
     </div>
 
     <div class="step flip reveal">
-      <div class="step-art term"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>every quarter, every change</span></div>
-<pre><code><span class="p">$</span> rampguide ocr --content . --since 2026-q2
-<span class="ok">✓</span> ocr with 14 change entries since 2026-q2 → dist/fedramp/ocr.json
-
-<span class="p">$</span> rampguide scn --content . --since main
-<span class="ok">✓</span> Adaptive change, 1 commit(s), 2 impacted requirement(s)
-  → dist/fedramp/scn.json
-
-<span class="p">$</span> rampguide vdr scans/2026-08-vdr.json
-scans/2026-08-vdr.json — FedRAMP Vulnerability Detail Report
-  checked against fedramp-vulnerability-detail-report-schema
-  period: 2026-08-01 → 2026-08-31
-  4 vulnerabilities: 2 still active, 1 fully mitigated, 1 false positive
-  internet-reachable: 2 · likely exploitable: 1 · overdue: 1
-<span class="ok">✓</span> 1 file(s) pass</code></pre></div>
+      <div class="step-art sheet doc"><span class="tab">every quarter, every change</span>
+        <div class="bar"><span>fedramp/ · generated</span><span>schema-checked</span></div>
+        <div class="body">
+          <h4>Ongoing Certification Report</h4>
+          <p><span class="meta">fedramp/ocr.json · 14 change entries since 2026-Q2, each from a commit</span></p>
+          <p>2026-09-12: Disable idle privileged accounts after <mark>30 days</mark> (affects AC-2(3), AC-2(5))</p>
+          <h4 style="margin-top:1rem">Significant Change Notification</h4>
+          <p><span class="meta">fedramp/scn.json · adaptive change · 1 commit · 2 impacted requirements</span></p>
+        </div>
+      </div>
       <div>
         <div class="n">04</div>
-        <h3>Stay authorized from the same repo.</h3>
-        <p>Continuous monitoring comes out of the history you already keep. The quarterly Ongoing Certification Report is computed from your commits. A Significant Change Notification is built from the branch that made the change. Vulnerability reports are checked against FedRAMP's schema and rules before anyone submits them.</p>
+        <h3>Stay authorized from the same history.</h3>
+        <p>Continuous monitoring comes out of the history your people already write in the workbench. The quarterly Ongoing Certification Report is computed from your commits, and the Significant Change Notification from the change that made it. One snapshot per report freezes what was published, kept for the life of the certification.</p>
       </div>
     </div>
   </div>
@@ -604,7 +613,7 @@ scans/2026-08-vdr.json — FedRAMP Vulnerability Detail Report
       <div class="sheet reveal d1"><span class="tab green">After</span><span class="stamp green thunk">Recompiled</span>
         <div class="giant green">1</div>
         <div class="what">set of facts. Everything else is generated.</div>
-        <p>Plain files in git. One command. A diff of the output is the complete list of what changed, and the readable documents and the machine-readable package can't disagree.</p>
+        <p>Plain files in git. One build. A comparison of two builds is the complete list of what changed, and the readable documents and the machine-readable package can't disagree.</p>
         <div class="tree" aria-hidden="true"><b>acme-compliance/</b>
 ├── params.yaml · profile.yaml · package.yaml
 ├── solutions/sso/solution.yaml   <span class="ok">← the fact</span>
@@ -617,44 +626,25 @@ scans/2026-08-vdr.json — FedRAMP Vulnerability Detail Report
 
 <section class="dark" id="library">
   <div class="wrap">
-    <div class="formrow reveal"><span class="no">08</span><span>The library</span><span class="meta">the part you pay for</span></div>
+    <div class="formrow reveal"><span class="no">08</span><span>The library</span><span class="meta">included in every plan</span></div>
     <div class="lib">
       <div class="reveal">
         <h2>Most of your package, already written.</h2>
-        <p class="lede" style="margin-top:1.1rem">Most companies run the same kinds of tools: single sign-on, logging, firewalls, scanning. The library ships professionally written, auditor-ready content for each, parameterized for your environment. Install a pack, answer its questions, and dozens of requirements gain solid language in a minute.</p>
+        <p class="lede" style="margin-top:1.1rem">Most companies run the same kinds of tools: single sign-on, logging, firewalls, scanning. The library holds professionally written, auditor-ready content for each, parameterized for your environment. Your package starts from the packs for the tools you run, and every value a pack sets is one you can change in the workbench.</p>
         <div class="stats">
-          <div><b>33</b><span>answer packs, professionally written</span></div>
-          <div><b>278</b><span>of the 323 Rev5 Moderate controls covered</span></div>
+          <div><b>33</b><span>packs, professionally written</span></div>
+          <div><b>278</b><span>of the 323 Rev5 Moderate controls with pre-written prose</span></div>
           <div><b>2</b><span>dialects, 20x through FedRAMP's published crosswalk</span></div>
         </div>
         <div class="facts">
-          <div><b>Your wording wins</b><p>Your edits live beside the pack and survive every update. Re-assemble, rebuild, diff.</p></div>
+          <div><b>Your wording wins</b><p>Your edits live beside the pack and survive every update.</p></div>
           <div><b>Swap vendors, not statements</b><p>Okta or Microsoft Entra, AWS or Azure. Only the vendor wording changes; your statements stay put.</p></div>
-          <div><b>Maintained</b><p>As FedRAMP's rules, baselines, and cryptographic-module data change, the packs change. Your next install pulls it.</p></div>
+          <div><b>Maintained</b><p>As FedRAMP's rules, baselines, and cryptographic-module data change, the packs change with them.</p></div>
           <div><b>Procedure-deep</b><p>The richest prose is operational: who opens which console, verifies which setting, files which report. That is what the Security Decision Record draws on.</p></div>
         </div>
-        <div style="margin-top:2rem"><a class="btn gold lg" href="pricing.html">Get the library <span class="arrow">→</span></a></div>
+        <div style="margin-top:2rem"><a class="btn gold lg" href="pricing.html">See pricing <span class="arrow">→</span></a></div>
       </div>
-      <div class="term reveal d1"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>rampguide add</span></div>
-<pre><code><span class="p">$</span> rampguide add sso --content .
-<span class="dim">? Which variant?</span> okta
-<span class="dim">? After how many days without a sign-in is an</span>
-<span class="dim">  account automatically disabled?</span> (35) 30
-<span class="dim">? After how many idle minutes must a user</span>
-<span class="dim">  session end?</span> (15) 15
-<span class="dim">? Which team administers your identity</span>
-<span class="dim">  provider?</span> Identity Engineering
-<span class="ok">✓</span> assembled sso (okta) → solutions/sso/solution.yaml
-  21 answered requirement(s) already have statements
-  — the pack's fragments are available to them
-  answers 12 requirement(s) missing statements:
-  ac-2.1, ac-2.2, ac-2.4, ac-2.13, ac-7, ac-11,
-  ia-2.1, ia-2.2, ia-2.8, ia-5, ia-5.1, ia-8
-
-<span class="p">$</span> rampguide build --content . --out dist
-<span class="ok">✓</span> built 18 docs, policies, procedures, crypto-modules,
-  fedramp/sdr.json, fedramp/cpo.json, oscal/ssp.json,
-  inventory.json → dist/</code></pre></div>
+      <figure class="lib-shot reveal d1"><img src="img/app-chip.png" alt="A control open for editing in the workbench. The value 35 in the blank AC-2(3)(d) is a highlighted chip; opened, it shows its field, labeled days before an idle privileged account is disabled, owned by the Wingdings SSO solution, with a Save button and the note that every document that prints it follows." width="1360" height="1372" loading="lazy"><figcaption>A pack's value in the workbench: set once, printed in every document that uses it.</figcaption></figure>
     </div>
     <div class="index-head reveal"><span><b>Index of packs</b> · 31 categories · 33 packs</span><span>category · variants · Rev5 controls answered</span></div>
     <ul class="index reveal">
@@ -702,7 +692,7 @@ scans/2026-08-vdr.json — FedRAMP Vulnerability Detail Report
         <h2>Where your package lives once it exists.</h2>
         <p class="lede" style="margin-top:1.1rem">FedRAMP no longer wants your package emailed around. Agencies request access, someone approves, they retrieve the current package, and every access and every denial is logged and reportable. On the 20x track this window is required from day one; on the classic Rev5 track, new certifications need it from 2027-01-01 and existing ones by 2027-08-01.</p>
         <p class="muted">RampGuide's trust center is that window, live at trust.rampguide.com and fed directly by your builds: an owner publishes from the app, and the package, the readable policies, and the document inventory land there, every file hashed. You decide who reads. Federal agency staff with a .gov or .mil address on the federal list kept by CISA, the Cybersecurity and Infrastructure Security Agency, can be let in automatically; everyone else waits for your approval. Every read is logged, and programs read the same package through the <a href="api.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">API</a>.</p>
-        <p class="muted"><a href="trust-center.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">Read the full trust center page →</a> <a href="trust-center.html#dates" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">The dates, rule set by rule set →</a> Want one for your offering? <a href="mailto:nathan@spiderstrategies.com?subject=Trust%20center" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">Tell us</a>.</p>
+        <p class="muted"><a href="trust-center.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">Read the full trust center page →</a> <a href="trust-center.html#dates" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">The dates, rule set by rule set →</a> Every subscription includes one for its offering.</p>
       </div>
       <div class="sheet reveal d1"><span class="tab gold">Example · fictional</span>
         <div class="win" aria-label="A trust center access log, illustrative">
@@ -731,8 +721,7 @@ scans/2026-08-vdr.json — FedRAMP Vulnerability Detail Report
           <tr><td>The machine-readable package</td><td>A separate project that drifts from the prose</td><td>An export, when the vendor supports the schema</td><td class="us">Generated from the same facts, schema-checked</td></tr>
           <tr><td>When a fact changes</td><td>Find and fix it in forty places</td><td>Edit it where their model allows</td><td class="us">Change one line; the diff shows what moved</td></tr>
           <tr><td>Continuous monitoring</td><td>Assemble reports by hand each quarter</td><td>Dashboards, inside the platform</td><td class="us">Computed from your git history</td></tr>
-          <tr><td>Runs inside your boundary</td><td><span class="yes">✓</span></td><td><span class="no">—</span></td><td class="us"><span class="yes">✓</span> the command line: no AI, no network at build time</td></tr>
-          <tr><td>Price</td><td>Hours</td><td>$25,000 to $60,000 a year for a Rev5 package; $55,000 to $125,000 with continuous monitoring (list prices, read 2026-09-28)</td><td class="us">Compiler included · library from $6,000 a year</td></tr>
+          <tr><td>Price</td><td>Hours</td><td>$25,000 to $60,000 a year for a Rev5 package; $55,000 to $125,000 with continuous monitoring (list prices, read 2026-09-28)</td><td class="us">$6,000 a year per offering: the app, the library and the trust center</td></tr>
         </tbody>
       </table>
     </div>
@@ -744,12 +733,11 @@ scans/2026-08-vdr.json — FedRAMP Vulnerability Detail Report
     <div class="formrow reveal"><span class="no">11</span><span>Pricing</span><span class="meta">per cloud service offering · per year</span></div>
     <div class="section-head reveal">
       <h2>One price per offering. No seats.</h2>
-      <p class="lede">A cloud service offering is what FedRAMP authorizes; one program repo generates one offering's package. Founding customers get 50% off year one.</p>
+      <p class="lede">A cloud service offering is what FedRAMP authorizes; one program repo generates one offering's package. Every plan is the whole app: the workbench, the library and your trust center. Founding customers get 50% off year one.</p>
     </div>
     <div class="strip">
-      <div class="sheet reveal"><span class="tab">Software</span><div class="name">Engine</div><div class="price">Included</div><p>Importer, builder, validators, the ongoing-monitoring reports, and the hosted workbench. A command line too, for teams who must build inside their own boundary.</p></div>
-      <div class="sheet us reveal d1"><span class="tab ink">Most teams</span><span class="stamp">Founding · 50% off yr 1</span><div class="name">Library</div><div class="price">$6,000<small> / year</small></div><p>All 33 answer packs, both dialects, vendor variants, updates as FedRAMP changes.</p></div>
-      <div class="sheet reveal d2"><span class="tab gold">Complete</span><div class="name">Library + onboarding</div><div class="price">$15,000<small> / year</small></div><p>We bring your existing program across, map it to the library, and stay on the line.</p></div>
+      <div class="sheet us reveal"><span class="tab ink">Most teams</span><span class="stamp">Founding · 50% off yr 1</span><div class="name">RampGuide</div><div class="price">$6,000<small> / year</small></div><p>The hosted app, all 33 packs and their updates, and your trust center at trust.rampguide.com.</p></div>
+      <div class="sheet reveal d1"><span class="tab gold">Complete</span><div class="name">RampGuide + onboarding</div><div class="price">$15,000<small> / year</small></div><p>Everything in RampGuide, plus a call to bring your existing program across and people on the line through your assessment.</p></div>
     </div>
     <div class="reveal" style="margin-top:1.6rem"><a class="btn lg" href="pricing.html">See pricing and sign up <span class="arrow">→</span></a></div>
   </div>
@@ -761,10 +749,10 @@ scans/2026-08-vdr.json — FedRAMP Vulnerability Detail Report
     <div class="cta-final reveal">
       <span class="stamp big thunk">Compiled</span>
       <h2>Ready to get your paperwork done?</h2>
-      <p>Start with the library and your first pack lands in a minute. Or open the interactive walkthrough first: every file in the pipeline, hover for its story.</p>
+      <p>Take the product tour on a fictional program, or open the interactive walkthrough: every file in the pipeline, hover for its story.</p>
       <div style="display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center;position:relative">
         <a class="btn lg" href="pricing.html">See pricing</a>
-        <a class="btn lg ghost" href="how-it-works.html">See exactly how it works <span class="arrow">→</span></a>
+        <a class="btn lg ghost" href="product.html">Take the product tour <span class="arrow">→</span></a>
       </div>
     </div>
   </div>

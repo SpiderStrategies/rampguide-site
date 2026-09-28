@@ -19,25 +19,35 @@ node tools/build.ts --check  # fails if a root page is stale
 No dependencies; Node ≥ 22 runs the script directly. `how-it-works.html`
 is not built — it is a self-contained page and stays edited by hand.
 
-- `index.html` — the marketing page: hero, the animated build
-  storyboard, before/after, the three product mocks, why, the library,
-  the alternatives, a pricing strip, the closing call to action.
-- `pricing.html` — the three plans and the signup forms. Each form
+The site sells one hosted app, with the library and the trust center
+inside it, and never mentions a command line, a library key or
+`rampguide add` (Nate, 2026-09-28). The pictures of the app are drawn in
+the site's own paper (`.app`, `.ui` in `src/index.html`) or are the
+screenshots in `img/`; the dark file windows show files, never a prompt.
+
+- `index.html` — the marketing page: hero (a generated document and the
+  Publish steps), what we sell, the storyboard (a value changed in the
+  workbench, reviewed and committed, the documents updated, the package
+  an agency reads), how it works, before/after, the library, the trust
+  center, the alternatives, a pricing strip, the closing call to action.
+- `pricing.html` — two plans (RampGuide and Complete; the trust center is
+  in both), which frameworks it builds today, and the signup forms. Each form
   posts (`tier`, `org`, `cso`) to `https://api.rampguide.com/v1/checkout`
   (rampguide-api), which redirects to Stripe's hosted Checkout. Card
   data never touches this site.
-- `welcome.html` — Stripe's success page. Reads `session_id` from the
-  URL, calls `/v1/claim` once, and shows the library key exactly once.
+- `welcome.html` — Stripe's success page: what happens next (the trust
+  center within one business day, the owner's invitation, passkeys, the
+  team, the workbench). Static; it shows no key and calls nothing.
 - `product.html` — the product tour of the hosted app: six screenshots
   (`img/app-*.png`, captured 2026-09-28 from a local instance of
   rampguide-trust with the fictional ACME RoadRunner tenant) of the
   workbench (a question, a value chip, review and commit), Publish,
-  Access, and the package as an agency reads it; then the command line
-  underneath, and the interactive walkthrough embedded.
+  Access, and the package as an agency reads it; then the interactive
+  walkthrough embedded.
 - `trust-center.html` — product two, live at trust.rampguide.com since
   2026-09-23: what an agency does there, how a build reaches it, where it
-  runs (hosted; the build can stay inside the customer's boundary), and
-  an honest list of what is and is not built.
+  runs (hosted, one per offering, in every plan), and an honest list of
+  what is and is not built.
 - `api.html` — the trust center's API for programs: the OpenAPI document,
   three ways to authenticate, and every route and rule, read live from
   `trust.rampguide.com/v1/openapi.json` when the page opens (the trust

@@ -2,7 +2,7 @@
    Typeface: Nebula Sans (self-hosted, SIL OFL — see fonts/license.txt).
    Identity: official paperwork, made light. Near-white paper, one
    confident federal blue, gold and green accents, rubber stamps, and
-   navy terminals doing the work. */
+   navy file windows showing the work. */
 
 @font-face { font-family: 'Nebula Sans'; src: url(fonts/NebulaSans-Book.woff2) format('woff2'); font-weight: 400; font-display: swap; }
 @font-face { font-family: 'Nebula Sans'; src: url(fonts/NebulaSans-Medium.woff2) format('woff2'); font-weight: 500; font-display: swap; }
@@ -294,10 +294,7 @@ section.dark .kicker { color: var(--term-gold); }
 .faq details[open] summary::after { content: '–'; }
 .faq details p { color: var(--ink-2); margin: 0.8rem 0 0; max-width: 60em; }
 
-/* ---------- key reveal (welcome) ---------- */
-.keybox { background: linear-gradient(180deg, var(--term-2), var(--term)); color: var(--term-fg); border-radius: 12px; padding: 20px 22px; font-family: var(--mono); font-size: 0.95rem; line-height: 1.7; overflow-x: auto; box-shadow: var(--glow); }
-.keybox .k { color: #fff; font-weight: 700; word-break: break-all; }
-.keybox .p { color: var(--term-dim); }
+/* ---------- notices ---------- */
 .notice { border: 1px solid var(--line); border-left: 4px solid var(--amber); background: var(--sheet); border-radius: 8px; padding: 14px 18px; font-size: 0.95rem; color: var(--ink-2); }
 .notice.bad { border-left-color: var(--red); }
 .notice.good { border-left-color: var(--green); }

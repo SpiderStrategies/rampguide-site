@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pricing — RampGuide</title>
-<meta name="description" content="RampGuide pricing: the compiler is included. The maintained FedRAMP content library is $6,000 per year per cloud service offering; Complete adds white-glove onboarding at $15,000. Founding customers get 50% off year one.">
+<meta name="description" content="RampGuide pricing: one hosted app with the workbench, the maintained FedRAMP content library and your trust center, $6,000 per year per cloud service offering. Complete adds onboarding at $15,000. Founding customers get 50% off year one.">
 <meta property="og:title" content="RampGuide pricing">
-<meta property="og:description" content="The compiler is included. The maintained content library is $6,000 per cloud service offering per year; Complete, with onboarding, $15,000. Founding customers: 50% off year one.">
+<meta property="og:description" content="One app with the content library and your trust center inside: $6,000 per cloud service offering per year; Complete, with onboarding, $15,000. Founding customers: 50% off year one.">
 <meta property="og:url" content="https://rampguide.com/pricing.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://rampguide.com/og.png">
@@ -25,6 +25,8 @@
   }
   .founding b { color: var(--gold-deep); }
   .founding small { color: var(--ink-3); font-size: 0.78rem; font-family: var(--mono); letter-spacing: 0.02em; }
+  .tiers.two { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 900px) { .tiers.two { grid-template-columns: 1fr; } }
   .unit { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; margin-top: clamp(32px, 4vw, 56px); }
   .unit div { border-top: 2px solid var(--ink); padding-top: 0.9rem; font-size: 0.95rem; color: var(--ink-2); }
   .unit div b { display: block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.5rem; }
@@ -33,6 +35,19 @@
   .tc-band { display: grid; grid-template-columns: 1fr auto; gap: 1rem 2rem; align-items: center; }
   .tc-band > * { min-width: 0; }
   @media (max-width: 700px) { .tc-band { grid-template-columns: 1fr; justify-items: start; } }
+
+  /* which frameworks, today: status as a dot beside a word */
+  .fw { list-style: none; margin: clamp(20px, 3vw, 32px) 0 0; padding: 0; background: var(--sheet); border: 1px solid var(--blue-line); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .fw li { display: grid; grid-template-columns: 7.5rem minmax(0, 17rem) 1fr; gap: 0.3rem 1.4rem; align-items: baseline; padding: 1.05rem 1.4rem; border-top: 1px solid var(--line-soft); }
+  .fw li:first-child { border-top: 0; }
+  .fw li > * { min-width: 0; }
+  .fw b { font-weight: 500; letter-spacing: -0.01em; }
+  .fw li > span:last-child { color: var(--ink-2); font-size: 0.95rem; }
+  .fw .st { font-family: var(--mono); font-size: 0.64rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); display: inline-flex; align-items: center; gap: 0.5em; }
+  .fw .st::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
+  .fw .st.built { color: var(--green); }
+  .fw .st.next { color: var(--gold-deep); }
+  @media (max-width: 800px) { .fw li { grid-template-columns: 1fr; padding: 1rem 1.1rem; } }
 </style>
 </head>
 <body>
@@ -45,7 +60,8 @@
       <a href="product.html">Product tour</a>
       <a href="trust-center.html">Trust center</a>
       <a href="pricing.html">Pricing</a>
-      <a class="btn" href="pricing.html">Get the library <span class="arrow">→</span></a>
+      <a href="https://trust.rampguide.com/">Sign in</a>
+      <a class="btn" href="pricing.html">Get started <span class="arrow">→</span></a>
     </nav>
   </div>
 </header>
@@ -56,8 +72,8 @@
   <div class="wrap">
     <div class="section-head" style="max-width:52rem">
       <span class="kicker">Pricing</span>
-      <h1 style="margin-top:1rem">The compiler is included.<br>The content is what you buy.</h1>
-      <p class="lede">The software that generates your FedRAMP package comes with every plan: the hosted app, and a command line for teams who must build inside their own boundary. The pre-written, kept-current content is one price per cloud service offering per year. No seats, no per-document fees, and your program stays plain files in git, yours to take with you.</p>
+      <h1 style="margin-top:1rem">One app.<br>One price per offering.</h1>
+      <p class="lede">Every plan is the whole app: the workbench where your people answer, the library that writes most of the package, and the trust center agencies read. One price per cloud service offering per year. No seats, no per-document fees, and your program stays plain files in git, a full copy yours whenever you ask.</p>
     </div>
   </div>
 </section>
@@ -67,40 +83,24 @@
     <div id="checkout-notice" class="notice bad" hidden style="margin-bottom:clamp(18px,3vw,28px)"></div>
     <div class="founding reveal">
       <div><b>Founding customers:</b> 50% off your first year for the first ten customers who sign before December 31, 2026. Applied automatically at checkout.</div>
-      <small>annual billing · card via Stripe · key shown once, right after payment</small>
+      <small>annual billing · card via Stripe · your trust center within one business day</small>
     </div>
 
-    <div class="tiers">
-      <div class="sheet tier reveal"><span class="tab">Engine</span>
-        <div class="name">Engine</div>
-        <div class="price">Included</div>
-        <div class="per">in every plan · hosted, or inside your boundary</div>
-        <p class="desc">Everything that generates the package: the importer, the builder, the validators. It runs in the hosted app, where your people answer, review and commit in the workbench, and as a command line for teams who must build inside their own boundary. Your facts stay in git and the whole submission is produced from them.</p>
-        <ul class="check-list">
-          <li><strong>The whole package</strong>: narratives, policies, procedures, the crypto-module inventory, SDR / CPO / OCR / SCN, OSCAL SSP, document inventory</li>
-          <li><strong>Start from your existing SSP</strong> (Word Appendix A or OSCAL)</li>
-          <li><strong>Both tracks</strong>: Rev5 and 20x from one repo</li>
-          <li><strong>Schema checks</strong> against FedRAMP's published schemas</li>
-          <li><strong>Continuous monitoring outputs</strong>: OCR, SCN, VDR pre-checks, change blast radius</li>
-          <li><strong>The workbench</strong> in the hosted app for the gaps and the maintenance loop</li>
-          <li>The command line runs offline, inside your boundary</li>
-        </ul>
-        <a class="btn ghost block" href="how-it-works.html">See how it works <span class="arrow">→</span></a>
-        <p class="note">The command line is included with every subscription, to run inside your own boundary.</p>
-      </div>
-
-      <div class="sheet tier featured reveal d1"><span class="tab ink">Most teams</span><span class="stamp">Founding · 50% off yr 1</span>
-        <div class="name">Library</div>
+    <div class="tiers two">
+      <div class="sheet tier featured reveal"><span class="tab ink">Most teams</span><span class="stamp">Founding · 50% off yr 1</span>
+        <div class="name">RampGuide</div>
         <div class="price">$6,000<small> / year</small></div>
         <div class="per">per cloud service offering · $500 a month, billed annually</div>
-        <p class="desc">Most of your package, already written: professionally authored, parameterized answer packs for the tools you run, kept current as FedRAMP changes.</p>
+        <p class="desc">The hosted app with most of your package already written: the workbench, the library, and your trust center.</p>
         <ul class="check-list">
-          <li><strong>Everything in Engine</strong></li>
-          <li><strong>All 33 answer packs</strong>, mapped to 278 of the 323 Rev5 Moderate controls</li>
-          <li><strong>Both dialects</strong>: 20x coverage through FedRAMP's published crosswalk</li>
+          <li><strong>The whole package</strong>: narratives, policies, procedures, the crypto-module inventory, SDR / CPO / OCR / SCN, OSCAL SSP, document inventory</li>
+          <li><strong>The workbench</strong>: your people answer, review and commit as themselves</li>
+          <li><strong>All 33 packs</strong>: values and pre-written operational prose for 278 of the 323 Rev5 Moderate controls</li>
           <li><strong>Vendor variants</strong>: Okta or Entra, AWS or Azure. Swap the pack, not your statements</li>
-          <li><strong>Updates as FedRAMP changes</strong>: new rules, baseline transitions, refreshed cryptographic-module data</li>
-          <li><strong>Your wording wins</strong>: overrides survive every update</li>
+          <li><strong>Updates as FedRAMP changes</strong>: new rules, baseline transitions, refreshed cryptographic-module data. Your wording wins</li>
+          <li><strong>Your trust center</strong> at trust.rampguide.com: requests, tiers, every read logged</li>
+          <li><strong>Start from your existing Moderate SSP</strong> (Word Appendix A, or its machine-readable OSCAL form)</li>
+          <li><strong>Both FedRAMP programs</strong>: Rev5 Moderate and 20x, from one repository</li>
         </ul>
         <form method="post" action="https://api.rampguide.com/v1/checkout" data-checkout>
           <input type="hidden" name="tier" value="library">
@@ -111,17 +111,17 @@
         <p class="note">Card and billing details are entered on Stripe's hosted page. Nothing about your card ever touches rampguide.com.</p>
       </div>
 
-      <div class="sheet tier reveal d2"><span class="tab">Complete</span>
+      <div class="sheet tier reveal d1"><span class="tab">Complete</span>
         <div class="name">Complete</div>
         <div class="price">$15,000<small> / year</small></div>
         <div class="per">per cloud service offering · billed annually</div>
-        <p class="desc">Library plus white-glove onboarding: we bring your existing program across, map it to the library, and stay on the line.</p>
+        <p class="desc">Everything in RampGuide, plus people: we bring your existing program across with you, map it to the library, and stay on the line through your assessment.</p>
         <ul class="check-list">
-          <li><strong>Everything in Library</strong></li>
-          <li><strong>We import your existing SSP</strong> and review the import report with you</li>
+          <li><strong>Everything in RampGuide</strong></li>
+          <li><strong>A call within one business day</strong> to bring your existing SSP in and go through what the import flagged, with you</li>
           <li><strong>Pack matching</strong>: we run the matcher over your statements and map your program to the library</li>
           <li><strong>Priority pack requests</strong>: a tool we don't cover yet goes to the front of the queue</li>
-          <li><strong>Direct support</strong> from the people who write the packs</li>
+          <li><strong>Direct support</strong> from the people who write the packs, through your assessment</li>
         </ul>
         <form method="post" action="https://api.rampguide.com/v1/checkout" data-checkout>
           <input type="hidden" name="tier" value="complete">
@@ -129,15 +129,15 @@
           <label>Cloud service offering <input name="cso" required maxlength="80" placeholder="NestPortal"></label>
           <button class="btn ghost block" type="submit">Continue to checkout <span class="arrow">→</span></button>
         </form>
-        <p class="note">We'll reach out within one business day of your purchase to schedule the import.</p>
+        <p class="note">Within one business day of your purchase we set up your trust center and offer a time for the call.</p>
       </div>
     </div>
 
-    <div class="sheet reveal" style="margin-top:clamp(24px,3vw,40px);padding:clamp(20px,2.6vw,30px)"><span class="tab green">Live</span>
+    <div class="sheet reveal" style="margin-top:clamp(24px,3vw,40px);padding:clamp(20px,2.6vw,30px)"><span class="tab green">Included</span>
       <div class="tc-band">
         <div>
           <div style="font-size:1.25rem;font-weight:700;letter-spacing:-.02em">Trust center</div>
-          <p class="muted" style="margin:.4rem 0 0;max-width:60em">The secure window where government customers request, review, and download your package, with every access logged. Required on the 20x track now; on the classic Rev5 track, for new certifications from 2027-01-01 and existing ones by 2027-08-01 (<a href="trust-center.html#dates" style="text-decoration:underline;text-underline-offset:3px">the dates</a>). Live at trust.rampguide.com, beside the app that builds your package. Pricing: <a href="mailto:nathan@spiderstrategies.com?subject=Trust%20center%20pricing" style="text-decoration:underline;text-underline-offset:3px">ask us</a>.</p>
+          <p class="muted" style="margin:.4rem 0 0;max-width:60em">The secure window where government customers request, review, and download your package, with every access logged. Required on the 20x track now; on the classic Rev5 track, for new certifications from 2027-01-01 and existing ones by 2027-08-01 (<a href="trust-center.html#dates" style="text-decoration:underline;text-underline-offset:3px">the dates</a>). Live at trust.rampguide.com, one per offering, in every plan.</p>
         </div>
         <a class="btn ghost" href="trust-center.html">Read about it <span class="arrow">→</span></a>
       </div>
@@ -145,31 +145,25 @@
 
     <div class="unit reveal">
       <div><b>What's a cloud service offering?</b> The thing FedRAMP authorizes: one product, one boundary, one package. One RampGuide content repo compiles one offering. That's the unit you pay for.</div>
-      <div><b>Why a subscription?</b> Compliance content decays. Rules change, baselines transition, cryptographic-module certificates lapse. The maintenance is the product; your next <code>rampguide add</code> pulls the current pack.</div>
-      <div><b>Why so much less than the platforms?</b> The leading hosted platform lists a FedRAMP Rev5 package at $25,000 to $60,000 a year by impact level, and $55,000 to $125,000 with continuous monitoring (its published prices, read 2026-09-28), and keeps your program inside its database. Yours stays plain files in git, a full copy yours whenever you ask, and the compiler that builds it is included; you pay for the content and its upkeep.</div>
+      <div><b>Why a subscription?</b> Compliance content decays. Rules change, baselines transition, cryptographic-module certificates lapse. The maintenance is the product: the packs change as FedRAMP does, and your edits survive every update.</div>
+      <div><b>Why so much less than the platforms?</b> The leading hosted platform lists a FedRAMP Rev5 package at $25,000 to $60,000 a year by impact level, and $55,000 to $125,000 with continuous monitoring (its published prices, read 2026-09-28), and keeps your program inside its database. Yours stays plain files in git, a full copy yours whenever you ask, and one price covers the app, the library and the trust center.</div>
     </div>
   </div>
 </section>
 
-<section class="alt">
+<section class="alt" id="frameworks">
   <div class="wrap">
-    <div class="formrow reveal"><span class="no">02</span><span>Side by side</span><span class="meta">what each plan includes</span></div>
-    <div class="sheet reveal" style="padding:0.5rem 0.75rem;overflow-x:auto">
-      <table class="compare">
-        <thead><tr><th></th><th>Engine</th><th>Library</th><th>Complete</th></tr></thead>
-        <tbody>
-          <tr><td>Engine: importer, builder, validators, the hosted workbench</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>Rev5 and 20x from one repo</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>Machine-readable Certification Package, schema-checked</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>The 33 maintained answer packs, both dialects, vendor variants</td><td><span class="no">—</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>Updates as FedRAMP rules, baselines, and crypto data change</td><td><span class="no">—</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>Library key for <code>rampguide add</code></td><td><span class="no">—</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>We import your existing SSP and map your program</td><td><span class="no">—</span></td><td><span class="no">—</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>Priority pack requests, direct support</td><td><span class="no">—</span></td><td><span class="no">—</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>Price per offering, per year</td><td>Included</td><td>$6,000</td><td>$15,000</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="formrow reveal"><span class="no">02</span><span>Which frameworks, today</span><span class="meta">what it builds, and what it does not yet</span></div>
+    <div class="section-head reveal" style="max-width:52rem"><h2>Exactly what it builds today.</h2>
+      <p class="lede">RampGuide builds FedRAMP packages. This is exactly what it compiles and publishes today, and what it does not do yet.</p></div>
+    <ul class="fw reveal">
+      <li><span class="st built">Built</span><b>FedRAMP Rev5 Moderate</b><span>All 323 controls. The library's packs supply the values and the operational prose for 278 of them.</span></li>
+      <li><span class="st built">Built</span><b>FedRAMP 20x</b><span>Built, without the class. The 46 Key Security Indicators compile from the same facts as Rev5; the library reaches 43 through FedRAMP's published crosswalk. The class, and the automated evidence Class C and D require, are not built yet.</span></li>
+      <li><span class="st next">Next</span><b>FedRAMP Rev5 Low and High</b><span>Not built yet.</span></li>
+      <li><span class="st next">Next</span><b>CMMC Level 2</b><span>The Cybersecurity Maturity Model Certification, the Department of Defense's program for its contractors. Not built yet.</span></li>
+      <li><span class="st">Not built</span><b>Department of Defense Impact Levels 4 and 5</b><span>Tell us if you need them.</span></li>
+      <li><span class="st">Not offered</span><b>LI-SaaS</b><span>FedRAMP's 2026 rules no longer name it; a low-impact SaaS goes through 20x Class A.</span></li>
+    </ul>
   </div>
 </section>
 
@@ -178,28 +172,28 @@
     <div class="formrow reveal"><span class="no">03</span><span>Questions</span><span class="meta">the short answers</span></div>
     <div class="faq reveal">
       <details>
-        <summary>Do I need the library to use RampGuide?</summary>
-        <p>Every plan includes it, and no requirement has to use a pack. The engine generates the package from whatever facts are in your repo, and the importer brings your existing prose across word for word. Packs are for the requirements where you would rather start from auditor-ready, parameterized content for the tools everyone runs, and keep it current without writing it yourself.</p>
+        <summary>Is the library extra?</summary>
+        <p>No. Every plan includes all 33 packs and their updates. No requirement has to use a pack: the compiler builds the package from whatever facts are in your repository, and an import brings your existing prose across word for word. Packs are for the requirements where you would rather start from auditor-ready content for the tools everyone runs, and keep it current without writing it yourself.</p>
       </details>
       <details>
         <summary>What happens when FedRAMP changes something?</summary>
-        <p>We update the packs. Your next <code>rampguide add</code> re-assembles the current pack with your overrides layered on top, so your edits survive and the new language lands. Rebuild, diff <code>dist/</code>, and you can see exactly what moved.</p>
+        <p>We update the packs, and the compiler follows FedRAMP's rules, baselines and cryptographic-module data. Your own wording lives beside the pack and survives every update. The same facts always build the same bytes, so comparing two builds shows exactly what moved.</p>
       </details>
       <details>
-        <summary>Does my compliance content leave my environment?</summary>
-        <p>In the hosted app, your package lives with us: plain files in a git repository we store for you, and a full copy (a git bundle you clone like any repository) is yours whenever you ask. Builds use no AI. If your boundary requires that nothing leaves, run the command line inside it instead: builds make no network calls, and the library service sees only which key downloaded which pack.</p>
+        <summary>Where does my compliance content live?</summary>
+        <p>With us, in the hosted app: plain files in a git repository we store for you. A full copy, a git bundle you clone like any repository, is yours whenever you ask. Builds use no AI.</p>
       </details>
       <details>
-        <summary>What exactly do I receive after paying?</summary>
-        <p>A library key, shown once on the page right after checkout. Two lines in your shell, the library URL and the key, and <code>rampguide add --list</code> shows every pack with how many of your gaps it fills. Keep the key somewhere safe; we store only a hash of it and can't show it again. If you lose it, we revoke it and issue a new one.</p>
+        <summary>What happens after I pay?</summary>
+        <p>Within one business day we create your trust center at trust.rampguide.com and email an invitation to the address on your receipt. That person enrolls with a passkey, becomes the owner, and invites the rest of your team into the workbench. On Complete, we also offer a time for the call that brings your existing SSP in.</p>
       </details>
       <details>
         <summary>Can I cancel?</summary>
-        <p>Yes, any time from the receipt Stripe emails you. The subscription runs to the end of the paid year, then stops; the key stops working when the subscription ends. What you've already installed stays in your repo. Terms and refund details are being finalized; ask us before you buy if they matter to your decision.</p>
+        <p>Yes, any time from the receipt Stripe emails you. The subscription runs to the end of the paid year, then stops. Ask for the full copy of your repository before then; it is yours. Terms and refund details are being finalized; ask us before you buy if they matter to your decision.</p>
       </details>
       <details>
         <summary>Is RampGuide itself FedRAMP authorized?</summary>
-        <p>No. The hosted app is not FedRAMP authorized, and nothing here implies endorsement or certification by FedRAMP or the U.S. General Services Administration. If your program needs the build to stay inside your own authorization boundary, the command line runs there. Ask us what your assessor will want to know about the hosted app.</p>
+        <p>No. The hosted app is not FedRAMP authorized, and nothing here implies endorsement or certification by FedRAMP or the U.S. General Services Administration. Ask us what your assessor will want to know about the hosted app.</p>
       </details>
       <details>
         <summary>More than a few offerings, a purchase order, or a reseller?</summary>

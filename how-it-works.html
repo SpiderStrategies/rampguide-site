@@ -141,7 +141,7 @@ svg .fserif{font-family:var(--serif)}
 
 <div id="stage">
   <svg id="scene" viewBox="0 0 1560 1040" preserveAspectRatio="xMidYMid meet"
-       role="img" aria-label="Dependency graph: source files flow through the rampguide build compiler into compiled documents"></svg>
+       role="img" aria-label="Dependency graph: source files flow through the build into compiled documents"></svg>
 </div>
 
 <div id="corner">
@@ -223,7 +223,7 @@ const TIP = {
   ksi2:{k:'SOURCE FILE — YOU EDIT THIS', t:'statements/mla/ksi-mla-let.md', b:'The answer to KSI-MLA-LET (Monitoring, Logging &amp; Auditing — Logging Event Types): which event types NestPortal logs. It never references BadgeKeeper, so a BadgeKeeper change passes it by — same lesson, new dialect.'},
   iamk:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'IAM.md', b:'The Identity &amp; Access chapter auditors read on the 20x track: one narrative per indicator, from the statement files. Nobody types in this file — it is built.', out:1},
   sdrk:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'sdr.json', b:'The same machine-readable report as the classic track — one government schema serves both. On 20x it carries the keySecurityIndicators section: status, implementation, validation, and typed evidence references.', out:1},
-  comp:{k:'THE COMPILER', t:'rampguide build', b:'Validates every file, resolves every <code>{{reference}}</code> to its one true value — tracking provenance, i.e. which sources fed which output — and emits every document at once. Identical input, byte-identical output.'},
+  comp:{k:'THE COMPILER', t:'the build', b:'Validates every file, resolves every <code>{{reference}}</code> to its one true value — tracking provenance, i.e. which sources fed which output — and emits every document at once. Identical input, byte-identical output.'},
   acmd:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'AC.md', b:'The Access Control chapter auditors read: one narrative per requirement, straight from the statement files. Nobody types in this file — it is built.', out:1},
   pol:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'policies.md', b:'The external rulebook: each family’s purpose and roles, then the one-line policy tier from every statement that defines one. “We do X” — no how, no tooling detail.', out:1},
   proc:{k:'COMPILED OUTPUT — NEVER HAND-EDITED', t:'procedures.md', b:'The internal manual: each statement’s step-by-step procedure tier — or its narrative, when no separate steps exist — collected for the people who operate the system.', out:1},
@@ -490,7 +490,7 @@ const stagePills = [];
   el('rect', {x:'4', y:'4', width:n.w-8, height:n.h-8, rx:'11',
     fill:'none', stroke:'rgba(255,255,255,.05)'}, g);
   el('text', {x:n.w/2, y:34, 'font-size':'13.5', fill:'#fbfaf7', 'font-weight':'600',
-    class:'fmono', 'text-anchor':'middle', text:'rampguide build'}, g);
+    class:'fmono', 'text-anchor':'middle', text:'the build'}, g);
   el('line', {x1:'16', y1:'46', x2:n.w-16, y2:'46', stroke:'rgba(255,255,255,.08)'}, g);
   const names = ['validate','resolve','emit'];
   names.forEach((nm, i) => {
