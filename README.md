@@ -31,7 +31,9 @@ screenshots in `img/`; the dark file windows show files, never a prompt.
   an agency reads), how it works, before/after, the library, the trust
   center, the alternatives, a pricing strip, the closing call to action.
 - `pricing.html` — two plans (RampGuide and Complete; the trust center is
-  in both), which frameworks it builds today, and the signup forms. Each form
+  in both), which frameworks it builds today (the full list; the home
+  page's Frameworks card is its short form, and both change the week the
+  app's list does), and the signup forms. Each form
   posts (`tier`, `org`, `cso`) to `https://api.rampguide.com/v1/checkout`
   (rampguide-api), which redirects to Stripe's hosted Checkout. Card
   data never touches this site.

@@ -91,8 +91,26 @@
   .builton .lbl { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); margin-right: 0.4rem; }
   .builton span:not(.lbl) { font-size: 0.82rem; color: var(--ink-2); background: #fff; border: 1px solid var(--line); border-radius: 100px; padding: 0.4em 0.85em; }
   .builton span b { color: var(--blue); font-weight: 500; }
-  .builton a { font-size: 0.82rem; color: var(--blue); font-weight: 500; padding: 0.4em 0.2em; }
-  .builton a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ---------- frameworks, today: status as a dot beside a word ---------- */
+  section.fw-band { padding: clamp(32px, 4.5vw, 56px) 0 0; }
+  .fw-card { display: grid; grid-template-columns: 0.85fr 1.25fr; gap: clamp(20px, 4vw, 64px); padding: clamp(26px, 3.2vw, 40px); align-items: start; }
+  .fw-card > * { min-width: 0; }
+  .fw-card h2 { font-size: clamp(1.7rem, 2.8vw, 2.4rem); margin: 0.3rem 0 0.8rem; }
+  .fw-head p { color: var(--ink-2); margin: 0 0 1.1rem; }
+  .fw-head a { color: var(--blue); font-weight: 500; }
+  .fw-head a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .fw-list { list-style: none; margin: 0; padding: 0; }
+  .fw-list li { display: grid; grid-template-columns: 6.8rem 1fr; gap: 0.15rem 1rem; align-items: baseline; padding: 0.8rem 0; border-top: 1px solid var(--line-soft); }
+  .fw-list li:first-child { border-top: 0; padding-top: 0.3rem; }
+  .fw-list b { font-weight: 500; font-size: 1.05rem; letter-spacing: -0.01em; }
+  .fw-list small { grid-column: 2; color: var(--ink-3); font-size: 0.86rem; }
+  .fw-list .st { font-family: var(--mono); font-size: 0.64rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); display: inline-flex; align-items: center; gap: 0.5em; }
+  .fw-list .st::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
+  .fw-list .st.built { color: var(--green); }
+  .fw-list .st.next { color: var(--gold-deep); }
+  @media (max-width: 800px) { .fw-card { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .fw-list li { grid-template-columns: 1fr; gap: 0.3rem; } .fw-list small { grid-column: 1; } }
 
   /* ---------- storyboard: four frames on a 16s loop, pure CSS ---------- */
   .story { --T: 16s; --stage: 4s; overflow: hidden; border-radius: 14px; }
@@ -323,6 +341,25 @@
   <span>docs/AC.md</span><span>docs/AT.md</span><span>docs/AU.md</span><span>docs/CA.md</span><span>docs/CM.md</span><span>docs/CP.md</span><span>docs/IA.md</span><span>docs/IR.md</span><span>docs/MA.md</span><span>docs/MP.md</span><span>docs/PE.md</span><span>docs/PL.md</span><span>docs/PS.md</span><span>docs/RA.md</span><span>docs/SA.md</span><span>docs/SC.md</span><span>docs/SI.md</span><span>docs/SR.md</span><span>docs/policies.md</span><span>docs/procedures.md</span><span>docs/crypto-modules.md</span><span>fedramp/sdr.json</span><span>fedramp/cpo.json</span><span>fedramp/ocr.json</span><span>fedramp/scn.json</span><span>oscal/ssp.json</span><span>inventory.json</span>
 </div></div>
 
+<section class="fw-band" id="frameworks">
+  <div class="wrap">
+    <div class="sheet fw-card reveal"><span class="tab ink">Frameworks</span>
+      <div class="fw-head">
+        <h2>What it builds today.</h2>
+        <p>RampGuide builds FedRAMP packages. This is exactly what it compiles and publishes today, what comes next, and what it does not do.</p>
+        <a href="pricing.html#frameworks">Every framework, in detail →</a>
+      </div>
+      <ul class="fw-list">
+        <li><span class="st built">Built</span><b>FedRAMP Rev5 Moderate</b><small>All 323 controls; the library writes the values and prose for 278.</small></li>
+        <li><span class="st built">Built</span><b>FedRAMP 20x</b><small>The 46 Key Security Indicators, from the same facts. The class is not built yet.</small></li>
+        <li><span class="st next">Next</span><b>FedRAMP Rev5 Low and High</b></li>
+        <li><span class="st next">Next</span><b>CMMC Level 2</b><small>The Cybersecurity Maturity Model Certification, for defense contractors.</small></li>
+        <li><span class="st">Not built</span><b>Defense Impact Levels 4 and 5</b><small>Tell us if you need them.</small></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <div class="wrap builton reveal">
   <span class="lbl">Built on the program's own published sources</span>
   <span><b>FedRAMP Rev5</b> Moderate baseline · 323 controls</span>
@@ -330,7 +367,6 @@
   <span><b>CR26</b> machine-readable package schemas</span>
   <span><b>NIST CMVP</b> cryptographic-module data</span>
   <span><b>OSCAL</b> System Security Plan</span>
-  <a href="pricing.html#frameworks">Which frameworks, today →</a>
 </div>
 
 <!-- ================= 01 IN ONE MINUTE ================= -->
@@ -772,6 +808,7 @@ inventory.json         <span class="dim">word counts, dates from git</span></cod
         <a href="product.html">Product tour</a>
         <a href="how-it-works.html">Interactive walkthrough</a>
         <a href="trust-center.html">Trust center</a>
+        <a href="pricing.html#frameworks">Frameworks</a>
         <a href="api.html">API</a>
         <a href="pricing.html">Pricing</a>
         <a href="mailto:nathan@spiderstrategies.com">Contact</a>
