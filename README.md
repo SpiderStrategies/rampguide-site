@@ -28,7 +28,9 @@ is not built — it is a self-contained page and stays edited by hand.
   data never touches this site.
 - `welcome.html` — Stripe's success page. Reads `session_id` from the
   URL, calls `/v1/claim` once, and shows the library key exactly once.
-- `product.html` — the product tour: five real `rampguide ui` screenshots
+- `product.html` — the product tour (stale: the hosted workbench replaced
+  the local ui it shows; the site truth pull request, plan to-do 8,
+  rewrites it): five `rampguide ui` screenshots
   (`img/ui-*.png`, captured from a fictional ACME repo with a few fields
   left open), the command line underneath, and the interactive
   walkthrough embedded.
