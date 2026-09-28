@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trust center — RampGuide</title>
-<meta name="description" content="The RampGuide trust center: the secure window where government customers request, review, and download your FedRAMP package, with every access logged. Required on the 20x track and on the classic track from 2027. Coming: deployable inside your own environment first, hosted later.">
-<meta property="og:title" content="The RampGuide trust center (coming)">
+<meta name="description" content="The RampGuide trust center, live at trust.rampguide.com: the secure window where government customers request, review, and download your FedRAMP package, with every access logged. Required on the 20x track and on the classic track from 2027.">
+<meta property="og:title" content="The RampGuide trust center">
 <meta property="og:description" content="Where your FedRAMP package lives once it exists: agencies request access, you approve, they retrieve the current package, every access and denial logged. A rendering of your repo, not a platform's database.">
 <meta property="og:url" content="https://rampguide.com/trust-center.html">
 <meta property="og:type" content="website">
@@ -25,6 +25,10 @@
   .tc-hero h1 { margin: 1rem 0 1.2rem; font-size: clamp(2.4rem, 5vw, 4.2rem); }
   .status { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-deep); background: var(--gold-soft); border: 1px solid rgba(217, 154, 30, 0.35); border-radius: 100px; padding: 0.45em 0.9em; }
   .status i { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(217, 154, 30, 0.2); }
+  .status.live { color: var(--green-deep); background: var(--green-soft); border-color: rgba(31, 138, 76, 0.35); }
+  .status.live i { background: var(--green); box-shadow: 0 0 0 4px rgba(31, 138, 76, 0.2); }
+  .shot { margin-top: clamp(28px, 4vw, 48px); border-radius: 12px; overflow: hidden; border: 1px solid var(--blue-line); box-shadow: var(--shadow-lg); background: #fff; }
+  .shot img { display: block; width: 100%; height: auto; }
 
   .win { border: 1px solid var(--blue-line); border-radius: 12px; overflow: hidden; background: #fff; font-size: 0.88rem; box-shadow: var(--shadow-lg); }
   .win .bar { display: flex; justify-content: space-between; padding: 10px 14px; background: var(--blue-soft); font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-deep); }
@@ -86,13 +90,13 @@
   <div class="aurora" aria-hidden="true"></div>
   <div class="wrap">
     <div>
-      <span class="status"><i></i>Coming · design stage · timing to be announced</span>
+      <span class="status live"><i></i>Live · trust.rampguide.com</span>
       <h1>Where your package lives <span class="grad">once it exists.</span></h1>
       <p class="lede">FedRAMP no longer wants your package emailed around. Agencies request access, you approve, they retrieve the current package, and every access and every denial is logged and reportable. That window is called a trust center. On the 20x track you need one from day one; on the classic track it becomes required in 2027.</p>
-      <p class="lede">RampGuide's trust center is that window, fed directly by your builds. It ships first as a stack you deploy inside your own environment, so nothing about your package leaves your boundary. A hosted version follows.</p>
+      <p class="lede">RampGuide's trust center is that window, live at trust.rampguide.com and fed directly by your builds. It sits on the same host as the app your people build the package in, so publishing is one step, not an integration.</p>
       <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.4rem">
-        <a class="btn gold" href="mailto:nathan@spiderstrategies.com?subject=Trust%20center">Tell me when it ships <span class="arrow">→</span></a>
-        <a class="btn ghost" href="#how">How it will work</a>
+        <a class="btn gold" href="mailto:nathan@spiderstrategies.com?subject=Trust%20center">Talk to us <span class="arrow">→</span></a>
+        <a class="btn ghost" href="#how">How it works</a>
       </div>
     </div>
     <div class="win reveal" aria-label="A trust center access log, illustrative and fictional">
@@ -115,39 +119,40 @@
       <li><b>Access on request</b><span><strong>An agency asks, you decide.</strong> Government customers and prospects request access. Access is granted, not open: agency staff are provisioned on arrival from a known government domain or wait for your approval, and every viewer is a person your compliance owner can see, revoke, and report on.</span></li>
       <li><b>The current package</b><span><strong>What they retrieve is the real thing.</strong> The machine-readable package and the readable documents, at the version you have published, with an inventory of what is there: name, summary, size, version, last updated.</span></li>
       <li><b>A log of everything</b><span><strong>Every access is recorded and reportable.</strong> Who requested, who approved, who viewed what, when. The grants list doubles as your access inventory.</span></li>
-      <li><b>Denials reported</b><span><strong>A refusal is an event, not silence.</strong> Denied requests are logged with a reason and reported to the program, the same way a rejected key is a log line and not a mystery in the RampGuide library service today.</span></li>
+      <li><b>Denials reported</b><span><strong>A refusal is an event, not silence.</strong> Denied requests are logged with a reason. When the request came from a federal agency, FedRAMP must hear within five business days: the Access page gives you the report's text and the deadline, and keeps both in view until you record FedRAMP's ticket number.</span></li>
     </ul>
   </div>
 </section>
 
 <section id="how">
   <div class="wrap">
-    <div class="formrow reveal"><span class="no">02</span><span>How it will work</span><span class="meta">a rendering of your repo</span></div>
+    <div class="formrow reveal"><span class="no">02</span><span>How it works</span><span class="meta">a rendering of your repo</span></div>
     <div class="section-head reveal"><h2>Publish a build. That is the whole integration.</h2>
       <p class="lede">Other platforms' trust centers render their database. RampGuide's renders your git repo: the package on the trust center is the same bytes your last build produced, with dates and word counts computed from your history.</p></div>
     <div class="flow">
-      <div class="sheet reveal"><div class="n">01</div><h3>Build, as always</h3><p>Your facts in git; one command produces the package. Nothing leaves your computer while it runs.</p></div>
-      <div class="sheet reveal d1"><div class="n">02</div><h3>Publish the public slice</h3><p>An explicit second step pushes only what agencies are allowed to see: the machine-readable package, the readable policies, the document inventory.</p></div>
-      <div class="sheet reveal d2"><div class="n">03</div><h3>Approve viewers</h3><p>Requests land in a queue. Your compliance owner approves, and the viewer receives an invitation with multi-factor sign-in. Revoke the same way.</p></div>
+      <div class="sheet reveal"><div class="n">01</div><h3>Build, as always</h3><p>Your people answer and commit in the workbench; a build turns the committed files into the package. No AI and no network while it runs.</p></div>
+      <div class="sheet reveal d1"><div class="n">02</div><h3>Publish</h3><p>An owner publishes from the Publish page. Each file carries a tier, so a reader sees only what theirs allows: the machine-readable package, the readable documents, the document inventory.</p></div>
+      <div class="sheet reveal d2"><div class="n">03</div><h3>Decide who reads</h3><p>Requests land on the Access page. An owner lets each one in at a tier or turns it down; readers sign in with a passkey. Federal agency staff can be let in automatically. Remove anyone the same way.</p></div>
       <div class="sheet reveal d3"><div class="n">04</div><h3>Every event logged</h3><p>Views, downloads, approvals, denials, with the package version each viewer saw. The change history is the quarterly report you already generate.</p></div>
     </div>
-    <p class="muted" style="margin-top:1.6rem;max-width:60em">Two things fall out of building it this way. The inventory FedRAMP asks for already comes out of every build, word counts and last-updated dates included. And the readable documents and the machine-readable package can never disagree on the trust center, because both came out of the same build.</p>
+    <p class="muted" style="margin-top:1.6rem;max-width:60em">Two things fall out of building it this way. The inventory FedRAMP asks for already comes out of every build, word counts and last-updated dates included. And the readable documents and the machine-readable package can never disagree on the trust center, because both came out of the same build. Programs read the same package through a documented <a href="api.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">API</a>.</p>
+    <figure class="shot reveal" style="margin-left:0;margin-right:0"><img src="img/app-package.png" alt="The package as a federal agency reviewer reads it in the trust center: the documents at the agency tier, each with its path, date, the controls it answers, its size and its SHA-256 hash, and buttons to open or download it." width="1160" height="780" loading="lazy"></figure>
   </div>
 </section>
 
 <section class="alt" id="modes">
   <div class="wrap">
-    <div class="formrow reveal"><span class="no">03</span><span>Two ways to run it</span><span class="meta">your boundary first</span></div>
+    <div class="formrow reveal"><span class="no">03</span><span>Where it runs</span><span class="meta">hosted, with the build where you need it</span></div>
     <div class="modes">
-      <div class="sheet reveal"><span class="tab ink">First</span>
-        <div class="when">Deployable · inside your environment</div>
-        <h3>A stack you deploy into your own cloud boundary.</h3>
-        <p>Approval workflow, encrypted storage, an access-grants table, and audit logging, packaged for your own account, including government cloud regions. Your package never leaves the boundary you already had assessed. This is the version teams with strict boundaries will ask for anyway, and it is the one we build first.</p>
-      </div>
-      <div class="sheet reveal d1"><span class="tab gold">Later</span>
+      <div class="sheet reveal"><span class="tab green">Live</span>
         <div class="when">Hosted · trust.rampguide.com</div>
-        <h3>The same code, run by us, for everyone who would rather not.</h3>
-        <p>Most teams do not want to operate an approval workflow themselves. The hosted version adds a tenant per customer to the same stack. It waits on one thing: a service that holds other companies' government-facing packages should be able to show its own. We intend to certify the hosted trust center the way our customers certify theirs, with our own engine, before we open it.</p>
+        <h3>Run by us, one trust center per offering.</h3>
+        <p>Each offering gets its own trust center on trust.rampguide.com, beside the app its package is built in. You decide who reads it; RampGuide runs the service and never decides who gets in. The package itself is plain files in a git repository we store for you, and a full copy is yours whenever you ask.</p>
+      </div>
+      <div class="sheet reveal d1"><span class="tab ink">Inside your boundary</span>
+        <div class="when">The command line · your environment</div>
+        <h3>The build can stay inside your boundary.</h3>
+        <p>Teams whose authorization boundary requires it run the same compiler as a command line in their own environment and publish the result to their trust center with a publish key. What agencies read is still exactly the bytes that build wrote.</p>
       </div>
     </div>
   </div>
@@ -158,12 +163,13 @@
     <div class="formrow reveal"><span class="no">04</span><span>Honest status</span><span class="meta">what exists, what does not</span></div>
     <div class="split">
       <div class="reveal">
-        <h2 style="margin-bottom:1rem">Designed. Not yet built.</h2>
-        <p class="muted">The design is done and the pieces it needs already exist in the product: the build emits the document inventory the program requires, the quarterly change report is computed from your history, and the library service already runs the same approve-or-deny, log-everything pattern in miniature. What does not exist yet is the stack itself, the publish command, and a price.</p>
-        <p class="muted">If you are on the 20x track, or planning for the classic track's 2027 requirement, tell us. Early customers shape what ships first.</p>
+        <h2 style="margin-bottom:1rem">Live. Not finished.</h2>
+        <p class="muted">Live at trust.rampguide.com since 2026-09-23: passkey sign-in, requests and approvals, automatic entry for federal agency staff, tiers, the logged package, the access inventory and daily summaries, the denial report to FedRAMP, a snapshot per Ongoing Certification Report, and an <a href="api.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">API</a> for programs.</p>
+        <p class="muted">Not built yet: the status page FedRAMP asks for at Class B and above (its rule allows it to be separate), an upload slot for FedRAMP's own certification reports, and sign-in with a government smart card (a Personal Identity Verification card or a Common Access Card). RampGuide itself is not FedRAMP authorized.</p>
+        <p class="muted">If you are on the 20x track, or planning for the classic track's 2027 requirement, tell us. Early customers shape what ships next.</p>
       </div>
       <div class="ask reveal d1">
-        <h2>Want it early?</h2>
+        <h2>Want one for your offering?</h2>
         <p>One email. Tell us which track you are on and when you need the window open.</p>
         <a class="btn gold lg" href="mailto:nathan@spiderstrategies.com?subject=Trust%20center">Tell us <span class="arrow">→</span></a>
       </div>
@@ -190,7 +196,7 @@
         <a href="mailto:nathan@spiderstrategies.com">Contact</a>
       </nav>
     </div>
-    <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program. The trust center described here is in design; the access log shown is fictional (ACME Corp).</p>
+    <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program. The access log and the package shown are fictional (ACME Corp).</p>
   </div>
 </footer>
 

@@ -23,6 +23,9 @@
   .unit div b { display: block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.5rem; }
   @media (max-width: 700px) { .unit { grid-template-columns: 1fr; } }
   .faq-wrap { max-width: 56rem; }
+  .tc-band { display: grid; grid-template-columns: 1fr auto; gap: 1rem 2rem; align-items: center; }
+  .tc-band > * { min-width: 0; }
+  @media (max-width: 700px) { .tc-band { grid-template-columns: 1fr; justify-items: start; } }
 </style>
 </head>
 <body>
@@ -112,11 +115,11 @@
       </div>
     </div>
 
-    <div class="sheet reveal" style="margin-top:clamp(24px,3vw,40px);padding:clamp(20px,2.6vw,30px);border-style:dashed;background:linear-gradient(180deg,#fff,var(--gold-soft))"><span class="tab gold">Coming</span>
-      <div style="display:grid;grid-template-columns:1fr auto;gap:1rem 2rem;align-items:center">
+    <div class="sheet reveal" style="margin-top:clamp(24px,3vw,40px);padding:clamp(20px,2.6vw,30px)"><span class="tab green">Live</span>
+      <div class="tc-band">
         <div>
           <div style="font-size:1.25rem;font-weight:700;letter-spacing:-.02em">Trust center</div>
-          <p class="muted" style="margin:.4rem 0 0;max-width:60em">The secure window where government customers request, review, and download your package, with every access logged. Required on the 20x track, and on the classic track from 2027. Ships first as a stack inside your own environment; a hosted version follows. Pricing and timing to be announced.</p>
+          <p class="muted" style="margin:.4rem 0 0;max-width:60em">The secure window where government customers request, review, and download your package, with every access logged. Required on the 20x track, and on the classic track from 2027. Live at trust.rampguide.com, beside the app that builds your package. Pricing: <a href="mailto:nathan@spiderstrategies.com?subject=Trust%20center%20pricing" style="text-decoration:underline;text-underline-offset:3px">ask us</a>.</p>
         </div>
         <a class="btn ghost" href="trust-center.html">Read about it <span class="arrow">→</span></a>
       </div>

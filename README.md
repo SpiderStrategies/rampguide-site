@@ -34,8 +34,10 @@ is not built — it is a self-contained page and stays edited by hand.
   workbench (a question, a value chip, review and commit), Publish,
   Access, and the package as an agency reads it; then the command line
   underneath, and the interactive walkthrough embedded.
-- `trust-center.html` — product two, described from the design memo as
-  *coming*; honest about status.
+- `trust-center.html` — product two, live at trust.rampguide.com since
+  2026-09-23: what an agency does there, how a build reaches it, where it
+  runs (hosted; the build can stay inside the customer's boundary), and
+  an honest list of what is and is not built.
 - `api.html` — the trust center's API for programs: the OpenAPI document,
   three ways to authenticate, and every route and rule, read live from
   `trust.rampguide.com/v1/openapi.json` when the page opens (the trust

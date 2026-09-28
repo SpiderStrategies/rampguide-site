@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RampGuide — Your FedRAMP paperwork, done and kept current</title>
-<meta name="description" content="RampGuide generates your FedRAMP documentation from a short list of facts about your system, using pre-written content for the tools you already run, and keeps it current when your facts or the rules change. The compiler is included, the content library is what you pay for, trust center coming.">
+<meta name="description" content="RampGuide generates your FedRAMP documentation from a short list of facts about your system, using pre-written content for the tools you already run, and keeps it current when your facts or the rules change. The compiler is included, the content library is what you pay for, and the hosted trust center is live.">
 <meta property="og:title" content="RampGuide — Your FedRAMP paperwork, done and kept current">
-<meta property="og:description" content="Hundreds of pages of FedRAMP documentation, generated from the facts about your system and kept current as they change. The compiler is included; pre-written content library from $6,000 a year; trust center coming.">
+<meta property="og:description" content="Hundreds of pages of FedRAMP documentation, generated from the facts about your system and kept current as they change. The compiler is included; pre-written content library from $6,000 a year; the hosted trust center is live.">
 <meta property="og:url" content="https://rampguide.com/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://rampguide.com/og.png">
@@ -221,13 +221,14 @@
   .gloss li b { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.08em; color: var(--blue); font-weight: 700; padding-top: 0.15em; }
   .gloss-head { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-top: clamp(28px, 4vw, 48px); }
 
-  /* ---------- trust center (coming) ---------- */
+  /* ---------- trust center ---------- */
   .tc { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(28px, 5vw, 72px); align-items: center; }
   @media (max-width: 900px) { .tc { grid-template-columns: 1fr; } }
+  .tc > * { min-width: 0; }
   .tc .sheet { padding: clamp(22px, 3vw, 34px); }
   .tc .win { border: 1px solid var(--blue-line); border-radius: 10px; overflow: hidden; background: #fff; font-size: 0.85rem; }
   .tc .win .bar { display: flex; justify-content: space-between; padding: 8px 12px; background: var(--blue-soft); font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-deep); }
-  .tc .win .row { display: flex; justify-content: space-between; gap: 1rem; padding: 10px 14px; border-top: 1px solid var(--line-soft); color: var(--ink-2); }
+  .tc .win .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.3rem 1rem; padding: 10px 14px; border-top: 1px solid var(--line-soft); color: var(--ink-2); }
   .tc .win .row b { color: var(--ink); font-weight: 500; }
   .tc .win .row i { font-style: normal; font-family: var(--mono); font-size: 0.7rem; color: var(--green-deep); background: var(--green-soft); border-radius: 100px; padding: 0.25em 0.6em; white-space: nowrap; }
   .tc .win .row i.pend { color: var(--gold-deep); background: var(--gold-soft); }
@@ -337,7 +338,7 @@
   <div class="wrap">
     <div class="formrow reveal"><span class="no">02</span><span>What we sell</span><span class="meta">four things, one price that matters</span></div>
     <div class="section-head reveal">
-      <h2>The compiler is included. The content is the product. The trust center is next.</h2>
+      <h2>The compiler is included. The content is the product. The trust center is live.</h2>
     </div>
     <div class="offer">
       <div class="sheet reveal"><span class="tab">Software</span>
@@ -355,9 +356,9 @@
         <p>The library plus white-glove onboarding: we bring your existing documentation across, map it to the library, and stay on the line through your assessment.</p>
         <a class="more" href="pricing.html">Pricing →</a>
       </div>
-      <div class="sheet soon reveal d3"><span class="tab gold">Coming</span>
-        <div class="name">Trust center</div><div class="price soon">COMING · ASK US</div>
-        <p>The secure window where government customers request, review, and download your package, with every access logged. FedRAMP requires one on the 20x track, and on the classic track from 2027. Deploy it inside your own environment first; a hosted version follows.</p>
+      <div class="sheet reveal d3"><span class="tab green">Live</span>
+        <div class="name">Trust center</div><div class="price">LIVE · PRICING: ASK US</div>
+        <p>The secure window where government customers request, review, and download your package, with every access logged. FedRAMP requires one on the 20x track, and on the classic track from 2027. Live at trust.rampguide.com, beside the app that builds your package.</p>
         <a class="more" href="trust-center.html">Read about it →</a>
       </div>
     </div>
@@ -692,18 +693,18 @@ scans/2026-08-vdr.json — FedRAMP Vulnerability Detail Report
   </div>
 </section>
 
-<!-- ================= 08 TRUST CENTER ================= -->
+<!-- ================= 09 TRUST CENTER ================= -->
 <section id="trust">
   <div class="wrap">
-    <div class="formrow reveal"><span class="no">09</span><span>Coming: the trust center</span><span class="meta">product two · timing to be announced</span></div>
+    <div class="formrow reveal"><span class="no">09</span><span>The trust center</span><span class="meta">live at trust.rampguide.com</span></div>
     <div class="tc">
       <div class="reveal">
         <h2>Where your package lives once it exists.</h2>
         <p class="lede" style="margin-top:1.1rem">FedRAMP no longer wants your package emailed around. Agencies request access, someone approves, they retrieve the current package, and every access and every denial is logged and reportable. On the 20x track this window is required from day one; on the classic track it becomes required in 2027.</p>
-        <p class="muted">RampGuide's trust center will be that window, fed directly by your builds: publish the external slice of a build and the current package, the readable policies, and the document inventory land there with the change history intact. It ships first as a stack you deploy inside your own environment, so nothing about your package leaves your boundary; a hosted version follows.</p>
-        <p class="muted"><a href="trust-center.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">Read the full trust center page →</a> Want it early, or want to shape it? <a href="mailto:nathan@spiderstrategies.com?subject=Trust%20center" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">Tell us</a>.</p>
+        <p class="muted">RampGuide's trust center is that window, live at trust.rampguide.com and fed directly by your builds: an owner publishes from the app, and the package, the readable policies, and the document inventory land there, every file hashed. You decide who reads. Federal agency staff with a .gov or .mil address on the federal list kept by CISA, the Cybersecurity and Infrastructure Security Agency, can be let in automatically; everyone else waits for your approval. Every read is logged, and programs read the same package through the <a href="api.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">API</a>.</p>
+        <p class="muted"><a href="trust-center.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">Read the full trust center page →</a> Want one for your offering? <a href="mailto:nathan@spiderstrategies.com?subject=Trust%20center" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">Tell us</a>.</p>
       </div>
-      <div class="sheet reveal d1"><span class="tab gold">Preview · fictional</span>
+      <div class="sheet reveal d1"><span class="tab gold">Example · fictional</span>
         <div class="win" aria-label="A trust center access log, illustrative">
           <div class="bar"><span>ACME · NestPortal · package access</span><span>logged</span></div>
           <div class="row"><b>Dept. of Example · authorizing official</b><i>approved · downloaded 2026-09-11</i></div>
