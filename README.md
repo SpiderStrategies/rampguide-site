@@ -28,12 +28,12 @@ is not built — it is a self-contained page and stays edited by hand.
   data never touches this site.
 - `welcome.html` — Stripe's success page. Reads `session_id` from the
   URL, calls `/v1/claim` once, and shows the library key exactly once.
-- `product.html` — the product tour (stale: the hosted workbench replaced
-  the local ui it shows; the site truth pull request, plan to-do 8,
-  rewrites it): five `rampguide ui` screenshots
-  (`img/ui-*.png`, captured from a fictional ACME repo with a few fields
-  left open), the command line underneath, and the interactive
-  walkthrough embedded.
+- `product.html` — the product tour of the hosted app: six screenshots
+  (`img/app-*.png`, captured 2026-09-28 from a local instance of
+  rampguide-trust with the fictional ACME RoadRunner tenant) of the
+  workbench (a question, a value chip, review and commit), Publish,
+  Access, and the package as an agency reads it; then the command line
+  underneath, and the interactive walkthrough embedded.
 - `trust-center.html` — product two, described from the design memo as
   *coming*; honest about status.
 - `api.html` — the trust center's API for programs: the OpenAPI document,
