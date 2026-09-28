@@ -34,12 +34,17 @@ screenshots in `img/`; the dark file windows show files, never a prompt.
   in both), which frameworks it builds today (the full list; the home
   page's Frameworks card is its short form, and both change the week the
   app's list does), and the signup forms. Each form
-  posts (`tier`, `org`, `cso`) to `https://api.rampguide.com/v1/checkout`
-  (rampguide-api), which redirects to Stripe's hosted Checkout. Card
-  data never touches this site.
-- `welcome.html` — Stripe's success page: what happens next (the trust
-  center within one business day, the owner's invitation, passkeys, the
-  team, the workbench). Static; it shows no key and calls nothing.
+  posts (`plan`, `org`, `offering`, and the trust center owner's `name`
+  and work `email`) to `https://trust.rampguide.com/v1/checkout`, the
+  app's own checkout (rampguide-trust, README "Buying"), which redirects to
+  Stripe's hosted Checkout. Card data never touches this site. When Stripe
+  says the payment cleared, the app creates the trust center and invites
+  the owner. Until Stripe is set up the checkout sends the buyer back with
+  `?error=unavailable`, which the page words as "Online checkout is not
+  open yet".
+- `welcome.html` — Stripe's success page: the trust center is on its way
+  (the owner's invitation within minutes, passkeys, setup, the
+  workbench). Static; it shows no key and calls nothing.
 - `product.html` — the product tour of the hosted app: six screenshots
   (`img/app-*.png`, captured 2026-09-28 from a local instance of
   rampguide-trust with the fictional ACME RoadRunner tenant) of the
@@ -65,9 +70,11 @@ screenshots in `img/`; the dark file windows show files, never a prompt.
   leave it committed.
 
 Local preview: `python3 -m http.server 4173 --bind 127.0.0.1` here, and
-`node tools/dev-server.ts --port 8787 --site http://127.0.0.1:4173` in
-rampguide-api. When served from localhost, the forms and the welcome
-page target that dev API (override with `?api=http://host:port`).
+`npm run dev` in rampguide-trust (the app on localhost:8790, with Stripe
+simulated). When served from localhost, the pricing forms post to that
+local app (override with `?trust=http://localhost:<port>`), so a purchase
+runs end to end: the simulated Stripe page, the welcome page, and the
+owner's invitation in the app's `.local/mail.log`.
 
 All example content is fictional (ACME Corp, NestPortal). No customer
 names, no pack prose — the library catalog on the page is names,
