@@ -57,7 +57,7 @@ screenshots in `img/`; the dark file windows show files, never a prompt.
   walkthrough embedded.
 - `trust-center.html` — the trust center, live at trust.rampguide.com
   since 2026-09-23: what an agency does there, what Publish does, where it
-  runs (hosted, one per offering, in every plan), and an honest list of
+  runs (hosted, one per company with a page per package, in every plan), and an honest list of
   what is and is not built.
 - `api.html` — the trust center's API for programs: the OpenAPI document,
   three ways to authenticate, and every route and rule, read live from
