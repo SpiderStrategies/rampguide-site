@@ -99,11 +99,11 @@
 
 <section>
   <div class="wrap">
-    <div class="formrow reveal"><span class="no">03</span><span>Three ways to authenticate</span><span class="meta">people, systems, the provider's pipeline</span></div>
+    <div class="formrow reveal"><span class="no">03</span><span>Three ways to authenticate</span><span class="meta">people, readers' systems, and RampGuide's own</span></div>
     <ul class="ways reveal">
       <li><b>Session cookie</b><span><strong>For people.</strong> A passkey sign-in at the trust center sets it, the browser sends it on its own, and it lasts one hour idle and twelve hours in all.</span></li>
       <li><b>Party API key</b><span><strong>For an agency's or an assessor's own systems.</strong> Minted by your team lead on your access page, scoped to one trust center and one tier, expiring within a year, every use logged; sent as <code>Authorization: Bearer rgt_live_…</code>.</span></li>
-      <li><b>Publish key</b><span><strong>For the provider's build pipeline only.</strong> It can publish and nothing else, and the trust center checks every uploaded file against the manifest.</span></li>
+      <li><b>Publish key</b><span><strong>RampGuide's own; no provider is given one.</strong> The publish routes below take it. Owners publish from the Publish page in the app, and the trust center checks every file a build uploads against its manifest.</span></li>
     </ul>
   </div>
 </section>

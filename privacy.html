@@ -36,16 +36,26 @@
     <p>rampguide.com is static pages served by GitHub Pages. We run no analytics, no advertising pixels, no chat widgets, and set no cookies. GitHub's hosting logs are subject to GitHub's privacy statement.</p>
 
     <h2>Buying a subscription</h2>
-    <p>Checkout happens on Stripe's hosted page. Stripe collects your card details, billing address, and email under Stripe's privacy policy; we never see your card number. From Stripe we receive your email address, the organization and offering names you typed on our pricing page, and the subscription and payment identifiers, and we keep them to operate your subscription and reach you about it.</p>
+    <p>The pricing form sends the organization and offering names, and the owner's name and work email, to the RampGuide app at trust.rampguide.com, which takes you to Stripe's hosted checkout with them. Stripe collects your card details and billing address under Stripe's privacy policy; we never see your card number. From Stripe we receive the payment's outcome and the subscription and payment identifiers. We keep all of it to operate your subscription and reach you about it.</p>
 
-    <h2>The library service</h2>
-    <p>When the engine downloads a pack with your key, our service records the key's hash prefix, your organization label, the pack name, and the time. That log is how we operate the service and notice abuse. We store only a hash of your key. Your content repository, statements, parameters, and compiled documents never reach us — the engine builds locally with no network access.</p>
+    <h2>The RampGuide app</h2>
+    <p>The app runs at trust.rampguide.com on Amazon Web Services, in its commercial US East (N. Virginia) region. It holds:</p>
+    <ul>
+      <li><strong>People.</strong> Each person's name and email address, and the public half of their passkey. A passkey is the only way to sign in: there is no password, and the private half never leaves the person's device. Sign-in codes, recovery codes, sessions and API keys are stored only as hashes.</li>
+      <li><strong>Your package.</strong> The answers your people give, the documents uploaded during setup (deleted once setup has created the package), the package's repository with each change's author and date, and every build and publish. It is encrypted at rest. Builds use no AI and send your content nowhere.</li>
+      <li><strong>Your trust center's records.</strong> Requests for access (the requester's name, email, organization and stated reason), who was let in or turned down and by whom, and every view and download with the person, the file and the package version. Your owners see these records; they are the access log FedRAMP's rules ask you to keep.</li>
+      <li><strong>Service logs.</strong> Each request's time, path, IP address and browser identifier, and a record of every read and write of stored packages, used to run and secure the service.</li>
+    </ul>
+    <p>RampGuide's operators can reach this data to run the service, and can read a trust center's package at its assessor tier. They never decide who gets in. <em>[Who the operators are, and how quickly a customer hears of an incident — leadership decision pending.]</em></p>
+
+    <h2>Who else sees it</h2>
+    <p>Only the people your owners let in read your package, at the tier they allow. When an owner turns down a federal agency, FedRAMP's rules have the owner report it; the app gives the owner the report's text and sends nothing to FedRAMP itself.</p>
 
     <h2>Email</h2>
-    <p>If you email us, we keep the correspondence to answer you. We do not add you to marketing lists.</p>
+    <p>The app sends sign-in codes, invitations and notices of new requests from rampguide.com through Amazon Simple Email Service. If you email us, we keep the correspondence to answer you. We do not add you to marketing lists.</p>
 
     <h2>Retention and your rights</h2>
-    <p>Subscription records are kept for the life of the subscription and as long afterward as tax and accounting rules require. Write to nathan@spiderstrategies.com to ask what we hold about you or to have it deleted where the law allows.</p>
+    <p>Access records and service logs are kept for 400 days. Subscription records are kept for the life of the subscription and as long afterward as tax and accounting rules require. When a subscription ends, a full copy of your package's repository is yours on request. <em>[How long a package and its records are kept after a subscription ends — leadership decision pending.]</em> Write to nathan@spiderstrategies.com to ask what we hold about you or to have it deleted where the law allows.</p>
 
     <h2>Changes</h2>
     <p>Updates to this notice are posted here with a new effective date.</p>

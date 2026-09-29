@@ -6,7 +6,7 @@
 <title>Trust center — RampGuide</title>
 <meta name="description" content="The RampGuide trust center, live at trust.rampguide.com: the secure window where government customers request, review, and download your FedRAMP package, with every access logged. Required on the 20x track now, and on the classic Rev5 track for new certifications from 2027-01-01.">
 <meta property="og:title" content="The RampGuide trust center">
-<meta property="og:description" content="Where your FedRAMP package lives once it exists: agencies request access, you approve, they retrieve the current package, every access and denial logged. A rendering of your repo, not a platform's database.">
+<meta property="og:description" content="Where your FedRAMP package lives once it exists: agencies request access, you approve, they retrieve the current package, every access and denial logged. Part of every RampGuide plan.">
 <meta property="og:url" content="https://rampguide.com/trust-center.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://rampguide.com/og.png">
@@ -101,7 +101,7 @@
       <span class="status live"><i></i>Live · trust.rampguide.com</span>
       <h1>Where your package lives <span class="grad">once it exists.</span></h1>
       <p class="lede">FedRAMP no longer wants your package emailed around. Agencies request access, you approve, they retrieve the current package, and every access and every denial is logged and reportable. That window is called a trust center. On the 20x track you need one from day one; on the classic Rev5 track, new certifications need one from 2027-01-01 and existing ones by 2027-08-01.</p>
-      <p class="lede">RampGuide's trust center is that window, live at trust.rampguide.com and fed directly by your builds. It sits on the same host as the app your people build the package in, so publishing is one step, not an integration.</p>
+      <p class="lede">RampGuide's trust center is that window, live at trust.rampguide.com. When an owner presses Publish, the readers you let in have the new package, every file hashed.</p>
       <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.4rem">
         <a class="btn gold" href="mailto:nathan@spiderstrategies.com?subject=Trust%20center">Talk to us <span class="arrow">→</span></a>
         <a class="btn ghost" href="#how">How it works</a>
@@ -113,7 +113,7 @@
       <div class="row"><div><b>Agency reviewer · security</b><small>viewer since 2026-08-02</small></div><i>viewed policies.md</i></div>
       <div class="row"><div><b>New request · procurement analyst</b><small>submitted 2026-09-12 08:41</small></div><i class="pend">pending approval</i></div>
       <div class="row"><div><b>Unknown requester</b><small>no agency affiliation given</small></div><i class="deny">denied · reported</i></div>
-      <div class="row"><div><b>Current package</b><small>build 2026-09-12 · same bytes as the repo</small></div><i>14 changes since Q2</i></div>
+      <div class="row"><div><b>Current package</b><small>published 2026-09-12 · every file hashed</small></div><i>14 changes since Q2</i></div>
     </div>
   </div>
 </section>
@@ -146,16 +146,16 @@
 
 <section id="how">
   <div class="wrap">
-    <div class="formrow reveal"><span class="no">02</span><span>How it works</span><span class="meta">a rendering of your repo</span></div>
-    <div class="section-head reveal"><h2>Publish a build. That is the whole integration.</h2>
-      <p class="lede">Other platforms' trust centers render their database. RampGuide's renders your git repo: the package on the trust center is the same bytes your last build produced, with dates and word counts computed from your history.</p></div>
+    <div class="formrow reveal"><span class="no">02</span><span>How it works</span><span class="meta">from the workbench to every read</span></div>
+    <div class="section-head reveal"><h2>Press Publish. Your readers have the new package.</h2>
+      <p class="lede">There is nothing to upload and nothing to keep in sync. The package on your trust center is exactly what the last build made from the answers your people committed, and each document's date comes from its own change history.</p></div>
     <div class="flow">
-      <div class="sheet reveal"><div class="n">01</div><h3>Build, as always</h3><p>Your people answer and commit in the workbench; a build turns the committed files into the package. No AI and no network while it runs.</p></div>
+      <div class="sheet reveal"><div class="n">01</div><h3>Build</h3><p>Your people answer and commit in the workbench; a build turns the committed answers into the package. No AI writes any of it.</p></div>
       <div class="sheet reveal d1"><div class="n">02</div><h3>Publish</h3><p>An owner publishes from the Publish page. Each file carries a tier, so a reader sees only what theirs allows: the machine-readable package, the readable documents, the document inventory.</p></div>
       <div class="sheet reveal d2"><div class="n">03</div><h3>Decide who reads</h3><p>Requests land on the Access page. An owner lets each one in at a tier or turns it down; readers sign in with a passkey. Federal agency staff can be let in automatically. Remove anyone the same way.</p></div>
-      <div class="sheet reveal d3"><div class="n">04</div><h3>Every event logged</h3><p>Views, downloads, approvals, denials, with the package version each viewer saw. The change history is the quarterly report you already generate.</p></div>
+      <div class="sheet reveal d3"><div class="n">04</div><h3>Every event logged</h3><p>Views, downloads, approvals, denials, with the package version each viewer saw. The same change history becomes your quarterly Ongoing Certification Report.</p></div>
     </div>
-    <p class="muted" style="margin-top:1.6rem;max-width:60em">Two things fall out of building it this way. The inventory FedRAMP asks for already comes out of every build, word counts and last-updated dates included. And the readable documents and the machine-readable package can never disagree on the trust center, because both came out of the same build. Programs read the same package through a documented <a href="api.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">API</a>.</p>
+    <p class="muted" style="margin-top:1.6rem;max-width:60em">Two things come with building it this way. The document inventory FedRAMP asks for comes out of every build, with each document's version and last-updated date. And the readable documents and the machine-readable package can never disagree on the trust center, because both came out of the same build. Programs read the same package through a documented <a href="api.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">API</a>.</p>
     <figure class="shot reveal" style="margin-left:0;margin-right:0"><img src="img/app-package.png" alt="The package as a reviewer from Dept. of Example, a fictional federal agency, reads it in the trust center: the documents at the agency tier, each with its path, date, the controls it answers, its size and its SHA-256 hash, and buttons to open or download it." width="1160" height="780" loading="lazy"></figure>
   </div>
 </section>
@@ -167,12 +167,12 @@
       <div class="sheet reveal"><span class="tab green">Live</span>
         <div class="when">Hosted · trust.rampguide.com</div>
         <h3>Run by us, one trust center per offering.</h3>
-        <p>Each offering gets its own trust center on trust.rampguide.com, beside the app its package is built in. You decide who reads it; RampGuide runs the service and never decides who gets in. The package itself is plain files in a git repository we store for you, and a full copy is yours whenever you ask.</p>
+        <p>Each offering gets its own trust center at trust.rampguide.com. You decide who reads it; RampGuide runs the service and never decides who gets in. The package itself is plain files in a git repository we store for you, and a full copy is yours whenever you ask.</p>
       </div>
       <div class="sheet reveal d1"><span class="tab ink">Included</span>
         <div class="when">Every plan · one per offering</div>
-        <h3>In the same subscription as the app.</h3>
-        <p>Every RampGuide plan includes the trust center: the workbench your people build the package in, the library that writes most of it, and the window agencies read it through, for one price per offering. <a href="pricing.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">See pricing →</a></p>
+        <h3>Part of RampGuide, not an add-on.</h3>
+        <p>Every RampGuide plan includes it: the workbench, the library and the trust center are one app, for one price per offering. <a href="pricing.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">See pricing →</a></p>
       </div>
     </div>
   </div>

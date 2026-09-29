@@ -64,7 +64,7 @@
     <div id="checkout-notice" class="notice bad" hidden style="margin-bottom:clamp(18px,3vw,28px)"></div>
     <div class="founding reveal">
       <div><b>Founding customers:</b> 50% off your first year for the first ten customers who sign before December 31, 2026. Applied automatically at checkout.</div>
-      <small>annual billing · card via Stripe · your trust center minutes after you pay</small>
+      <small>annual billing · card via Stripe · the owner's invitation minutes after you pay</small>
     </div>
 
     <div class="tiers two">
@@ -87,11 +87,11 @@
           <input type="hidden" name="plan" value="rampguide">
           <label>Organization <input name="org" required maxlength="80" autocomplete="organization" placeholder="ACME Corp"></label>
           <label>Cloud service offering <input name="offering" required maxlength="80" placeholder="NestPortal"></label>
-          <label>Trust center owner <input name="name" required maxlength="80" autocomplete="name" placeholder="Avery Collins"></label>
+          <label>Owner's name <input name="name" required maxlength="80" autocomplete="name" placeholder="Avery Collins"></label>
           <label>Owner's work email <input name="email" type="email" required maxlength="254" autocomplete="email" placeholder="avery@acme.example"></label>
           <button class="btn block" type="submit">Continue to checkout <span class="arrow">→</span></button>
         </form>
-        <p class="note">The owner gets the invitation to your trust center, and Stripe's receipt. Card details are entered on Stripe's hosted page and never touch rampguide.com.</p>
+        <p class="note">The owner gets the invitation and Stripe's receipt, sets up your package and invites your team. Card details are entered on Stripe's hosted page and never touch rampguide.com.</p>
       </div>
 
       <div class="sheet tier reveal d1"><span class="tab">Complete</span>
@@ -102,7 +102,7 @@
         <ul class="check-list">
           <li><strong>Everything in RampGuide</strong></li>
           <li><strong>A call within one business day</strong> to bring your existing SSP in and go through what the import flagged, with you</li>
-          <li><strong>Pack matching</strong>: we run the matcher over your statements and map your program to the library</li>
+          <li><strong>Pack matching</strong>: we compare your statements with the library and map your program to the packs that fit</li>
           <li><strong>Priority pack requests</strong>: a tool we don't cover yet goes to the front of the queue</li>
           <li><strong>Direct support</strong> from the people who write the packs, through your assessment</li>
         </ul>
@@ -110,11 +110,11 @@
           <input type="hidden" name="plan" value="complete">
           <label>Organization <input name="org" required maxlength="80" autocomplete="organization" placeholder="ACME Corp"></label>
           <label>Cloud service offering <input name="offering" required maxlength="80" placeholder="NestPortal"></label>
-          <label>Trust center owner <input name="name" required maxlength="80" autocomplete="name" placeholder="Avery Collins"></label>
+          <label>Owner's name <input name="name" required maxlength="80" autocomplete="name" placeholder="Avery Collins"></label>
           <label>Owner's work email <input name="email" type="email" required maxlength="254" autocomplete="email" placeholder="avery@acme.example"></label>
           <button class="btn ghost block" type="submit">Continue to checkout <span class="arrow">→</span></button>
         </form>
-        <p class="note">Your trust center is created the moment you pay; within one business day we offer the owner a time for the call.</p>
+        <p class="note">The owner's invitation comes minutes after you pay; within one business day we offer them a time for the call.</p>
       </div>
     </div>
 
@@ -129,7 +129,7 @@
     </div>
 
     <div class="unit reveal">
-      <div><b>What's a cloud service offering?</b> The thing FedRAMP authorizes: one product, one boundary, one package. One RampGuide content repo compiles one offering. That's the unit you pay for.</div>
+      <div><b>What's a cloud service offering?</b> The thing FedRAMP authorizes: one product, one boundary, one package. One offering is one package in RampGuide. That's the unit you pay for.</div>
       <div><b>Why a subscription?</b> Compliance content decays. Rules change, baselines transition, cryptographic-module certificates lapse. The maintenance is the product: the packs change as FedRAMP does, and your edits survive every update.</div>
       <div><b>Why so much less than the platforms?</b> The leading hosted platform lists a FedRAMP Rev5 package at $25,000 to $60,000 a year by impact level, and $55,000 to $125,000 with continuous monitoring (its published prices, read 2026-09-28), and keeps your program inside its database. Yours stays plain files in git, a full copy yours whenever you ask, and one price covers the app, the library and the trust center.</div>
     </div>
@@ -158,11 +158,11 @@
     <div class="faq reveal">
       <details>
         <summary>Is the library extra?</summary>
-        <p>No. Every plan includes all 33 packs and their updates. No requirement has to use a pack: the compiler builds the package from whatever facts are in your repository, and an import brings your existing prose across word for word. Packs are for the requirements where you would rather start from auditor-ready content for the tools everyone runs, and keep it current without writing it yourself.</p>
+        <p>No. Every plan includes all 33 packs and their updates. No requirement has to use a pack: RampGuide builds the package from whatever your people answer, and an import brings your existing prose across word for word. Packs are for the requirements where you would rather start from auditor-ready content for the tools everyone runs, and keep it current without writing it yourself.</p>
       </details>
       <details>
         <summary>What happens when FedRAMP changes something?</summary>
-        <p>We update the packs, and the compiler follows FedRAMP's rules, baselines and cryptographic-module data. Your own wording lives beside the pack and survives every update. The same facts always build the same bytes, so comparing two builds shows exactly what moved.</p>
+        <p>We update the packs, and the compiler follows FedRAMP's rules, baselines and cryptographic-module data. Your own wording lives beside the pack and survives every update.</p>
       </details>
       <details>
         <summary>Where does my compliance content live?</summary>
@@ -170,7 +170,7 @@
       </details>
       <details>
         <summary>What happens after I pay?</summary>
-        <p>Your trust center is created at trust.rampguide.com the moment the payment clears, and the owner you named gets an email invitation within minutes, at the address on your receipt. The owner enrolls with a passkey, sets up your package (your offering, your existing SSP or the library, the framework, the tools you run), and invites the rest of your team into the workbench. On Complete, we also offer a time, within one business day, for the call that brings your existing SSP in.</p>
+        <p>We set up RampGuide for your offering at trust.rampguide.com the moment the payment clears, and the owner you named gets an email invitation within minutes, at the address on your receipt. The owner enrolls with a passkey, sets up your package (your offering, your existing SSP or the library, the framework, the tools you run), and invites the rest of your team into the workbench. On Complete, we also offer a time, within one business day, for the call that brings your existing SSP in.</p>
       </details>
       <details>
         <summary>Can I cancel?</summary>

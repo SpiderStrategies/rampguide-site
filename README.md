@@ -21,7 +21,11 @@ is not built — it is a self-contained page and stays edited by hand.
 
 The site sells one hosted app, with the library and the trust center
 inside it, and never mentions a command line, a library key or
-`rampguide add` (Nate, 2026-09-28). The pictures of the app are drawn in
+`rampguide add` (Nate, 2026-09-28), and never sells the app's plumbing
+as a benefit: no "same host", no "not an integration", no builds, repos,
+byte-identical output or word counts the buyer never sees (Nate,
+2026-09-28: "we're hosting it"). A fact is set once in the workbench, an
+owner presses Publish, and readers have the new package; say that. The pictures of the app are drawn in
 the site's own paper (`.app`, `.ui` in `src/index.html`) or are the
 screenshots in `img/`; the dark file windows show files, never a prompt.
 
@@ -42,7 +46,7 @@ screenshots in `img/`; the dark file windows show files, never a prompt.
   the owner. Until Stripe is set up the checkout sends the buyer back with
   `?error=unavailable`, which the page words as "Online checkout is not
   open yet".
-- `welcome.html` — Stripe's success page: the trust center is on its way
+- `welcome.html` — Stripe's success page: RampGuide is on its way
   (the owner's invitation within minutes, passkeys, setup, the
   workbench). Static; it shows no key and calls nothing.
 - `product.html` — the product tour of the hosted app: six screenshots
@@ -51,8 +55,8 @@ screenshots in `img/`; the dark file windows show files, never a prompt.
   workbench (a question, a value chip, review and commit), Publish,
   Access, and the package as an agency reads it; then the interactive
   walkthrough embedded.
-- `trust-center.html` — product two, live at trust.rampguide.com since
-  2026-09-23: what an agency does there, how a build reaches it, where it
+- `trust-center.html` — the trust center, live at trust.rampguide.com
+  since 2026-09-23: what an agency does there, what Publish does, where it
   runs (hosted, one per offering, in every plan), and an honest list of
   what is and is not built.
 - `api.html` — the trust center's API for programs: the OpenAPI document,
@@ -63,7 +67,9 @@ screenshots in `img/`; the dark file windows show files, never a prompt.
 - `how-it-works.html` — the interactive dependency-graph demo (canonical;
   the workspace `rampguide-depgraph.html` is a derived copy).
 - `terms.html`, `privacy.html` — DRAFTS, `noindex`, not linked from any
-  nav until approved (see LAUNCH.md).
+  nav until approved (see LAUNCH.md). Since 2026-09-28 they describe the
+  hosted app and the data it holds; the bracketed decisions and a
+  lawyer's read remain.
 - `site.css` — shared styles. `fonts/` — Nebula Sans woff2 + license.
 - `LAUNCH.md` — the human gates and the exact test→live steps.
 - `CNAME` — created automatically by GitHub when the custom domain is set;
