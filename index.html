@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RampGuide — Your FedRAMP paperwork, done and kept current</title>
-<meta name="description" content="RampGuide generates your FedRAMP documentation from a short list of facts about your system, using pre-written content for the tools you already run, and keeps it current when your facts or the rules change. One hosted app: the workbench, the content library and your trust center, one price per package.">
-<meta property="og:title" content="RampGuide — Your FedRAMP paperwork, done and kept current">
-<meta property="og:description" content="Hundreds of pages of FedRAMP documentation, generated from the facts about your system and kept current as they change. One hosted app with the content library and your trust center inside, from $6,000 a year per package.">
+<title>RampGuide — Prepare. Review. Publish.</title>
+<meta name="description" content="Prepare FedRAMP and CMMC documentation in a guided workspace. Review changes, publish deliberately, and share through a permission-controlled trust center.">
+<meta property="og:title" content="RampGuide — Prepare. Review. Publish.">
+<meta property="og:description" content="Prepare FedRAMP and CMMC documentation in a guided workspace. Review changes, publish deliberately, and share through a permission-controlled trust center.">
 <meta property="og:url" content="https://rampguide.com/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://rampguide.com/og.png">
@@ -17,796 +17,285 @@
 <link rel="preload" href="fonts/NebulaSans-Book.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/NebulaSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="site.css">
-<style>
-  /* ---------- hero: color, a blurred quilt of controls, a layered composition ---------- */
-  .hero { padding: clamp(48px, 7vw, 108px) 0 clamp(48px, 6vw, 92px); position: relative; overflow: hidden; }
-  .hero .aurora { position: absolute; inset: -20% -10% -10% -10%; z-index: -2; pointer-events: none;
-    background:
-      radial-gradient(38% 42% at 78% 28%, rgba(36, 87, 166, 0.22), transparent 70%),
-      radial-gradient(30% 34% at 92% 70%, rgba(217, 154, 30, 0.20), transparent 70%),
-      radial-gradient(28% 30% at 60% 95%, rgba(31, 138, 76, 0.16), transparent 70%),
-      radial-gradient(40% 40% at 8% 12%, rgba(230, 238, 249, 0.9), transparent 70%);
-    animation: drift 18s ease-in-out infinite alternate; }
-  @keyframes drift { to { transform: translate3d(-2%, 2%, 0) scale(1.04); } }
-  .hero .quilt { position: absolute; right: -6%; top: -8%; width: 58%; height: 120%; z-index: -1; pointer-events: none; opacity: 0.4; filter: blur(34px) saturate(1.25); }
-  .hero .quilt svg { width: 100%; height: 100%; }
-  .hero .grid-paper { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0.5;
-    background-image: linear-gradient(rgba(36, 87, 166, 0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(36, 87, 166, 0.07) 1px, transparent 1px);
-    background-size: 28px 28px;
-    -webkit-mask-image: radial-gradient(70% 70% at 50% 40%, #000 30%, transparent 100%); mask-image: radial-gradient(70% 70% at 50% 40%, #000 30%, transparent 100%); }
-  .hero .wrap { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
-  .hero h1 { margin: 1.2rem 0 1.3rem; }
-  .hero .cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.7rem; }
-  .hero .fine { margin-top: 1.5rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; }
-  .hero .fine span::before { content: '✓ '; color: var(--green); }
-  .hero-art { position: relative; min-height: 500px; }
-  .hero-art .art-doc { position: absolute; right: 0; top: 0; width: 76%; transform: rotate(2.5deg); z-index: 1; }
-  .hero-art .art-app { position: absolute; left: 0; bottom: 0; width: 86%; z-index: 2; }
-  .hero-art .art-app .line { opacity: 0; animation: lineIn 0.5s var(--ease) forwards; }
-  .hero-art .art-app .line.l1 { animation-delay: 0.3s; } .hero-art .art-app .line.l2 { animation-delay: 1.2s; }
-  .hero-art .art-app .line.l3 { animation-delay: 2.1s; } .hero-art .art-app .line.l4 { animation-delay: 3.0s; }
-  @keyframes lineIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-  .hero-art .art-stamp { position: absolute; right: 2%; top: 9%; z-index: 3; opacity: 0; animation: thunk 0.42s cubic-bezier(0.2, 1.6, 0.4, 1) 3.8s forwards; }
-  @media (max-width: 900px) {
-    .hero .wrap { grid-template-columns: 1fr; }
-    .hero .quilt { width: 120%; right: -30%; top: 30%; }
-    .hero-art { min-height: 0; display: grid; gap: 18px; }
-    .hero-art .art-doc, .hero-art .art-app { position: static; width: 100%; transform: none; }
-    .hero-art .art-stamp { right: 8px; top: 8px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .hero .aurora { animation: none; }
-    .hero-art .art-app .line { animation: none; opacity: 1; }
-    .hero-art .art-stamp { animation: none; opacity: 0.92; }
-  }
-
-  /* ---------- the app, drawn in the site's paper: the Publish steps and the review ---------- */
-  .app { background: #fff; border: 1px solid var(--blue-line); border-radius: var(--radius); box-shadow: var(--shadow-lg); overflow: hidden; font-size: 0.9rem; }
-  .app .bar { display: flex; justify-content: space-between; gap: 1rem; padding: 10px 16px; background: var(--blue-soft); font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-deep); }
-  .app .row { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 0.3rem 0.75rem; padding: 12px 16px; border-top: 1px solid var(--line-soft); }
-  .app .row i { font-style: normal; width: 20px; height: 20px; border-radius: 50%; background: var(--blue-soft); color: var(--blue); display: grid; place-items: center; font-size: 0.68rem; font-weight: 700; }
-  .app .row b { color: var(--ink); font-weight: 500; }
-  .app .row span { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-3); min-width: 0; overflow-wrap: anywhere; }
-  .app .live { padding: 16px 16px 18px; border-top: 1px solid var(--line-soft); text-align: center; }
-  .app .live b { display: block; font-size: 1.25rem; font-weight: 500; letter-spacing: -0.02em; }
-  .app .live b::before { content: '✓ '; color: var(--green); }
-  .app .live span { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-3); }
-  .app .body { padding: 14px 16px 16px; }
-  .app h4 { font-size: 1.05rem; font-weight: 500; margin: 0 0 0.2rem; letter-spacing: -0.01em; }
-  .app .sub { color: var(--ink-3); font-size: 0.8rem; margin: 0 0 0.9rem; }
-  .app .change { border-top: 1px solid var(--line-soft); padding: 0.75rem 0; }
-  .app .change b { font-weight: 500; }
-  .app .change p { margin: 0.2rem 0 0.25rem; color: var(--ink-2); font-size: 0.88rem; }
-  .app .change code { font-family: var(--mono); font-size: 0.68rem; color: var(--ink-3); }
-  .app s { background: var(--red-soft); color: var(--red); border-radius: 3px; padding: 0 0.2em; }
-  .app ins { text-decoration: none; background: var(--green-soft); color: var(--green-deep); border-radius: 3px; padding: 0 0.2em; }
-  .app .go { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.9rem; border-top: 1px solid var(--line-soft); padding-top: 0.9rem; font-size: 0.8rem; color: var(--ink-2); }
-  .app .go b { font-weight: 500; background: var(--blue); color: #fff; border-radius: 8px; padding: 0.55em 1em; font-size: 0.85rem; }
-  .app.files .row { grid-template-columns: 1fr auto; }
-  .app.files .row b { font-family: var(--mono); font-size: 0.78rem; }
-  .ui s { color: var(--ink-3); margin-right: 0.4em; }
-
-  /* ---------- built on ---------- */
-  .builton { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0.8rem; padding: 18px 0; }
-  .builton .lbl { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); margin-right: 0.4rem; }
-  .builton span:not(.lbl) { font-size: 0.82rem; color: var(--ink-2); background: #fff; border: 1px solid var(--line); border-radius: 100px; padding: 0.4em 0.85em; }
-  .builton span b { color: var(--blue); font-weight: 500; }
-
-  /* ---------- frameworks, today: status as a dot beside a word ---------- */
-  section.fw-band { padding: clamp(32px, 4.5vw, 56px) 0 0; }
-  .fw-card { display: grid; grid-template-columns: 0.85fr 1.25fr; gap: clamp(20px, 4vw, 64px); padding: clamp(26px, 3.2vw, 40px); align-items: start; }
-  .fw-card > * { min-width: 0; }
-  .fw-card h2 { font-size: clamp(1.7rem, 2.8vw, 2.4rem); margin: 0.3rem 0 0.8rem; }
-  .fw-head p { color: var(--ink-2); margin: 0 0 1.1rem; }
-  .fw-head a { color: var(--blue); font-weight: 500; }
-  .fw-head a:hover { text-decoration: underline; text-underline-offset: 3px; }
-  .fw-list { list-style: none; margin: 0; padding: 0; }
-  .fw-list li { display: grid; grid-template-columns: 6.8rem 1fr; gap: 0.15rem 1rem; align-items: baseline; padding: 0.8rem 0; border-top: 1px solid var(--line-soft); }
-  .fw-list li:first-child { border-top: 0; padding-top: 0.3rem; }
-  .fw-list b { font-weight: 500; font-size: 1.05rem; letter-spacing: -0.01em; }
-  .fw-list small { grid-column: 2; color: var(--ink-3); font-size: 0.86rem; }
-  .fw-list .st { font-family: var(--mono); font-size: 0.64rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); display: inline-flex; align-items: center; gap: 0.5em; }
-  .fw-list .st::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
-  .fw-list .st.built { color: var(--green); }
-  .fw-list .st.next { color: var(--gold-deep); }
-  @media (max-width: 800px) { .fw-card { grid-template-columns: 1fr; } }
-  @media (max-width: 600px) { .fw-list li { grid-template-columns: 1fr; gap: 0.3rem; } .fw-list small { grid-column: 1; } }
-
-  /* ---------- storyboard: four frames on a 16s loop, pure CSS ---------- */
-  .story { --T: 16s; --stage: 4s; overflow: hidden; border-radius: 14px; }
-  .story .rail { display: grid; grid-template-columns: repeat(4, 1fr); padding: 20px 24px 14px; border-bottom: 1px solid var(--line-soft); position: relative; }
-  .story .step-l { display: flex; align-items: center; gap: 0.6rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--ink-3); }
-  .story .step-l i { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; font-style: normal; font-size: 0.7rem; color: transparent; background: var(--sheet); flex: none; }
-  .story .step-l i::after { content: '✓'; }
-  .story .track { position: absolute; left: 24px; right: 24px; bottom: 0; height: 2px; background: var(--line-soft); }
-  .story .track b { position: absolute; inset: 0; background: linear-gradient(90deg, var(--blue), var(--green)); transform-origin: left; transform: scaleX(0); }
-  .story .frames { position: relative; min-height: 350px; background: linear-gradient(180deg, var(--bg-2), #eef1f6); }
-  .story .frame { position: absolute; inset: 0; padding: clamp(14px, 2.4vw, 28px); opacity: 0; display: grid; align-content: center; }
-  .story .frame.two { grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
-  .story .cap { padding: 16px 24px 18px; font-size: 1rem; color: var(--ink-2); min-height: 4.8em; position: relative; }
-  .story .cap p { position: absolute; inset: 16px 24px auto; margin: 0; opacity: 0; }
-  .story .cap p::before { content: '▛ '; color: var(--gold); }
-  .story.play .frame, .story.play .cap p { animation: frameCycle var(--T) infinite both; animation-delay: calc(var(--i) * var(--stage)); }
-  .story.play .step-l i { animation: stepCycle var(--T) infinite both; animation-delay: calc(var(--i) * var(--stage)); }
-  .story.play .track b { animation: trackCycle var(--T) linear infinite; }
-  @keyframes frameCycle { 0% { opacity: 0; transform: translateY(8px); } 3% { opacity: 1; transform: none; } 25% { opacity: 1; transform: none; } 27.5% { opacity: 0; transform: translateY(-6px); } 100% { opacity: 0; } }
-  @keyframes stepCycle { 0% { color: transparent; border-color: var(--line); background: var(--sheet); } 2% { color: #fff; border-color: var(--blue); background: var(--blue); } 100% { color: #fff; border-color: var(--blue); background: var(--blue); } }
-  @keyframes trackCycle { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-  @media (prefers-reduced-motion: reduce) {
-    .story .frame, .story .cap p, .story .step-l i, .story .track b { animation: none !important; }
-    .story .frame { position: static; opacity: 1; }
-    .story .frames { display: grid; gap: 8px; }
-    .story .cap p { position: static; opacity: 1; margin: 0 0 0.6em; }
-    .story .step-l i { color: #fff; border-color: var(--blue); background: var(--blue); }
-  }
-  @media (max-width: 700px) {
-    .story .rail { grid-template-columns: repeat(2, 1fr); gap: 8px 12px; }
-    .story .frame.two { grid-template-columns: 1fr; }
-    .story .frames { min-height: 430px; }
-    .story .cap { min-height: 6.4em; }
-  }
-  .story .term, .story .doc { box-shadow: var(--shadow); }
-
-  /* ---------- before / after ---------- */
-  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 40px); align-items: stretch; margin-top: 22px; }
-  @media (max-width: 800px) { .ba { grid-template-columns: 1fr; gap: 36px; } }
-  .ba > * { min-width: 0; }
-  .ba .sheet { padding: clamp(22px, 3vw, 36px); display: grid; gap: 0.6rem; align-content: start; }
-  .ba .giant.strike { position: relative; color: var(--ink-3); }
-  .ba .giant.strike::after { content: ''; position: absolute; left: -2%; right: -2%; top: 50%; height: 0.08em; background: var(--red); transform: rotate(-6deg); }
-  .ba .giant.green { color: var(--green); }
-  .ba .what { font-size: clamp(1.3rem, 2vw, 1.7rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin: 0.2rem 0 0.4rem; }
-  .ba p { color: var(--ink-2); margin: 0; }
-  .ba .stamp { position: absolute; right: 22px; top: 22px; }
-  .pile { position: relative; height: 120px; margin-top: 1rem; }
-  .pile .sh { position: absolute; width: 40%; height: 100px; background: #fff; border: 1px solid var(--line); border-radius: 3px; box-shadow: 0 6px 16px -8px rgba(20,22,28,.3); }
-  .pile .sh::before { content: ''; position: absolute; left: 12%; right: 12%; top: 14px; height: 5px; background: #e3e6ec; border-radius: 2px; box-shadow: 0 12px 0 #e3e6ec, 0 24px 0 #e3e6ec, 0 36px 0 #e3e6ec, 0 48px 0 #e3e6ec, 0 60px 0 #e3e6ec; }
-  .pile .s1 { left: 2%; top: 12px; transform: rotate(-6deg); } .pile .s2 { left: 30%; top: 2px; transform: rotate(3deg); } .pile .s3 { left: 58%; top: 14px; transform: rotate(-2deg); }
-  .pile .note { position: absolute; width: 60px; height: 46px; background: #f6d86b; box-shadow: 0 4px 10px -4px rgba(0,0,0,.35); font-size: 0.55rem; padding: 6px; line-height: 1.2; color: #5b4a06; font-family: var(--mono); }
-  .pile .n1 { left: 20%; top: 58px; transform: rotate(6deg); } .pile .n2 { left: 62%; top: -4px; transform: rotate(-8deg); } .pile .n3 { left: 82%; top: 64px; transform: rotate(4deg); }
-  .tree { font-family: var(--mono); font-size: 0.78rem; line-height: 1.55; color: var(--ink-2); background: var(--blue-soft); border-radius: 8px; padding: 12px 14px; height: 120px; overflow: auto hidden; white-space: pre; margin-top: 1rem; }
-  .tree b { color: var(--ink); font-weight: 500; } .tree .ok { color: var(--green); }
-
-  /* ---------- steps: start / build / maintain / stay authorized ---------- */
-  .step { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 80px); align-items: center; padding: clamp(30px, 4.5vw, 64px) 0; border-top: 1px solid var(--line); }
-  .step:first-of-type { border-top: 0; padding-top: 0; }
-  .step.flip .step-art { order: 2; }
-  .step .n { font-family: var(--mono); font-size: clamp(3rem, 6vw, 5.4rem); font-weight: 700; letter-spacing: -0.06em; line-height: 1; color: var(--gold); opacity: 0.55; }
-  .step h3 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); letter-spacing: -0.03em; margin: 0.4rem 0 0.9rem; }
-  .step p { color: var(--ink-2); font-size: 1.05rem; max-width: 30em; }
-  .step .term pre { font-size: 12.5px; }
-  @media (max-width: 900px) { .step { grid-template-columns: 1fr; gap: 20px; } .step.flip .step-art { order: 0; } }
-  .ui { font-size: 0.9rem; }
-  .ui .ctx { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em; color: var(--ink-3); margin-bottom: 0.7rem; }
-  .ui .q { font-weight: 500; color: var(--ink); margin-bottom: 0.8rem; font-size: 1.05rem; letter-spacing: -0.01em; }
-  .ui .field { display: flex; gap: 0.5rem; align-items: center; }
-  .ui .field span { flex: 1; border: 1px solid var(--line); border-radius: 8px; padding: 0.5em 0.75em; background: #fff; font-family: var(--mono); }
-  .ui .field b { font-size: 0.85rem; font-weight: 500; background: var(--blue); color: #fff; border-radius: 100px; padding: 0.55em 1em; }
-  .ui .ripple { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
-  .ui .ripple i { font-style: normal; font-family: var(--mono); font-size: 0.7rem; padding: 0.32em 0.6em; border-radius: 100px; background: var(--green-soft); color: var(--green-deep); }
-  .ui .commit { margin-top: 1rem; border-top: 1px solid var(--line-soft); padding-top: 0.9rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--ink-3); font-family: var(--mono); }
-  .ui .commit b { font-family: var(--sans); font-weight: 500; color: var(--blue); border: 1px solid var(--blue-line); border-radius: 100px; padding: 0.45em 0.9em; }
-
-  /* ---------- why ---------- */
-  .why p { color: var(--ink-2); font-size: 1.05rem; }
-  .fan { width: 100%; height: auto; }
-  .fan text { font-family: var(--mono); font-size: 11px; fill: var(--ink-2); }
-  .fan .src { fill: var(--sheet); stroke: var(--blue); stroke-width: 1.2; }
-  .fan .dst { fill: var(--sheet); stroke: var(--blue-line); }
-  .fan .edge { stroke: var(--green); stroke-width: 1.4; fill: none; stroke-dasharray: 260; stroke-dashoffset: 260; }
-  .fan.in .edge { animation: draw 1.6s var(--ease) forwards; }
-  .fan.in .edge:nth-of-type(2) { animation-delay: 0.1s; } .fan.in .edge:nth-of-type(3) { animation-delay: 0.2s; } .fan.in .edge:nth-of-type(4) { animation-delay: 0.3s; } .fan.in .edge:nth-of-type(5) { animation-delay: 0.4s; } .fan.in .edge:nth-of-type(6) { animation-delay: 0.5s; }
-  @keyframes draw { to { stroke-dashoffset: 0; } }
-  @media (prefers-reduced-motion: reduce) { .fan .edge { stroke-dashoffset: 0; animation: none; } }
-
-  /* ---------- library (dark) ---------- */
-  .lib { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
-  @media (max-width: 900px) { .lib { grid-template-columns: 1fr; } }
-  .lib .stats { margin: 1.6rem 0 2rem; gap: 1.4rem 2.2rem; }
-  .lib .stats span { max-width: 10em; }
-  .lib-shot { margin: 0; }
-  .lib-shot img { width: 100%; height: auto; border-radius: 12px; box-shadow: var(--glow); background: #fff; }
-  .lib-shot figcaption { margin-top: 0.8rem; font-size: 0.85rem; color: var(--term-dim); }
-  .index-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; border-top: 1px solid rgba(233, 238, 247, 0.25); padding-top: 1rem; margin-top: clamp(32px, 5vw, 64px); font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--term-dim); }
-  .index-head b { color: var(--term-fg); }
-  .index { list-style: none; margin: 1rem 0 0; padding: 0; columns: 3; column-gap: 2.4rem; font-family: var(--mono); font-size: 0.78rem; line-height: 1.45; }
-  @media (max-width: 900px) { .index { columns: 2; } } @media (max-width: 600px) { .index { columns: 1; } }
-  .index li { break-inside: avoid; display: grid; grid-template-columns: 1fr auto; gap: 0 0.8rem; padding: 0.45rem 0; border-bottom: 1px dashed rgba(233, 238, 247, 0.16); }
-  .index .c { color: var(--term-fg); }
-  .index .v { color: var(--term-dim); grid-column: 1; font-size: 0.72rem; }
-  .index .n { color: var(--term-gold); grid-column: 2; grid-row: 1 / span 2; align-self: start; font-size: 0.7rem; }
-
-  /* ---------- versus ---------- */
-  .versus .sheet { padding: 0.6rem 0.9rem 0.4rem; overflow-x: auto; }
-  .versus .compare th { width: 25%; }
-  .versus .compare td { font-size: 0.92rem; }
-
-  /* ---------- pricing strip ---------- */
-  .strip { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(16px, 2.2vw, 28px); margin-top: 22px; }
-  @media (max-width: 900px) { .strip { grid-template-columns: 1fr; gap: 34px; } }
-  .strip .sheet { padding: clamp(22px, 2.6vw, 30px); display: grid; gap: 0.4rem; align-content: start; }
-  .strip .sheet.us { border-color: var(--blue); box-shadow: var(--shadow-lg); }
-  .strip .name { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; }
-  .strip .price { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.05em; line-height: 1.05; }
-  .strip .price small { font-size: 0.95rem; font-weight: 400; letter-spacing: 0; color: var(--ink-2); }
-  .strip p { color: var(--ink-2); margin: 0.3rem 0 0; font-size: 0.98rem; }
-  .strip .stamp { position: absolute; right: 16px; top: 14px; font-size: 0.6rem; }
-
-  /* ---------- final cta ---------- */
-  .cta-final { position: relative; background: radial-gradient(60% 80% at 20% 0%, rgba(36, 87, 166, 0.55), transparent 60%), radial-gradient(50% 70% at 90% 100%, rgba(31, 138, 76, 0.35), transparent 60%), var(--navy); color: var(--term-fg); border-radius: 18px; padding: clamp(40px, 6.5vw, 84px) clamp(24px, 5vw, 64px); text-align: center; overflow: hidden; box-shadow: var(--glow); }
-  .cta-final h2 { color: #fff; position: relative; }
-  .cta-final p { color: #c6d1e3; max-width: 34em; margin: 1rem auto 1.7rem; position: relative; }
-  .cta-final .btn.ghost { background: transparent; color: #fff; border-color: rgba(233, 238, 247, 0.4); }
-  .cta-final .btn.ghost:hover { border-color: #fff; background: rgba(255, 255, 255, 0.06); }
-  .cta-final .stamp { position: absolute; right: clamp(16px, 4vw, 56px); bottom: clamp(16px, 3vw, 36px); color: var(--term-gold); border-color: var(--term-gold); }
-
-  /* ---------- in one minute ---------- */
-  .minute { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.4vw, 32px); }
-  @media (max-width: 900px) { .minute { grid-template-columns: 1fr; } }
-  .minute > div { border-top: 2px solid var(--blue); padding-top: 1rem; }
-  .minute .lbl { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-deep); font-weight: 700; display: block; margin-bottom: 0.6rem; }
-  .minute h3 { font-size: 1.35rem; margin-bottom: 0.6rem; }
-  .minute p { color: var(--ink-2); font-size: 1.02rem; margin: 0 0 0.7em; }
-  .minute p:last-child { margin: 0; }
-
-  /* ---------- the offering ---------- */
-  .offer { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2vw, 24px); margin-top: 22px; }
-  @media (max-width: 1000px) { .offer { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 640px) { .offer { grid-template-columns: 1fr; gap: 30px; } }
-  .offer .sheet { padding: clamp(20px, 2.4vw, 28px); display: grid; gap: 0.45rem; align-content: start; }
-  .offer .sheet.us { border-color: var(--blue); box-shadow: var(--shadow-lg); }
-  .offer .sheet.soon { background: linear-gradient(180deg, #fff, var(--gold-soft)); border-style: dashed; }
-  .offer .name { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; }
-  .offer .price { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--blue); font-weight: 700; }
-  .offer .price.soon { color: var(--gold-deep); }
-  .offer p { color: var(--ink-2); font-size: 0.95rem; margin: 0.2rem 0 0; }
-  .offer .sheet a.more { margin-top: 0.6rem; font-size: 0.88rem; color: var(--blue); font-weight: 500; }
-  .offer .sheet a.more:hover { text-decoration: underline; text-underline-offset: 3px; }
-
-  /* ---------- glossary ---------- */
-  .gloss { list-style: none; margin: clamp(24px, 3vw, 40px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem 2.4rem; font-size: 0.92rem; }
-  @media (max-width: 800px) { .gloss { grid-template-columns: 1fr; } }
-  .gloss li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.8rem; padding: 0.55rem 0; border-top: 1px solid var(--line-soft); color: var(--ink-2); }
-  .gloss li b { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.08em; color: var(--blue); font-weight: 700; padding-top: 0.15em; }
-  .gloss-head { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-top: clamp(28px, 4vw, 48px); }
-
-  /* ---------- trust center ---------- */
-  .tc { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(28px, 5vw, 72px); align-items: center; }
-  @media (max-width: 900px) { .tc { grid-template-columns: 1fr; } }
-  .tc > * { min-width: 0; }
-  .tc .sheet { padding: clamp(22px, 3vw, 34px); }
-  .tc .win { border: 1px solid var(--blue-line); border-radius: 10px; overflow: hidden; background: #fff; font-size: 0.85rem; }
-  .tc .win .bar { display: flex; justify-content: space-between; padding: 8px 12px; background: var(--blue-soft); font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-deep); }
-  .tc .win .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.3rem 1rem; padding: 10px 14px; border-top: 1px solid var(--line-soft); color: var(--ink-2); }
-  .tc .win .row b { color: var(--ink); font-weight: 500; }
-  .tc .win .row i { font-style: normal; font-family: var(--mono); font-size: 0.7rem; color: var(--green-deep); background: var(--green-soft); border-radius: 100px; padding: 0.25em 0.6em; white-space: nowrap; }
-  .tc .win .row i.pend { color: var(--gold-deep); background: var(--gold-soft); }
-  .tc .win .row i.deny { color: var(--red); background: var(--red-soft); }
-</style>
 </head>
 <body>
-
-<header class="nav">
-  <div class="wrap">
-    <a class="wordmark" href="/">rampguide</a>
-    <nav class="nav-links">
-      <a href="/#minute">What it is</a>
-      <a href="product.html">Product tour</a>
-      <a href="trust-center.html">Trust center</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="https://trust.rampguide.com/">Sign in</a>
-      <a class="btn" href="pricing.html">Get started <span class="arrow">→</span></a>
-    </nav>
-  </div>
-</header>
-
-<main>
-
-<section class="hero">
-  <div class="aurora" aria-hidden="true"></div>
-  <div class="grid-paper" aria-hidden="true"></div>
-  <div class="quilt" aria-hidden="true"><svg viewBox="0 0 12 9" preserveAspectRatio="none">
-    <rect x="0" y="0" width="1" height="1" fill="#f3c35b" opacity="0.7"/><rect x="1" y="0" width="1" height="1" fill="#1f8a4c" opacity="0.5"/><rect x="2" y="0" width="1" height="1" fill="#2457a6" opacity="0.5"/><rect x="3" y="0" width="1" height="1" fill="#f3c35b" opacity="0.5"/><rect x="4" y="0" width="1" height="1" fill="#ffffff" opacity="0.7"/><rect x="5" y="0" width="1" height="1" fill="#2457a6" opacity="0.5"/><rect x="6" y="0" width="1" height="1" fill="#1f8a4c" opacity="1"/><rect x="7" y="0" width="1" height="1" fill="#2457a6" opacity="0.7"/><rect x="8" y="0" width="1" height="1" fill="#2457a6" opacity="1"/><rect x="9" y="0" width="1" height="1" fill="#2457a6" opacity="0.5"/><rect x="10" y="0" width="1" height="1" fill="#e6eef9" opacity="0.5"/><rect x="11" y="0" width="1" height="1" fill="#c9d6ea" opacity="1"/><rect x="0" y="1" width="1" height="1" fill="#2457a6" opacity="0.7"/><rect x="1" y="1" width="1" height="1" fill="#2457a6" opacity="0.7"/><rect x="2" y="1" width="1" height="1" fill="#d99a1e" opacity="1"/><rect x="3" y="1" width="1" height="1" fill="#4f7fc9" opacity="0.5"/><rect x="4" y="1" width="1" height="1" fill="#c9d6ea" opacity="0.9"/><rect x="5" y="1" width="1" height="1" fill="#ffffff" opacity="0.7"/><rect x="6" y="1" width="1" height="1" fill="#2457a6" opacity="0.7"/><rect x="7" y="1" width="1" height="1" fill="#f3c35b" opacity="0.5"/><rect x="8" y="1" width="1" height="1" fill="#ffffff" opacity="0.5"/><rect x="9" y="1" width="1" height="1" fill="#c9d6ea" opacity="0.5"/><rect x="10" y="1" width="1" height="1" fill="#c9d6ea" opacity="0.7"/><rect x="11" y="1" width="1" height="1" fill="#7fcf9f" opacity="1"/><rect x="0" y="2" width="1" height="1" fill="#f3c35b" opacity="1"/><rect x="1" y="2" width="1" height="1" fill="#c9d6ea" opacity="1"/><rect x="2" y="2" width="1" height="1" fill="#f3c35b" opacity="0.9"/><rect x="3" y="2" width="1" height="1" fill="#e6eef9" opacity="0.7"/><rect x="4" y="2" width="1" height="1" fill="#e6eef9" opacity="0.5"/><rect x="5" y="2" width="1" height="1" fill="#c9d6ea" opacity="0.9"/><rect x="6" y="2" width="1" height="1" fill="#ffffff" opacity="1"/><rect x="7" y="2" width="1" height="1" fill="#f3c35b" opacity="1"/><rect x="8" y="2" width="1" height="1" fill="#d99a1e" opacity="0.5"/><rect x="9" y="2" width="1" height="1" fill="#2457a6" opacity="1"/><rect x="10" y="2" width="1" height="1" fill="#4f7fc9" opacity="0.9"/><rect x="11" y="2" width="1" height="1" fill="#4f7fc9" opacity="1"/><rect x="0" y="3" width="1" height="1" fill="#1f8a4c" opacity="0.5"/><rect x="1" y="3" width="1" height="1" fill="#2457a6" opacity="0.9"/><rect x="2" y="3" width="1" height="1" fill="#f3c35b" opacity="0.9"/><rect x="3" y="3" width="1" height="1" fill="#c9d6ea" opacity="1"/><rect x="4" y="3" width="1" height="1" fill="#c9d6ea" opacity="1"/><rect x="5" y="3" width="1" height="1" fill="#2457a6" opacity="0.5"/><rect x="6" y="3" width="1" height="1" fill="#d99a1e" opacity="1"/><rect x="7" y="3" width="1" height="1" fill="#2457a6" opacity="0.5"/><rect x="8" y="3" width="1" height="1" fill="#d99a1e" opacity="1"/><rect x="9" y="3" width="1" height="1" fill="#d99a1e" opacity="1"/><rect x="10" y="3" width="1" height="1" fill="#f3c35b" opacity="0.5"/><rect x="11" y="3" width="1" height="1" fill="#7fcf9f" opacity="0.9"/><rect x="0" y="4" width="1" height="1" fill="#4f7fc9" opacity="0.5"/><rect x="1" y="4" width="1" height="1" fill="#7fcf9f" opacity="0.5"/><rect x="2" y="4" width="1" height="1" fill="#e6eef9" opacity="0.9"/><rect x="3" y="4" width="1" height="1" fill="#4f7fc9" opacity="0.7"/><rect x="4" y="4" width="1" height="1" fill="#1f8a4c" opacity="1"/><rect x="5" y="4" width="1" height="1" fill="#7fcf9f" opacity="0.5"/><rect x="6" y="4" width="1" height="1" fill="#4f7fc9" opacity="1"/><rect x="7" y="4" width="1" height="1" fill="#1f8a4c" opacity="0.9"/><rect x="8" y="4" width="1" height="1" fill="#4f7fc9" opacity="1"/><rect x="9" y="4" width="1" height="1" fill="#ffffff" opacity="0.9"/><rect x="10" y="4" width="1" height="1" fill="#1f8a4c" opacity="0.9"/><rect x="11" y="4" width="1" height="1" fill="#1f8a4c" opacity="0.7"/><rect x="0" y="5" width="1" height="1" fill="#4f7fc9" opacity="0.5"/><rect x="1" y="5" width="1" height="1" fill="#4f7fc9" opacity="0.7"/><rect x="2" y="5" width="1" height="1" fill="#e6eef9" opacity="0.7"/><rect x="3" y="5" width="1" height="1" fill="#2457a6" opacity="1"/><rect x="4" y="5" width="1" height="1" fill="#c9d6ea" opacity="0.7"/><rect x="5" y="5" width="1" height="1" fill="#d99a1e" opacity="0.9"/><rect x="6" y="5" width="1" height="1" fill="#2457a6" opacity="0.7"/><rect x="7" y="5" width="1" height="1" fill="#1f8a4c" opacity="0.9"/><rect x="8" y="5" width="1" height="1" fill="#c9d6ea" opacity="0.9"/><rect x="9" y="5" width="1" height="1" fill="#4f7fc9" opacity="0.5"/><rect x="10" y="5" width="1" height="1" fill="#7fcf9f" opacity="1"/><rect x="11" y="5" width="1" height="1" fill="#1f8a4c" opacity="1"/><rect x="0" y="6" width="1" height="1" fill="#1f8a4c" opacity="0.5"/><rect x="1" y="6" width="1" height="1" fill="#7fcf9f" opacity="1"/><rect x="2" y="6" width="1" height="1" fill="#2457a6" opacity="0.7"/><rect x="3" y="6" width="1" height="1" fill="#2457a6" opacity="0.7"/><rect x="4" y="6" width="1" height="1" fill="#7fcf9f" opacity="0.7"/><rect x="5" y="6" width="1" height="1" fill="#2457a6" opacity="0.9"/><rect x="6" y="6" width="1" height="1" fill="#c9d6ea" opacity="0.5"/><rect x="7" y="6" width="1" height="1" fill="#2457a6" opacity="0.5"/><rect x="8" y="6" width="1" height="1" fill="#c9d6ea" opacity="0.7"/><rect x="9" y="6" width="1" height="1" fill="#ffffff" opacity="0.5"/><rect x="10" y="6" width="1" height="1" fill="#f3c35b" opacity="0.5"/><rect x="11" y="6" width="1" height="1" fill="#2457a6" opacity="0.7"/><rect x="0" y="7" width="1" height="1" fill="#c9d6ea" opacity="1"/><rect x="1" y="7" width="1" height="1" fill="#4f7fc9" opacity="0.9"/><rect x="2" y="7" width="1" height="1" fill="#f3c35b" opacity="0.9"/><rect x="3" y="7" width="1" height="1" fill="#7fcf9f" opacity="0.5"/><rect x="4" y="7" width="1" height="1" fill="#2457a6" opacity="1"/><rect x="5" y="7" width="1" height="1" fill="#7fcf9f" opacity="1"/><rect x="6" y="7" width="1" height="1" fill="#7fcf9f" opacity="0.9"/><rect x="7" y="7" width="1" height="1" fill="#2457a6" opacity="0.7"/><rect x="8" y="7" width="1" height="1" fill="#2457a6" opacity="0.9"/><rect x="9" y="7" width="1" height="1" fill="#d99a1e" opacity="1"/><rect x="10" y="7" width="1" height="1" fill="#4f7fc9" opacity="0.5"/><rect x="11" y="7" width="1" height="1" fill="#e6eef9" opacity="0.9"/><rect x="0" y="8" width="1" height="1" fill="#4f7fc9" opacity="0.5"/><rect x="1" y="8" width="1" height="1" fill="#ffffff" opacity="0.9"/><rect x="2" y="8" width="1" height="1" fill="#2457a6" opacity="0.9"/><rect x="3" y="8" width="1" height="1" fill="#ffffff" opacity="0.9"/><rect x="4" y="8" width="1" height="1" fill="#4f7fc9" opacity="0.9"/><rect x="5" y="8" width="1" height="1" fill="#e6eef9" opacity="0.9"/><rect x="6" y="8" width="1" height="1" fill="#e6eef9" opacity="0.7"/><rect x="7" y="8" width="1" height="1" fill="#e6eef9" opacity="1"/><rect x="8" y="8" width="1" height="1" fill="#e6eef9" opacity="0.7"/><rect x="9" y="8" width="1" height="1" fill="#ffffff" opacity="1"/><rect x="10" y="8" width="1" height="1" fill="#f3c35b" opacity="0.5"/><rect x="11" y="8" width="1" height="1" fill="#2457a6" opacity="0.9"/>
-  </svg></div>
-  <div class="wrap">
-    <div>
-      <span class="kicker">Compliance as code. Your ATO package, compiled.</span>
-      <h1>Your FedRAMP paperwork, <span class="grad">done and kept current.</span></h1>
-      <p class="lede">Selling cloud software to the U.S. government means FedRAMP: hundreds of pages of security documentation, in a strict format, kept current forever. RampGuide generates that documentation from a short list of facts about your system, using pre-written content for the tools you already run, and keeps it current when your facts or the rules change.</p>
-      <div class="cta">
-        <a class="btn lg" href="pricing.html">See pricing</a>
-        <a class="btn lg ghost" href="#minute">What is RampGuide? <span class="arrow">→</span></a>
-      </div>
-      <div class="fine"><span>One price per package, no seats</span><span>Start from your existing documents</span><span>Your trust center included</span><span>Founding customers: 50% off year one</span></div>
-    </div>
-    <div class="hero-art" aria-label="A generated document, and the app publishing the build that produced it">
-      <div class="sheet doc art-doc"><span class="tab">docs/AC.md · generated</span>
-        <div class="bar"><span></span><span>AC-2(3) · Rev5 Moderate</span></div>
-        <div class="body"><p><span class="meta">Status: implemented · origination: service provider system specific</span></p><p>Inactive privileged accounts are disabled after <mark>30 days</mark> through automated functionality within Wingdings SSO, the centralized authentication platform. Accounts are immediately disabled when they have expired, are no longer associated with a user, or are in violation of organizational policy.</p><p><span class="meta">last_updated 2026-09-12 · 3 solutions · provenance: solutions/sso/solution.yaml</span></p></div>
-      </div>
-      <div class="app art-app">
-        <div class="bar"><span>Publish · ACME RoadRunner</span><span>trust.rampguide.com</span></div>
-        <div class="row line l1"><i>✓</i><b>Committed</b><span>a2f096a · AC-2(3): 35 → 30 days · Avery Collins</span></div>
-        <div class="row line l2"><i>✓</i><b>Built</b><span>a2f096a · 18 documents, SDR, CPO, OSCAL SSP</span></div>
-        <div class="row line l3"><i>✓</i><b>Published</b><span>2026-09-12 · every file hashed</span></div>
-        <div class="live line l4"><b>Live.</b><span>agencies read build a2f096a</span></div>
-      </div>
-      <span class="stamp big green art-stamp">Kept current</span>
-    </div>
-  </div>
-</section>
-
-<div class="marquee" aria-hidden="true"><div class="track">
-  <span>docs/AC.md</span><span>docs/AT.md</span><span>docs/AU.md</span><span>docs/CA.md</span><span>docs/CM.md</span><span>docs/CP.md</span><span>docs/IA.md</span><span>docs/IR.md</span><span>docs/MA.md</span><span>docs/MP.md</span><span>docs/PE.md</span><span>docs/PL.md</span><span>docs/PS.md</span><span>docs/RA.md</span><span>docs/SA.md</span><span>docs/SC.md</span><span>docs/SI.md</span><span>docs/SR.md</span><span>docs/policies.md</span><span>docs/procedures.md</span><span>docs/crypto-modules.md</span><span>fedramp/sdr.json</span><span>fedramp/cpo.json</span><span>fedramp/ocr.json</span><span>fedramp/scn.json</span><span>oscal/ssp.json</span><span>inventory.json</span>
-  <span>docs/AC.md</span><span>docs/AT.md</span><span>docs/AU.md</span><span>docs/CA.md</span><span>docs/CM.md</span><span>docs/CP.md</span><span>docs/IA.md</span><span>docs/IR.md</span><span>docs/MA.md</span><span>docs/MP.md</span><span>docs/PE.md</span><span>docs/PL.md</span><span>docs/PS.md</span><span>docs/RA.md</span><span>docs/SA.md</span><span>docs/SC.md</span><span>docs/SI.md</span><span>docs/SR.md</span><span>docs/policies.md</span><span>docs/procedures.md</span><span>docs/crypto-modules.md</span><span>fedramp/sdr.json</span><span>fedramp/cpo.json</span><span>fedramp/ocr.json</span><span>fedramp/scn.json</span><span>oscal/ssp.json</span><span>inventory.json</span>
-</div></div>
-
-<section class="fw-band" id="frameworks">
-  <div class="wrap">
-    <div class="sheet fw-card reveal"><span class="tab ink">Frameworks</span>
-      <div class="fw-head">
-        <h2>What it builds today.</h2>
-        <p>RampGuide builds FedRAMP and CMMC packages. This is exactly what it compiles and publishes today, what comes next, and what it does not do.</p>
-        <a href="pricing.html#frameworks">Every framework, in detail →</a>
-      </div>
-      <ul class="fw-list">
-        <li><span class="st built">Built</span><b>FedRAMP Rev5 Moderate</b><small>All 323 controls; the library writes the values and prose for 278.</small></li>
-        <li><span class="st built">Built</span><b>FedRAMP 20x</b><small>The 46 Key Security Indicators, from the same facts. The class is not built yet.</small></li>
-        <li><span class="st built">Built</span><b>FedRAMP Rev5 Low and High</b><small>Low’s 156 controls and High’s 410; the library writes the values and prose for 147 and 278.</small></li>
-        <li><span class="st built">Built</span><b>CMMC Level 2</b><small>The Cybersecurity Maturity Model Certification, for defense contractors: all 110 requirements in your own words, your plan of action with owners and dates, your SPRS score, and a trust center your primes and your assessor read.</small></li>
-        <li><span class="st">Not built</span><b>Defense Impact Levels 4 and 5</b><small>Tell us if you need them.</small></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<div class="wrap builton reveal">
-  <span class="lbl">Built on the program's own published sources</span>
-  <span><b>FedRAMP Rev5</b> Moderate baseline · 323 controls</span>
-  <span><b>FedRAMP 20x</b> · 46 Key Security Indicators</span>
-  <span><b>CR26</b> machine-readable package schemas</span>
-  <span><b>NIST CMVP</b> cryptographic-module data</span>
-  <span><b>OSCAL</b> System Security Plan</span>
-</div>
-
-<!-- ================= 01 IN ONE MINUTE ================= -->
-<section id="minute" style="padding-top:clamp(28px,4vw,56px)">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">01</span><span>What RampGuide is</span><span class="meta">in one minute, no jargon</span></div>
-    <div class="minute">
-      <div class="reveal">
-        <span class="lbl">What it is</span>
-        <h3>One app, with the writing done.</h3>
-        <p>RampGuide is a <strong>hosted app</strong>. Your people give it the facts about your system in the workbench: which tools you use, how they are configured, who is responsible for what. Its compiler writes the whole FedRAMP package from those facts, and rewrites it whenever a fact changes.</p>
-        <p>The <strong>library</strong> is the writing, done: professionally authored, assessor-ready content for the tools everyone runs, kept current as FedRAMP changes. It comes with the app.</p>
-      </div>
-      <div class="reveal d1">
-        <span class="lbl">Who it's for</span>
-        <h3>Teams selling cloud software to the government.</h3>
-        <p>Cloud and SaaS companies pursuing a FedRAMP authorization, or keeping one, on either of FedRAMP's tracks: the classic Rev5 baseline or the new, faster 20x track. And the consultants and assessors who help them.</p>
-        <p>If you have a 600-page System Security Plan in Word and dread every change to it, this is for you.</p>
-      </div>
-      <div class="reveal d2">
-        <span class="lbl">What you get</span>
-        <h3>Everything FedRAMP asks for, from one source.</h3>
-        <p>The readable documents assessors and agencies read: your System Security Plan narratives, policies, and procedures. The data files the program now requires alongside them. And the recurring reports that keep you authorized: quarterly change reports, change notifications, vulnerability reports.</p>
-        <p>All generated from the same facts, so nothing drifts and nothing is missed.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 02 THE OFFERING ================= -->
-<section class="alt" id="offering">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">02</span><span>What we sell</span><span class="meta">one app, everything in it</span></div>
-    <div class="section-head reveal">
-      <h2>One app, $6,000 a year per package. Everything is in it.</h2>
-    </div>
-    <div class="offer">
-      <div class="sheet reveal"><span class="tab">Software</span>
-        <div class="name">Workbench</div><div class="price">INCLUDED</div>
-        <p>Where your people answer what the package still needs, read each change in plain sentences, and commit it under their own names. The compiler builds the whole package from those answers: narratives, policies, procedures and the machine-readable files.</p>
-        <a class="more" href="product.html">See the product →</a>
-      </div>
-      <div class="sheet us reveal d1"><span class="tab ink">Content</span>
-        <div class="name">Content library</div><div class="price">INCLUDED</div>
-        <p>Most of your package, already written. 33 packs for the tools everyone runs, mapped to the controls they answer, kept current as FedRAMP changes. Your own wording always wins.</p>
-        <a class="more" href="#library">What's in it →</a>
-      </div>
-      <div class="sheet reveal d2"><span class="tab green">Live</span>
-        <div class="name">Trust center</div><div class="price">INCLUDED · LIVE</div>
-        <p>The secure window where government customers request, review, and download your package, with every access logged. FedRAMP requires one on the 20x track now; on the classic Rev5 track, for new certifications from 2027-01-01 and existing ones by 2027-08-01. Live at trust.rampguide.com.</p>
-        <a class="more" href="trust-center.html">Read about it →</a>
-      </div>
-      <div class="sheet reveal d3"><span class="tab gold">Service</span>
-        <div class="name">Complete</div><div class="price">$15,000 / YEAR · PER PACKAGE</div>
-        <p>Everything in the app, plus people: a call to bring your existing documentation across, your program mapped to the library, and someone on the line through your assessment.</p>
-        <a class="more" href="pricing.html">Pricing →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= WE'VE BEEN THROUGH IT ================= -->
-<section id="been">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">03</span><span>We've been through it</span><span class="meta">why this exists</span></div>
-    <div class="section-head reveal" style="max-width:52rem">
-      <h2>We didn't study FedRAMP. We got authorized, and then had to stay that way.</h2>
-      <p class="lede">RampGuide comes from a software company that holds a FedRAMP authorization of its own and has kept it current for years, the hard way: hundreds of pages in Word, one fact hunted down in forty places, an assessor across the table every year. Getting FedRAMP is tough. We've been there. This is what we built to make the second year, and the tenth, less painful than the first.</p>
-    </div>
-    <div class="minute" style="margin-top:clamp(20px,3vw,36px)">
-      <div class="reveal"><span class="lbl">Proof of work</span><h3>Built for our own package first.</h3><p>RampGuide was written to generate our own FedRAMP package before it was offered to anyone. Our own assessed System Security Plan has been imported into it, rebuilt and published.</p></div>
-      <div class="reveal d1"><span class="lbl">Who writes the packs</span><h3>People who have answered the questions.</h3><p>The library's questions are the ones assessors actually ask, and its wording is the kind that survives an assessment. Original prose, written by people who have operated a real program for years.</p></div>
-      <div class="reveal d2"><span class="lbl">Who picks up</span><h3>We're using it next quarter too.</h3><p>Onboarding is done by the same people who maintain our own package. When you email, you reach someone with an ongoing-monitoring deadline of their own. <a href="mailto:nathan@spiderstrategies.com?subject=We%27re%20going%20for%20FedRAMP" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">Talk to a human who's been through it</a>.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="why">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">04</span><span>The paperwork problem</span><span class="meta">and why it is getting worse</span></div>
-    <div class="split">
-      <div class="reveal">
-        <h2 style="margin-bottom:1.4rem">Selling to the government starts with a mountain of paperwork.</h2>
-        <p class="pull">When one fact changes, someone hunts it down in dozens of places. They always miss some.</p>
-        <p style="margin-top:1.4rem">Before an agency can use your cloud product, FedRAMP, the government's security approval program, makes you prove you keep their data safe. The proof runs hundreds of pages in a format that is picky on purpose, and it must stay current forever. Most companies still write it by hand, in Word.</p>
-        <p>The target keeps moving. The program now wants the package machine-readable, not just printable. Rules get revised. Baselines transition. Cryptographic-module certificates lapse on a schedule nobody chose. Content that was right last quarter is quietly wrong this one.</p>
-        <p>RampGuide's answer: keep each fact in one place and generate everything else from it. The same facts always produce the same package, so nothing in it changes unless someone changed a fact, and every change carries a name and a date. No AI writes your documents.</p>
-      </div>
-      <svg class="fan reveal d1" viewBox="0 0 420 300" role="img" aria-label="One fact fans out into six generated documents">
-        <rect class="src" x="10" y="122" width="132" height="56" rx="6"/>
-        <text x="24" y="146">Wingdings SSO</text>
-        <text x="24" y="164" style="fill:var(--ink);font-weight:700">30 days idle</text>
-        <path class="edge" d="M142 150 C 200 150, 210 40, 268 40"/>
-        <path class="edge" d="M142 150 C 200 150, 210 84, 268 84"/>
-        <path class="edge" d="M142 150 C 200 150, 210 128, 268 128"/>
-        <path class="edge" d="M142 150 C 200 150, 210 172, 268 172"/>
-        <path class="edge" d="M142 150 C 200 150, 210 216, 268 216"/>
-        <path class="edge" d="M142 150 C 200 150, 210 260, 268 260"/>
-        <g>
-          <rect class="dst" x="268" y="24" width="142" height="32" rx="5"/><text x="280" y="45">docs/AC.md</text>
-          <rect class="dst" x="268" y="68" width="142" height="32" rx="5"/><text x="280" y="89">docs/policies.md</text>
-          <rect class="dst" x="268" y="112" width="142" height="32" rx="5"/><text x="280" y="133">docs/procedures.md</text>
-          <rect class="dst" x="268" y="156" width="142" height="32" rx="5"/><text x="280" y="177">fedramp/sdr.json</text>
-          <rect class="dst" x="268" y="200" width="142" height="32" rx="5"/><text x="280" y="221">oscal/ssp.json</text>
-          <rect class="dst" x="268" y="244" width="142" height="32" rx="5"/><text x="280" y="265">inventory.json</text>
-        </g>
-      </svg>
-    </div>
-
-    <div class="gloss-head reveal">The words on this page, in plain English</div>
-    <ul class="gloss reveal">
-      <li><b>FedRAMP</b><span>The U.S. government's security approval program for cloud products. No approval, no federal customers.</span></li>
-      <li><b>ATO</b><span>Authority to Operate: the approval itself, granted after your package is assessed.</span></li>
-      <li><b>SSP</b><span>System Security Plan: the big document describing how your system meets every security requirement. Usually hundreds of pages.</span></li>
-      <li><b>Rev5 / 20x</b><span>FedRAMP's two tracks. Rev5 is the classic one, built on NIST's 800-53 controls at three levels: Low (156), Moderate (323) and High (410); RampGuide builds Moderate today. 20x is the new, faster track built on 46 Key Security Indicators.</span></li>
-      <li><b>Machine-readable package</b><span>The data files (JSON) FedRAMP now requires alongside the readable documents, so the government can process submissions automatically.</span></li>
-      <li><b>ConMon</b><span>Continuous monitoring: the quarterly reports, change notifications, and vulnerability reports you owe the program after you are authorized.</span></li>
-      <li><b>Assessor (3PAO)</b><span>The independent third party that checks your package and your system before authorization, and every year after.</span></li>
-      <li><b>Trust center</b><span>The secure website where government customers request and review your package. Required on 20x now; on the classic track, for new certifications from 2027-01-01 and existing ones by 2027-08-01.</span></li>
-    </ul>
-  </div>
-</section>
-
-<section id="live" class="alt">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">05</span><span>See it work</span><span class="meta">one change, start to finish</span></div>
-    <div class="section-head reveal" style="margin-bottom:clamp(24px,3vw,40px)">
-      <h2>Change one fact. Every document updates.</h2>
-    </div>
-    <div class="sheet story reveal" id="story" aria-label="Storyboard: a value changes in the workbench, the change is reviewed and committed, dependent documents update, agencies read the new package">
-      <div class="rail">
-        <div class="step-l"><i style="--i:0"></i>Change one fact</div>
-        <div class="step-l"><i style="--i:1"></i>Review &amp; commit</div>
-        <div class="step-l"><i style="--i:2"></i>Documents update</div>
-        <div class="step-l"><i style="--i:3"></i>Agencies read it</div>
-        <div class="track"><b></b></div>
-      </div>
-      <div class="frames">
-        <div class="frame" style="--i:0">
-          <div class="sheet ui" style="padding:18px 20px;max-width:36rem;width:100%;margin:0 auto">
-            <div class="ctx">WORKBENCH · AC-2(3) · WINGDINGS SSO</div>
-            <div class="q">Days before an idle privileged account is disabled</div>
-            <div class="field"><span><s>35</s>30</span><b>Save</b></div>
-            <div class="ripple"><i>docs/AC.md</i><i>docs/policies.md</i><i>docs/procedures.md</i><i>fedramp/sdr.json</i><i>oscal/ssp.json</i><i>inventory.json</i></div>
-          </div>
-        </div>
-        <div class="frame" style="--i:1">
-          <div class="app" style="max-width:36rem;width:100%;margin:0 auto">
-            <div class="body">
-              <h4>Review &amp; commit changes</h4>
-              <p class="sub">What changed since the last commit, in words.</p>
-              <div class="change"><b>Wingdings SSO</b><p>days before an idle privileged account is disabled <s>35</s> <ins>30</ins></p><code>solutions/sso/solution.yaml</code></div>
-              <div class="go"><b>Commit these changes</b><span>1 file, one commit, authored as you</span></div>
+    <a class="skip-link" href="#main">Skip to content</a>
+<header class="nav"><div class="wrap"><a class="wordmark" href="/">rampguide</a><nav class="nav-links" aria-label="Main navigation"><a href="product.html">Product</a><a href="trust-center.html">Trust center</a><a href="pricing.html">Pricing</a><a class="signin" href="https://trust.rampguide.com/">Sign in</a><a class="btn" href="pricing.html">Get started <span aria-hidden="true">→</span></a></nav></div></header>
+    <main id="main">
+      <section class="story-hero home-hero">
+        <div class="wrap">
+          <p class="eyebrow">FedRAMP + CMMC · One hosted workspace</p>
+          <div class="hero-line">
+            <h1>Make the work clear.<br><em>Make the package yours.</em></h1>
+            <div class="hero-aside">
+              <p>
+                Turn your team’s security answers into consistent documents.
+                Review what changed. Publish when you’re ready.
+              </p>
+              <div class="actions">
+                <a class="btn" href="product.html"
+                  >Explore the product <span aria-hidden="true">→</span></a
+                ><a class="text-link" href="pricing.html">See pricing</a>
+              </div>
             </div>
           </div>
         </div>
-        <div class="frame two" style="--i:2">
-          <div class="sheet doc"><div class="bar"><span>docs/AC.md</span><span>generated</span></div>
-            <div class="body"><h4>AC-2(3)</h4><p><span class="meta">Status: implemented</span></p><p>Inactive privileged accounts are disabled after <mark>30 days</mark> through automated functionality within Wingdings SSO, the centralized authentication platform. Accounts are immediately disabled when they have expired, are no longer associated with a user, or are in violation of organizational policy.</p></div></div>
-          <div class="term"><div class="bar"><span>fedramp/sdr.json · generated</span></div>
-<pre><code>{
-  "controlId": "AC-2(3)",
-  "parameterValues": [
-    { "parameterId": "AC-2(3)(d)",
-      "parameterValue": <span class="hi">"30 days"</span> }
-  ],
-  "controlImplementationStatus": "Implemented",
-  …</code></pre></div>
+      </section>
+      <section class="hero-product">
+        <div class="wrap">
+          <figure class="app-shot">
+            <a
+              href="img/ews-workbench-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: RampGuide workbench with the requirement queue, implementation answer and document connections"
+              ><picture
+                ><source
+                  media="(max-width: 640px)"
+                  srcset="img/ews-workbench-mobile-20261001.webp"
+                  width="780"
+                  height="1688"
+                >
+                <img
+                  src="img/ews-workbench-20261001.webp"
+                  alt="RampGuide workbench with the requirement queue, implementation answer and document connections"
+                  width="2880"
+                  height="2000"
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority="high"
+                ></picture
+              ></a
+            >
+            <figcaption>
+              01 / The workbench · Requirements, answers and context in one
+              place.<span>Actual application · Illustrative demo</span>
+            </figcaption>
+          </figure>
+          <p class="demo-note">
+            Screens captured from the working application on October 1, 2026.
+            EWS Group / MoversSuite is an illustrative demo scenario; people,
+            architecture, safeguards and results are fictional. No customer
+            relationship, assessment or certification is implied.
+          </p>
         </div>
-        <div class="frame" style="--i:3">
-          <div class="app files" style="max-width:36rem;width:100%;margin:0 auto">
-            <div class="bar"><span>ACME RoadRunner · agency tier</span><span>build a2f096a</span></div>
-            <div class="row"><b>docs/AC.md</b><span>2026-09-12 · sha256 3f9a…c21e</span></div>
-            <div class="row"><b>docs/policies.md</b><span>2026-09-12 · sha256 8b04…77d0</span></div>
-            <div class="row"><b>fedramp/sdr.json</b><span>2026-09-12 · sha256 e1c7…0a9b</span></div>
-            <div class="row"><b>oscal/ssp.json</b><span>2026-09-12 · sha256 52dd…f3e4</span></div>
-            <div class="row"><b>inventory.json</b><span>2026-09-12 · sha256 9a61…4b18</span></div>
+      </section>
+      <section id="minute">
+        <div class="wrap">
+          <div class="section-intro">
+            <p class="eyebrow">A deliberate path through complex work</p>
+            <h2>Your answers have<br>somewhere to go.</h2>
+            <p>
+              RampGuide connects the work your team does every day to the
+              package people need to review.
+            </p>
+          </div>
+          <div class="principles">
+            <article>
+              <span class="index-no">01</span>
+              <h3>Prepare with context.</h3>
+              <p>
+                Describe your system. Work through guided requirements. Reuse
+                company-wide answers and give gaps an owner and a plan.
+              </p>
+            </article>
+            <article>
+              <span class="index-no">02</span>
+              <h3>Review before release.</h3>
+              <p>
+                See saved changes, record the review, and build the documents.
+                An owner explicitly publishes the edition readers can access.
+              </p>
+            </article>
+            <article>
+              <span class="index-no">03</span>
+              <h3>Share with control.</h3>
+              <p>
+                Approve access for customers and assessors. Keep private work
+                separate, review reading activity and preserve published
+                snapshots.
+              </p>
+            </article>
           </div>
         </div>
-      </div>
-      <div class="cap">
-        <p style="--i:0">One value changes in the workbench: how many days an idle privileged account waits before it is disabled. The documents it feeds light up.</p>
-        <p style="--i:1">The change reads as a sentence, and one button commits it under your own name.</p>
-        <p style="--i:2">The build rewrites the package, and only the documents that depend on the fact change: the narrative, the machine-readable Security Decision Record, the policies, the procedures, each with a new date.</p>
-        <p style="--i:3">An owner publishes, and the agencies you let in read the new package in your trust center: every file hashed, every read logged.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="steps">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">06</span><span>How it works</span><span class="meta">from first draft to continuous monitoring</span></div>
-    <div class="section-head reveal" style="margin-bottom:clamp(28px,4vw,56px)">
-      <h2>Every step, from first draft to continuous monitoring.</h2>
-      <p class="lede">Bring what you have, generate what the program wants, fill the gaps in an interview, and keep the package current in the same app.</p>
-    </div>
-
-    <div class="step reveal">
-      <div class="step-art sheet doc"><span class="tab">day one</span>
-        <div class="bar"><span>import-report.md</span><span>NestPortal SSP · Appendix A</span></div>
-        <div class="body">
-          <h4>Import report</h4>
-          <p><span class="meta">323 controls imported from 328 document record segments · 5 table-of-contents rows skipped</span></p>
-          <p>Every word of the plan landed in the package as a statement for the control it answers. Nothing was silently dropped.</p>
-          <p><mark>12 with warnings</mark>: review those first.</p>
-          <p><span class="meta">323 statements · 2 solutions · 0 errors</span></p>
+      </section>
+      <section class="paper-band">
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">A package that tells the truth</p>
+              <h2>See progress.<br>Keep the gaps visible.</h2>
+            </div>
+            <p>
+              A complete set of answers can still describe unfinished work.
+              Track what needs attention without confusing preparation,
+              publication and an actual assessment.
+            </p>
+          </div>
+          <figure class="app-shot">
+            <a
+              href="img/ews-assessment-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: MoversSuite calculated readiness showing open gaps and no recorded assessment"
+              ><img
+                src="img/ews-assessment-20261001.webp"
+                alt="MoversSuite calculated readiness showing open gaps and no recorded assessment"
+                width="2880"
+                height="2000"
+                loading="lazy"
+                decoding="async"
+              ></a
+            >
+            <figcaption>
+              02 / Assessment preparation · Six gaps remain visible in this
+              demo.<span>Actual application · Illustrative demo</span>
+            </figcaption>
+          </figure>
+          <a class="text-link" href="product.html#prepare"
+            >Inside the preparation workflow →</a
+          >
         </div>
-      </div>
-      <div>
-        <div class="n">01</div>
-        <h3>Start from what you have.</h3>
-        <p>Bring the Moderate System Security Plan you already maintain, as the Word Appendix A, the Appendix Q crypto table, or its machine-readable OSCAL form. Every word lands in your package, nothing is silently dropped, and the import report lists what needs human eyes.</p>
-        <p>Starting fresh? Your package starts from the library's packs for the tools you run.</p>
-      </div>
-    </div>
-
-    <div class="step flip reveal">
-      <div class="step-art term"><div class="bar"><span>the package · every build</span></div>
-<pre><code>docs/
-  AC.md AT.md AU.md CA.md CM.md CP.md IA.md
-  IR.md MA.md MP.md PE.md PL.md PS.md RA.md
-  SA.md SC.md SI.md SR.md
-  policies.md          <span class="dim">external, one per family</span>
-  procedures.md        <span class="dim">internal, operational tier</span>
-  crypto-modules.md    <span class="dim">Appendix Q shape</span>
-fedramp/
-  sdr.json cpo.json    <span class="ok">✓ schema-checked</span>
-  ocr.json scn.json    <span class="ok">✓ schema-checked</span>
-oscal/
-  ssp.json
-inventory.json         <span class="dim">the document inventory</span></code></pre></div>
-      <div>
-        <div class="n">02</div>
-        <h3>Generate the whole package.</h3>
-        <p>For people: family narratives, the policies document, the procedures document, the cryptographic-module inventory. For the program: the Security Decision Record, Certification Package Overview, Ongoing Certification Report, and Significant Change Notification, each checked against FedRAMP's own JSON schemas before you submit, not after.</p>
-      </div>
-    </div>
-
-    <div class="step reveal">
-      <a class="step-art" href="product.html" style="display:block;border-radius:12px;overflow:hidden;border:1px solid var(--blue-line);box-shadow:var(--shadow-lg);background:#fff"><img src="img/app-question.png" alt="The RampGuide workbench asking one question: control AC-2(3), whose official text has a blank for the time period after which inactive accounts are disabled, above the program's own narrative and an answer field." width="1160" height="764" loading="lazy" style="display:block;width:100%;height:auto"></a>
-      <div>
-        <div class="n">03</div>
-        <h3>Fill the gaps in an interview. Ship changes as commits.</h3>
-        <p>The workbench in the hosted app shows what the program still needs from a human, one question at a time, and lights up the documents each answer feeds. A value is set once: change it and every document that prints it follows. Read the change in plain sentences and commit it under your own name. Every change keeps who made it, when and why, the way code changes do.</p>
-        <p><a href="product.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">See the product tour →</a></p>
-      </div>
-    </div>
-
-    <div class="step flip reveal">
-      <div class="step-art sheet doc"><span class="tab">every quarter, every change</span>
-        <div class="bar"><span>fedramp/ · generated</span><span>schema-checked</span></div>
-        <div class="body">
-          <h4>Ongoing Certification Report</h4>
-          <p><span class="meta">fedramp/ocr.json · 14 change entries since 2026-Q2, each from a commit</span></p>
-          <p>2026-09-12: Disable idle privileged accounts after <mark>30 days</mark> (affects AC-2(3), AC-2(5))</p>
-          <h4 style="margin-top:1rem">Significant Change Notification</h4>
-          <p><span class="meta">fedramp/scn.json · adaptive change · 1 commit · 2 impacted requirements</span></p>
+      </section>
+      <section>
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">The operational work, too</p>
+              <h2>Owners, due dates.<br>And a record of what happened.</h2>
+            </div>
+            <p>
+              Assign recurring tasks, connect them to package requirements, and
+              record completion or a finding. A finished task does not silently
+              change a compliance answer.
+            </p>
+          </div>
+          <figure class="app-shot">
+            <a
+              href="img/ews-tasks-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: Assigned EWS operational tasks with due dates, recurrence and requirement links"
+              ><picture
+                ><source
+                  media="(max-width: 640px)"
+                  srcset="img/ews-tasks-mobile-20261001.webp"
+                  width="780"
+                  height="1688"
+                >
+                <img
+                  src="img/ews-tasks-20261001.webp"
+                  alt="Assigned EWS operational tasks with due dates, recurrence and requirement links"
+                  width="2880"
+                  height="2000"
+                  loading="lazy"
+                  decoding="async"
+                ></picture
+              ></a
+            >
+            <figcaption>
+              03 / Company tasks · Keep follow-up work connected.<span
+                >Actual application · Illustrative demo</span
+              >
+            </figcaption>
+          </figure>
         </div>
-      </div>
-      <div>
-        <div class="n">04</div>
-        <h3>Stay authorized from the same history.</h3>
-        <p>Continuous monitoring comes out of the history your people already write in the workbench. The quarterly Ongoing Certification Report is computed from your commits, and the Significant Change Notification from the change that made it. One snapshot per report freezes what was published, kept for the life of the certification.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="alt">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">07</span><span>Before and after</span><span class="meta">the same program, two ways</span></div>
-    <div class="ba">
-      <div class="sheet reveal"><span class="tab">Before</span>
-        <div class="giant strike">600</div>
-        <div class="what">pages, hand-edited in Word.</div>
-        <p>One fact lives in forty places. Every update is a hunt, something is always missed, and the machine-readable export is a separate project that drifts from the prose.</p>
-        <div class="pile" aria-hidden="true"><div class="sh s1"></div><div class="sh s2"></div><div class="sh s3"></div><div class="note n1">35 → 30 days<br>(p. 112?)</div><div class="note n2">also AC-2(5)<br>+ policies</div><div class="note n3">regen OSCAL<br>by Friday</div></div>
-      </div>
-      <div class="sheet reveal d1"><span class="tab green">After</span><span class="stamp green thunk">Recompiled</span>
-        <div class="giant green">1</div>
-        <div class="what">set of facts. Everything else is generated.</div>
-        <p>Answer once in the workbench and every document follows. Each change reads as a sentence before anyone commits it, and the readable documents and the machine-readable package can't disagree.</p>
-        <div class="tree" aria-hidden="true"><b>Workbench · ACME RoadRunner</b>
-AC-2(3) · Wingdings SSO  <span class="ok">← the fact</span>
-  disable idle accounts: 35 → 30 days
-  committed by Avery Collins
-<span class="ok">✓ 6 documents rebuilt; rest unchanged</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="dark" id="library">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">08</span><span>The library</span><span class="meta">included in every plan</span></div>
-    <div class="lib">
-      <div class="reveal">
-        <h2>Most of your package, already written.</h2>
-        <p class="lede" style="margin-top:1.1rem">Most companies run the same kinds of tools: single sign-on, logging, firewalls, scanning. The library holds professionally written, auditor-ready content for each, parameterized for your environment. Your package starts from the packs for the tools you run, and every value a pack sets is one you can change in the workbench.</p>
-        <div class="stats">
-          <div><b>33</b><span>packs, professionally written</span></div>
-          <div><b>278</b><span>of the 323 Rev5 Moderate controls with pre-written prose</span></div>
-          <div><b>2</b><span>FedRAMP tracks: Rev5, and 20x through FedRAMP's published crosswalk</span></div>
+      </section>
+      <section class="paper-band">
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">A different experience for readers</p>
+              <h2>Share the published edition.</h2>
+            </div>
+            <p>
+              Customers and assessors open a focused document library. The owner
+              controls access; each reader’s tier determines what they can see.
+            </p>
+          </div>
+          <figure class="app-shot">
+            <a
+              href="img/ews-trust-center-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: Customer document library with the published summary, recorded-status fields and access limits"
+              ><picture
+                ><source
+                  media="(max-width: 640px)"
+                  srcset="img/ews-trust-mobile-20261001.webp"
+                  width="780"
+                  height="1688"
+                >
+                <img
+                  src="img/ews-trust-center-20261001.webp"
+                  alt="Customer document library with the published summary, recorded-status fields and access limits"
+                  width="2880"
+                  height="2000"
+                  loading="lazy"
+                  decoding="async"
+                ></picture
+              ></a
+            >
+            <figcaption>
+              04 / Customer view · Detailed CMMC readiness and gaps stay at the
+              assessor tier.<span>Actual application · Illustrative demo</span>
+            </figcaption>
+          </figure>
+          <a class="text-link" href="trust-center.html"
+            >Explore the trust center →</a
+          >
         </div>
-        <div class="facts">
-          <div><b>Your wording wins</b><p>Your edits live beside the pack and survive every update.</p></div>
-          <div><b>Swap vendors, not statements</b><p>Okta or Microsoft Entra, AWS or Azure. Only the vendor wording changes; your statements stay put.</p></div>
-          <div><b>Maintained</b><p>As FedRAMP's rules, baselines, and cryptographic-module data change, the packs change with them.</p></div>
-          <div><b>Procedure-deep</b><p>The richest prose is operational: who opens which console, verifies which setting, files which report. That is what the Security Decision Record draws on.</p></div>
+      </section>
+      <section>
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">Built around your program</p>
+              <h2>FedRAMP and CMMC.<br>Specific where it matters.</h2>
+            </div>
+            <div>
+              <p>
+                Program-specific questions, documents and status language. One
+                package represents one product or environment and one framework.
+                Your company can maintain more than one.
+              </p>
+              <p>
+                <a class="text-link" href="pricing.html#frameworks"
+                  >See supported frameworks and limits →</a
+                >
+              </p>
+            </div>
+          </div>
+          <p class="boundary-note">
+            RampGuide helps prepare and share documentation. It does not perform
+            an independent assessment, grant certification or authorization, or
+            submit your assessment to SPRS.
+          </p>
         </div>
-        <div style="margin-top:2rem"><a class="btn gold lg" href="pricing.html">See pricing <span class="arrow">→</span></a></div>
-      </div>
-      <figure class="lib-shot reveal d1"><img src="img/app-chip.png" alt="A control open for editing in the workbench. The value 35 in the blank AC-2(3)(d) is a highlighted chip; opened, it shows its field, labeled days before an idle privileged account is disabled, owned by the Wingdings SSO solution, with a Save button and the note that every document that prints it follows." width="1360" height="1372" loading="lazy"><figcaption>A pack's value in the workbench: set once, printed in every document that uses it.</figcaption></figure>
-    </div>
-    <div class="index-head reveal"><span><b>Index of packs</b> · 31 categories · 33 packs</span><span>category · variants · Rev5 controls answered</span></div>
-    <ul class="index reveal">
-        <li><span class="c">Anti-malware</span><span class="v">ClamAV</span><span class="n">1 control</span></li>
-        <li><span class="c">Application server</span><span class="v">Tomcat</span><span class="n">3 controls</span></li>
-        <li><span class="c">Application</span><span class="v">SaaS</span><span class="n">13 controls</span></li>
-        <li><span class="c">Assessment and authorization</span><span class="v">process</span><span class="n">12 controls</span></li>
-        <li><span class="c">Awareness training</span><span class="v">process</span><span class="n">5 controls</span></li>
-        <li><span class="c">Change management</span><span class="v">GitHub</span><span class="n">7 controls</span></li>
-        <li><span class="c">Cloud scoping</span><span class="v">SaaS</span><span class="n">12 controls</span></li>
-        <li><span class="c">Configuration management</span><span class="v">Ansible</span><span class="n">7 controls</span></li>
-        <li><span class="c">Contingency</span><span class="v">AWS</span><span class="n">21 controls</span></li>
-        <li><span class="c">External services</span><span class="v">process</span><span class="n">10 controls</span></li>
-        <li><span class="c">FIPS cryptography</span><span class="v">citations</span><span class="n">8 controls</span></li>
-        <li><span class="c">Governance</span><span class="v">policy program</span><span class="n">18 controls</span></li>
-        <li><span class="c">Host hardening</span><span class="v">DISA STIG</span><span class="n">3 controls</span></li>
-        <li><span class="c">Host intrusion detection</span><span class="v">Wazuh</span><span class="n">6 controls</span></li>
-        <li><span class="c">Infrastructure as code</span><span class="v">CloudFormation</span><span class="n">5 controls</span></li>
-        <li><span class="c">Incident response</span><span class="v">process</span><span class="n">16 controls</span></li>
-        <li><span class="c">Log aggregation</span><span class="v">OpenSearch</span><span class="n">20 controls</span></li>
-        <li><span class="c">Login protection</span><span class="v">fail2ban</span><span class="n">1 control</span></li>
-        <li><span class="c">Maintenance</span><span class="v">process</span><span class="n">9 controls</span></li>
-        <li><span class="c">Media protection</span><span class="v">AWS</span><span class="n">6 controls</span></li>
-        <li><span class="c">Network boundary</span><span class="v">AWS · Azure</span><span class="n">6 controls</span></li>
-        <li><span class="c">Personnel security</span><span class="v">process</span><span class="n">9 controls</span></li>
-        <li><span class="c">Physical (inherited)</span><span class="v">AWS</span><span class="n">17 controls</span></li>
-        <li><span class="c">Planning</span><span class="v">process</span><span class="n">6 controls</span></li>
-        <li><span class="c">Risk assessment</span><span class="v">process</span><span class="n">6 controls</span></li>
-        <li><span class="c">Secure development</span><span class="v">process</span><span class="n">7 controls</span></li>
-        <li><span class="c">Single sign-on</span><span class="v">Microsoft Entra ID · Okta</span><span class="n">33 controls</span></li>
-        <li><span class="c">Storage and audit trail</span><span class="v">AWS</span><span class="n">6 controls</span></li>
-        <li><span class="c">Supply chain</span><span class="v">process</span><span class="n">11 controls</span></li>
-        <li><span class="c">Vulnerability scanning</span><span class="v">Tenable Nessus</span><span class="n">9 controls</span></li>
-        <li><span class="c">Web application firewall</span><span class="v">AWS</span><span class="n">3 controls</span></li>
-    </ul>
-  </div>
-</section>
-
-<!-- ================= 09 TRUST CENTER ================= -->
-<section id="trust">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">09</span><span>The trust center</span><span class="meta">live at trust.rampguide.com</span></div>
-    <div class="tc">
-      <div class="reveal">
-        <h2>Where your package lives once it exists.</h2>
-        <p class="lede" style="margin-top:1.1rem">FedRAMP no longer wants your package emailed around. Agencies request access, someone approves, they retrieve the current package, and every access and every denial is logged and reportable. On the 20x track this window is required from day one; on the classic Rev5 track, new certifications need it from 2027-01-01 and existing ones by 2027-08-01.</p>
-        <p class="muted">RampGuide's trust center is that window, live at trust.rampguide.com: an owner presses Publish, and the package, the readable policies, and the document inventory land there, every file hashed. You decide who reads. Federal agency staff with a .gov or .mil address on the federal list kept by CISA, the Cybersecurity and Infrastructure Security Agency, can be let in automatically; everyone else waits for your approval. Every read is logged, and programs read the same package through the <a href="api.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">API</a>.</p>
-        <p class="muted"><a href="trust-center.html" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">Read the full trust center page →</a> <a href="trust-center.html#dates" style="color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:3px">The dates, rule set by rule set →</a> Every package comes with its trust center.</p>
-      </div>
-      <div class="sheet reveal d1"><span class="tab gold">Example · fictional</span>
-        <div class="win" aria-label="A trust center access log, illustrative">
-          <div class="bar"><span>ACME · NestPortal · package access</span><span>logged</span></div>
-          <div class="row"><b>Dept. of Example · authorizing official</b><i>approved · downloaded 2026-09-11</i></div>
-          <div class="row"><b>Agency reviewer · security</b><i>approved · viewed policies.md</i></div>
-          <div class="row"><b>New request · procurement</b><i class="pend">pending approval</i></div>
-          <div class="row"><b>Unknown requester</b><i class="deny">denied · reported</i></div>
-          <div class="row"><b>Package version</b><i>build 2026-09-12 · 14 changes since Q2</i></div>
+      </section>
+      <section class="closing">
+        <div class="wrap">
+          <div>
+            <p class="eyebrow">From answers to a published package</p>
+            <h2>Give the work a place to happen.</h2>
+          </div>
+          <a class="btn" href="pricing.html"
+            >Find your plan <span aria-hidden="true">→</span></a
+          >
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="versus alt">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">10</span><span>The alternatives</span><span class="meta">three ways to carry a package</span></div>
-    <div class="section-head reveal" style="margin-bottom:clamp(24px,3vw,40px)"><h2>Where your program lives decides everything else.</h2></div>
-    <div class="sheet reveal">
-      <table class="compare">
-        <thead><tr><th></th><th>By hand</th><th>Hosted GRC platform</th><th class="us">RampGuide</th></tr></thead>
-        <tbody>
-          <tr><td>Where the program lives</td><td>Word files on a shared drive</td><td>Someone else's database, behind their editor</td><td class="us">A git repo that is yours: plain files, a full copy whenever you ask</td></tr>
-          <tr><td>Who writes the content</td><td>You, or a consultant by the hour</td><td>You, inside their forms</td><td class="us">A maintained library, with your edits winning</td></tr>
-          <tr><td>The machine-readable package</td><td>A separate project that drifts from the prose</td><td>An export, when the vendor supports the schema</td><td class="us">Generated from the same facts, schema-checked</td></tr>
-          <tr><td>When a fact changes</td><td>Find and fix it in forty places</td><td>Edit it where their model allows</td><td class="us">Change it once in the workbench; every document follows</td></tr>
-          <tr><td>Continuous monitoring</td><td>Assemble reports by hand each quarter</td><td>Dashboards, inside the platform</td><td class="us">Computed from the changes your people commit</td></tr>
-          <tr><td>Price</td><td>Hours</td><td>$25,000 to $60,000 a year for a Rev5 package; $55,000 to $125,000 with continuous monitoring (list prices, read 2026-09-28)</td><td class="us">$6,000 a year per package: the app, the library and the trust center</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section id="pricing">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">11</span><span>Pricing</span><span class="meta">per package · per year</span></div>
-    <div class="section-head reveal">
-      <h2>One price per package. No seats.</h2>
-      <p class="lede">One package: one system, one framework, with its trust center and the library. A second system or a second framework is a second package in the same company, with the same people and one bill. Every plan is the whole app: the workbench, the library and your trust center. Founding customers get 50% off year one.</p>
-    </div>
-    <div class="strip">
-      <div class="sheet us reveal"><span class="tab ink">Most teams</span><span class="stamp">Founding · 50% off yr 1</span><div class="name">RampGuide</div><div class="price">$6,000<small> / year</small></div><p>The hosted app, all 33 packs and their updates, and your trust center at trust.rampguide.com.</p></div>
-      <div class="sheet reveal d1"><span class="tab gold">Complete</span><div class="name">RampGuide + onboarding</div><div class="price">$15,000<small> / year</small></div><p>Everything in RampGuide, plus a call to bring your existing program across and people on the line through your assessment.</p></div>
-    </div>
-    <div class="reveal" style="margin-top:1.6rem"><a class="btn lg" href="pricing.html">See pricing and sign up <span class="arrow">→</span></a></div>
-  </div>
-</section>
-
-<!-- ================= FINAL CTA ================= -->
-<section class="tight" style="padding-bottom:clamp(56px,8vw,112px)">
-  <div class="wrap">
-    <div class="cta-final reveal">
-      <span class="stamp big thunk">Compiled</span>
-      <h2>Ready to get your paperwork done?</h2>
-      <p>See the app on a fictional program in the product tour, or pick a plan.</p>
-      <div style="display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center;position:relative">
-        <a class="btn lg" href="pricing.html">See pricing</a>
-        <a class="btn lg ghost" href="product.html">Take the product tour <span class="arrow">→</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<footer>
+      </section>
+    </main>
+    <footer>
   <div class="wrap">
     <div class="row">
       <div>
         <div class="wordmark">rampguide</div>
-        <div class="faint" style="margin-top:.4rem">Compliance as code. Your ATO package, compiled.</div>
+        <div class="faint" style="margin-top:.4rem">Prepare with context. Publish with control.</div>
       </div>
       <nav>
         <a href="/#minute">What it is</a>
         <a href="product.html">Product tour</a>
-        <a href="how-it-works.html">Interactive walkthrough</a>
+        <a href="how-it-works.html">How it works</a>
         <a href="trust-center.html">Trust center</a>
         <a href="pricing.html#frameworks">Frameworks</a>
         <a href="api.html">API</a>
@@ -814,31 +303,8 @@ AC-2(3) · Wingdings SSO  <span class="ok">← the fact</span>
         <a href="mailto:nathan@spiderstrategies.com">Contact</a>
       </nav>
     </div>
-    <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program. Examples on this page are fictional (ACME Corp).</p>
+    <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program.</p>
   </div>
 </footer>
-
-<script>
-  // Reveal-on-scroll, stamps that thunk when seen, and the storyboard's
-  // play-when-visible. Zero dependencies; reduced motion handled in CSS.
-  (function () {
-    var reveals = document.querySelectorAll('.reveal, .thunk')
-    var story = document.getElementById('story')
-    if (!('IntersectionObserver' in window)) {
-      reveals.forEach(function (e) { e.classList.add('in') })
-      story.classList.add('play')
-      return
-    }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target) } })
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 })
-    reveals.forEach(function (e) { io.observe(e) })
-    var so = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { story.classList.toggle('play', en.isIntersecting) })
-    }, { threshold: 0.25 })
-    so.observe(story)
-  })()
-</script>
-
-</body>
+  </body>
 </html>

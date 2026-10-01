@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Product tour — RampGuide</title>
-<meta name="description" content="A tour of RampGuide's hosted app: the workbench that fills the gaps in your FedRAMP package, values that change everywhere they are used, the change in plain sentences, publishing, deciding who reads, and the trust center an agency reads.">
-<meta property="og:title" content="RampGuide, up close">
-<meta property="og:description" content="The workbench, the change in words, Publish, Access, and the trust center an agency reads, in one hosted app.">
+<meta name="description" content="Explore the current RampGuide workbench, system description, gaps, review, publication, people, tasks and document library.">
+<meta property="og:title" content="Product tour — RampGuide">
+<meta property="og:description" content="Explore the current RampGuide workbench, system description, gaps, review, publication, people, tasks and document library.">
 <meta property="og:url" content="https://rampguide.com/product.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://rampguide.com/og.png">
@@ -16,187 +16,399 @@
 <link rel="preload" href="fonts/NebulaSans-Book.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/NebulaSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="site.css">
-<style>
-  .tour-hero { padding: clamp(44px, 6vw, 84px) 0 clamp(24px, 3vw, 40px); position: relative; overflow: hidden; }
-  .tour-hero .aurora { position: absolute; inset: -20% -10% -10% -10%; z-index: -1; pointer-events: none;
-    background: radial-gradient(38% 42% at 80% 20%, rgba(36, 87, 166, 0.18), transparent 70%), radial-gradient(28% 30% at 55% 100%, rgba(31, 138, 76, 0.14), transparent 70%); }
-  .tour-hero h1 { margin: 1rem 0 1.2rem; font-size: clamp(2.4rem, 5vw, 4.2rem); }
-  .shot { display: grid; grid-template-columns: 1.35fr 0.65fr; gap: clamp(22px, 4vw, 56px); align-items: center; padding: clamp(28px, 4.5vw, 64px) 0; border-top: 1px solid var(--line); }
-  .shot:first-of-type { border-top: 0; padding-top: 0; }
-  .shot.flip { grid-template-columns: 0.65fr 1.35fr; }
-  .shot.flip .shot-img { order: 2; }
-  @media (max-width: 900px) { .shot, .shot.flip { grid-template-columns: 1fr; gap: 20px; } .shot.flip .shot-img { order: 0; } }
-  .shot-img { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--blue-line); box-shadow: var(--shadow-lg); background: #fff; }
-  .shot-img img { width: 100%; height: auto; display: block; }
-  .shot-img .cap { position: absolute; left: 12px; top: 12px; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue-deep); background: rgba(230, 238, 249, 0.92); border: 1px solid var(--blue-line); border-radius: 100px; padding: 0.4em 0.75em; }
-  .shot .n { font-family: var(--mono); font-size: clamp(2.6rem, 5vw, 4.4rem); font-weight: 700; letter-spacing: -0.06em; line-height: 1; color: var(--gold); opacity: 0.55; }
-  .shot h3 { font-size: clamp(1.45rem, 2.3vw, 1.9rem); letter-spacing: -0.03em; margin: 0.35rem 0 0.8rem; }
-  .shot p { color: var(--ink-2); font-size: 1.02rem; }
-  .shot .notes { list-style: none; padding: 0; margin: 0.6rem 0 0; display: grid; gap: 0.45rem; }
-  .shot .notes li { position: relative; padding-left: 1.4em; color: var(--ink-2); font-size: 0.95rem; }
-  .shot .notes li::before { content: '▸'; position: absolute; left: 0; color: var(--gold); }
-  .shot .notes li b { color: var(--ink); font-weight: 500; }
-  .embed { border: 1px solid var(--blue-line); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-lg); background: #1b1913; margin-top: 22px; }
-  .embed iframe { display: block; width: 100%; height: 640px; border: 0; }
-  @media (max-width: 700px) { .embed iframe { height: 480px; } }
-  .embed .bar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 10px 14px; background: var(--blue-soft); font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-deep); }
-  .embed .bar a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; text-transform: none; letter-spacing: 0; font-family: var(--sans); font-size: 0.85rem; }
-</style>
 </head>
 <body>
-
-<header class="nav">
-  <div class="wrap">
-    <a class="wordmark" href="/">rampguide</a>
-    <nav class="nav-links">
-      <a href="/#minute">What it is</a>
-      <a href="product.html">Product tour</a>
-      <a href="trust-center.html">Trust center</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="https://trust.rampguide.com/">Sign in</a>
-      <a class="btn" href="pricing.html">Get started <span class="arrow">→</span></a>
-    </nav>
-  </div>
-</header>
-
-<main>
-
-<section class="tour-hero">
-  <div class="aurora" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="section-head" style="max-width:52rem">
-      <span class="kicker">Product tour</span>
-      <h1>The product, <span class="grad">up close.</span></h1>
-      <p class="lede">One hosted app at trust.rampguide.com. Your people answer what the package still needs, review and commit as themselves, and publish; the agencies, assessors and customers you let in read the result in your trust center. Shown on a fictional program, ACME's RoadRunner.</p>
-    </div>
-  </div>
-</section>
-
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">01</span><span>The app</span><span class="meta">trust.rampguide.com · where your people work and your readers read</span></div>
-
-    <div class="shot reveal">
-      <div class="shot-img"><span class="cap">The question</span><img src="img/app-question.png" alt="The workbench asking one question: control AC-2(3), whose official text has a blank for the time period after which inactive accounts are disabled. The official text sits above the program's own narrative and an answer field. The compiled documents are listed on the left, progress per control family on the right." width="1160" height="764"></div>
-      <div>
-        <div class="n">01</div>
-        <h3>It asks only what the package still needs.</h3>
-        <p>Your people sign in with a passkey and open the workbench. It shows one question at a time: a control whose official text has a blank nobody has filled, or a placeholder left over from setup. The official wording is right there with its brackets marked, and your own narrative sits underneath for context.</p>
-        <ul class="notes">
-          <li><b>Every answer lands in a file</b> in your package's repository. The card names which one.</li>
-          <li><b>The documents an answer feeds light up</b> in the list on the left, so you see what the next build will change.</li>
-          <li><b>"Doesn't apply?"</b> marks the control not applicable and asks for the justification the program requires instead.</li>
-        </ul>
+    <a class="skip-link" href="#main">Skip to content</a>
+<header class="nav"><div class="wrap"><a class="wordmark" href="/">rampguide</a><nav class="nav-links" aria-label="Main navigation"><a href="product.html">Product</a><a href="trust-center.html">Trust center</a><a href="pricing.html">Pricing</a><a class="signin" href="https://trust.rampguide.com/">Sign in</a><a class="btn" href="pricing.html">Get started <span aria-hidden="true">→</span></a></nav></div></header>
+    <main id="main">
+      <section class="story-hero">
+        <div class="wrap">
+          <p class="eyebrow">Product tour · The working application</p>
+          <h1>Follow the work.<br>All the way to publication.</h1>
+          <p class="lede">
+            One MoversSuite demo package, from its system description to its
+            permission-controlled trust center. Every image below comes from the
+            current application.
+          </p>
+        </div>
+      </section>
+      <div class="wrap">
+        <p class="demo-note">
+          Screens captured from the working application on October 1, 2026. EWS
+          Group / MoversSuite is an illustrative demo scenario; people,
+          architecture, safeguards and results are fictional. No customer
+          relationship, assessment or certification is implied.
+        </p>
+        <nav class="tour-index" aria-label="Tour sections">
+          <a href="#prepare">01 / Guided preparation</a
+          ><a href="#scope">02 / System context</a
+          ><a href="#gaps">03 / Honest preparation</a
+          ><a href="#review">04 / Review and release</a
+          ><a href="#publish">05 / Explicit publication</a
+          ><a href="#people">06 / People and permissions</a
+          ><a href="#tasks">07 / Ongoing work</a
+          ><a href="#documents">08 / Documents</a>
+        </nav>
       </div>
-    </div>
-
-    <div class="shot flip reveal">
-      <div class="shot-img"><span class="cap">A value</span><img src="img/app-chip.png" alt="A control open for editing. The value 35 in the blank AC-2(3)(d) is a highlighted chip; opened, it shows its field, labeled days before an idle privileged account is disabled, owned by the Wingdings SSO solution, with a Save button and the note that every document that prints it follows. Below, the narrative shows the same value and two shared passages as highlighted chips." width="1360" height="1372" loading="lazy"></div>
-      <div>
-        <div class="n">02</div>
-        <h3>A value is set once and printed everywhere.</h3>
-        <p>Open any control from inside its document to edit it. Values show as highlighted chips. Open one and you change it where it lives, and every document that prints it follows when you save.</p>
-        <ul class="notes">
-          <li><b>Each value says what it is and whose it is:</b> "days before an idle privileged account is disabled", from the single sign-on solution.</li>
-          <li><b>Status, who implements the control, and the narrative</b> are edited on the same card.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="shot reveal">
-      <div class="shot-img"><span class="cap">Review &amp; commit</span><img src="img/app-review.png" alt="The review and commit drawer. The AC-2(3) narrative change reads as a sentence with the word immediately struck through and automatically marked as added; below it, the single sign-on value changed from 35 to 30. A prefilled commit message, and one button: commit these changes, two files, one commit, authored as you." width="1440" height="604" loading="lazy"></div>
-      <div>
-        <div class="n">03</div>
-        <h3>Read the change in words, then commit it as yourself.</h3>
-        <p>The button in the corner counts what you changed. Open it and the change reads as plain sentences: removed words struck through, new words marked. One button records it as a single commit under your own name and verified address.</p>
-        <ul class="notes">
-          <li><b>Every change keeps who made it, when and why.</b> Compliance changes get the same paper trail as code.</li>
-          <li><b>The git diff is one click away</b> for anyone who wants it.</li>
-          <li><b>A commit is not a publish.</b> Readers keep the published package until an owner publishes again.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="shot flip reveal">
-      <div class="shot-img"><span class="cap">Publish</span><img src="img/app-publish.png" alt="The Publish page: three steps ticked in order, committed, built and published, each with its build identifier and date, and a card that says Live, with a link to open the live package." width="1160" height="764" loading="lazy"></div>
-      <div>
-        <div class="n">04</div>
-        <h3>Build and publish from one page.</h3>
-        <p>The Publish page walks three steps in order: committed, built, published. The build runs on the committed files, and what readers get is exactly the bytes it wrote. Contributors answer, commit and build; only an owner publishes.</p>
-        <ul class="notes">
-          <li><b>Readers never see work in progress.</b> They keep the last publish until the next one.</li>
-          <li><b>One snapshot per Ongoing Certification Report</b> freezes what was published, kept for the life of the certification.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="shot reveal">
-      <div class="shot-img"><span class="cap">Access</span><img src="img/app-access.png" alt="The Access page, People tab: who can read this trust center, grouped by organization, starting with the provider's own staff and their roles and tiers. A menu on the left: requests, people, activity, API keys, settings." width="1160" height="720" loading="lazy"></div>
-      <div>
-        <div class="n">05</div>
-        <h3>You decide who reads, and see every read.</h3>
-        <p>An owner runs the trust center from Access: requests to let in or turn down, the people who hold access and at which tier, the activity log, API keys for programs, and the settings. RampGuide keeps it running and never decides who gets in.</p>
-        <ul class="notes">
-          <li><b>Federal agency staff can be let in automatically:</b> a .gov or .mil address on the federal list kept by CISA, the Cybersecurity and Infrastructure Security Agency. Everyone else waits for you.</li>
-          <li><b>Turn an agency down</b> and the page gives you FedRAMP's report text and the five-business-day deadline, and keeps both in view until you record FedRAMP's ticket number.</li>
-          <li><b>Tiers decide what each reader opens:</b> the agency tier, or the assessor tier, which adds the procedures and the cryptographic-module table.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="shot flip reveal">
-      <div class="shot-img"><span class="cap">The trust center</span><img src="img/app-package.png" alt="The package as a reviewer from Dept. of Example, a fictional federal agency, reads it in the trust center: the documents at the agency tier, each with its path, date, the controls it answers, its size and its SHA-256 hash, and buttons to open or download it." width="1160" height="780" loading="lazy"></div>
-      <div>
-        <div class="n">06</div>
-        <h3>What an agency reads, hash for hash.</h3>
-        <p>An agency reviewer signs in with a passkey and reads the package at their tier in your trust center: the documents and the machine-readable files FedRAMP's 2026 rules ask for, each with its size and SHA-256 hash. Every open and every download is logged.</p>
-        <ul class="notes">
-          <li><b>Programs read the same package</b> through a documented <a href="api.html" style="color:var(--blue);text-decoration:underline;text-underline-offset:3px">API</a>.</li>
-          <li><b>The public page and its JSON</b> carry what the FedRAMP Marketplace asks for, with no sign-in.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="alt">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">02</span><span>Try the mechanism</span><span class="meta">interactive · flip a fact, watch the documents</span></div>
-    <div class="section-head reveal"><h2>One fact, every document it feeds.</h2>
-      <p class="lede">This is the whole idea in one picture. Flip the highlighted fact and watch the change travel through the pipeline. Switch tracks to see the same facts produce the package for FedRAMP's other track.</p></div>
-    <div class="embed reveal">
-      <div class="bar"><span>how-it-works · interactive</span><a href="how-it-works.html">Open full screen →</a></div>
-      <iframe src="how-it-works.html" title="Interactive walkthrough: one fact, and every generated document it feeds" loading="lazy"></iframe>
-    </div>
-  </div>
-</section>
-
-<section class="tight" style="padding-bottom:clamp(56px,8vw,112px)">
-  <div class="wrap">
-    <div class="sheet reveal" style="padding:clamp(28px,4vw,48px);text-align:center;background:radial-gradient(60% 80% at 20% 0%, rgba(36,87,166,.12), transparent 60%), #fff">
-      <h2>Want to see it on your own program?</h2>
-      <p class="lede" style="margin:1rem auto 1.4rem">Complete-tier onboarding starts with your existing documents.</p>
-      <div style="display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center">
-        <a class="btn lg" href="pricing.html">See pricing</a>
-        <a class="btn lg ghost" href="mailto:nathan@spiderstrategies.com?subject=Show%20me%20RampGuide">Talk to a human <span class="arrow">→</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<footer>
+      <section class="tour-section" id="prepare">
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">01 / Guided preparation</p>
+              <h2>The requirement. Your answer. The document it feeds.</h2>
+            </div>
+            <p>
+              Move through a searchable requirement queue without losing the
+              answer you’re editing. Guidance stays beside the work, and
+              document links make the result tangible.
+            </p>
+          </div>
+          <figure class="app-shot">
+            <a
+              href="img/ews-workbench-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: Requirement editor with a saved implementation answer"
+              ><picture
+                ><source
+                  media="(max-width: 640px)"
+                  srcset="img/ews-workbench-mobile-20261001.webp"
+                  width="780"
+                  height="1688"
+                >
+                <img
+                  src="img/ews-workbench-20261001.webp"
+                  alt="Requirement editor with a saved implementation answer"
+                  width="2880"
+                  height="2000"
+                  loading="lazy"
+                  decoding="async"
+                ></picture
+              ></a
+            >
+            <figcaption>
+              The working copy remains private until an owner publishes.<span
+                >Actual application · Illustrative demo</span
+              >
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="tour-section" id="scope">
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">02 / System context</p>
+              <h2>Start with the system you actually mean.</h2>
+            </div>
+            <p>
+              Describe the boundary, environment, connections and review
+              schedule. Confirm that description before treating the system
+              security plan as answered.
+            </p>
+          </div>
+          <figure class="app-shot">
+            <a
+              href="img/ews-system-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: System boundary and environment details for the fictional MoversSuite scenario"
+              ><img
+                src="img/ews-system-20261001.webp"
+                alt="System boundary and environment details for the fictional MoversSuite scenario"
+                width="2880"
+                height="2000"
+                loading="lazy"
+                decoding="async"
+              ></a
+            >
+            <figcaption>
+              The demo architecture is illustrative; it is not an assertion
+              about EWS. <span>Actual application · Illustrative demo</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="tour-section" id="gaps">
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">03 / Honest preparation</p>
+              <h2>An answer can be complete. The work can still be open.</h2>
+            </div>
+            <p>
+              Record missing safeguards and give each gap an owner, a date and a
+              corrective plan. Calculated readiness helps organize preparation;
+              it is not an assessment result.
+            </p>
+          </div>
+          <figure class="app-shot">
+            <a
+              href="img/ews-gaps-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: CMMC gaps and corrective plans for six unmet requirements"
+              ><img
+                src="img/ews-gaps-20261001.webp"
+                alt="CMMC gaps and corrective plans for six unmet requirements"
+                width="2880"
+                height="2000"
+                loading="lazy"
+                decoding="async"
+              ></a
+            >
+            <figcaption>
+              Six planned gaps, including one that blocks conditional status in
+              this scenario.<span>Actual application · Illustrative demo</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="tour-section" id="review">
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">04 / Review and release</p>
+              <h2>Know what changed before readers do.</h2>
+            </div>
+            <p>
+              Review the saved change to an implementation answer and record it
+              in history. Building and publication are separate actions on the
+              Publish page.
+            </p>
+          </div>
+          <figure class="app-shot">
+            <a
+              href="img/ews-review-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: Saved implementation change shown for review before publication"
+              ><img
+                src="img/ews-review-20261001.webp"
+                alt="Saved implementation change shown for review before publication"
+                width="2880"
+                height="2000"
+                loading="lazy"
+                decoding="async"
+              ></a
+            >
+            <figcaption>
+              The published edition stays in place while this change is being
+              reviewed.<span>Actual application · Illustrative demo</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="tour-section" id="publish">
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">05 / Explicit publication</p>
+              <h2>The owner chooses the edition to share.</h2>
+            </div>
+            <p>
+              See the relationship between working changes, the built package
+              and the published edition. Preserve snapshots of published
+              material for later reference.
+            </p>
+          </div>
+          <figure class="app-shot">
+            <a
+              href="img/ews-publish-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: Publish page showing the current edition and unpublished working changes"
+              ><img
+                src="img/ews-publish-20261001.webp"
+                alt="Publish page showing the current edition and unpublished working changes"
+                width="2880"
+                height="2000"
+                loading="lazy"
+                decoding="async"
+              ></a
+            >
+            <figcaption>
+              Publishing shares documentation; it does not confer compliance
+              status.<span>Actual application · Illustrative demo</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="tour-section" id="people">
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">06 / People and permissions</p>
+              <h2>A role for the work. A tier for the documents.</h2>
+            </div>
+            <p>
+              Invite the people who prepare the package and the readers who need
+              it. Staff permissions and external reading access are separate
+              decisions.
+            </p>
+          </div>
+          <figure class="app-shot">
+            <a
+              href="img/ews-people-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: Company people and permissions including staff, customers and an assessor"
+              ><img
+                src="img/ews-people-20261001.webp"
+                alt="Company people and permissions including staff, customers and an assessor"
+                width="2880"
+                height="2000"
+                loading="lazy"
+                decoding="async"
+              ></a
+            >
+            <figcaption>
+              One company, one product, several different responsibilities.<span
+                >Actual application · Illustrative demo</span
+              >
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="tour-section" id="tasks">
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">07 / Ongoing work</p>
+              <h2>Keep follow-up out of someone’s inbox.</h2>
+            </div>
+            <p>
+              Assign one-time or recurring tasks, link requirements, and record
+              outcomes. A finding can become corrective work without quietly
+              changing a published answer.
+            </p>
+          </div>
+          <figure class="app-shot">
+            <a
+              href="img/ews-tasks-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: Operational tasks with responsible people and due dates"
+              ><picture
+                ><source
+                  media="(max-width: 640px)"
+                  srcset="img/ews-tasks-mobile-20261001.webp"
+                  width="780"
+                  height="1688"
+                >
+                <img
+                  src="img/ews-tasks-20261001.webp"
+                  alt="Operational tasks with responsible people and due dates"
+                  width="2880"
+                  height="2000"
+                  loading="lazy"
+                  decoding="async"
+                ></picture
+              ></a
+            >
+            <figcaption>
+              Task completion and requirement implementation remain distinct.<span
+                >Actual application · Illustrative demo</span
+              >
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="tour-section" id="documents">
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">08 / Documents</p>
+              <h2>A library people can actually review.</h2>
+            </div>
+            <p>
+              Open the generated documents and machine-readable files your
+              access tier allows. Read the current published edition or return
+              to a frozen snapshot.
+            </p>
+          </div>
+          <figure class="app-shot">
+            <a
+              href="img/ews-documents-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: Provider document library with CMMC documents and machine-readable files"
+              ><img
+                src="img/ews-documents-20261001.webp"
+                alt="Provider document library with CMMC documents and machine-readable files"
+                width="2880"
+                height="2000"
+                loading="lazy"
+                decoding="async"
+              ></a
+            >
+            <figcaption>
+              The provider view includes material customer-tier readers cannot
+              open.<span>Actual application · Illustrative demo</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="paper-band">
+        <div class="wrap mobile-feature">
+          <div>
+            <p class="eyebrow">The same work, on a smaller screen</p>
+            <h2>Pick a requirement.<br>Stay with the answer.</h2>
+            <p>
+              On mobile, the queue and answer take turns using the screen. Your
+              working context, implementation status and save actions remain
+              available.
+            </p>
+            <p class="small muted">
+              Actual 390 px mobile viewport. No separate demo interface.
+            </p>
+          </div>
+          <figure class="app-shot">
+            <a
+              href="img/ews-answer-mobile-20261001.webp"
+              target="_blank"
+              rel="noopener"
+              aria-label="Enlarge: Mobile requirement editor for MoversSuite"
+              ><img
+                src="img/ews-answer-mobile-20261001.webp"
+                alt="Mobile requirement editor for MoversSuite"
+                width="2880"
+                height="2000"
+                loading="lazy"
+                decoding="async"
+              ></a
+            >
+            <figcaption>
+              Mobile workbench.<span
+                >Actual application · Illustrative demo</span
+              >
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="closing">
+        <div class="wrap">
+          <div>
+            <p class="eyebrow">From answers to a published package</p>
+            <h2>Give the work a place to happen.</h2>
+          </div>
+          <a class="btn" href="pricing.html"
+            >Find your plan <span aria-hidden="true">→</span></a
+          >
+        </div>
+      </section>
+    </main>
+    <footer>
   <div class="wrap">
     <div class="row">
       <div>
         <div class="wordmark">rampguide</div>
-        <div class="faint" style="margin-top:.4rem">Compliance as code. Your ATO package, compiled.</div>
+        <div class="faint" style="margin-top:.4rem">Prepare with context. Publish with control.</div>
       </div>
       <nav>
         <a href="/#minute">What it is</a>
         <a href="product.html">Product tour</a>
-        <a href="how-it-works.html">Interactive walkthrough</a>
+        <a href="how-it-works.html">How it works</a>
         <a href="trust-center.html">Trust center</a>
         <a href="pricing.html#frameworks">Frameworks</a>
         <a href="api.html">API</a>
@@ -204,21 +416,8 @@
         <a href="mailto:nathan@spiderstrategies.com">Contact</a>
       </nav>
     </div>
-    <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program. The program and the people shown are fictional (ACME Corp, RoadRunner).</p>
+    <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program.</p>
   </div>
 </footer>
-
-<script>
-  // Reveal-on-scroll. Zero dependencies; reduced motion handled in CSS.
-  (function () {
-    var els = document.querySelectorAll('.reveal')
-    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in') }); return }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target) } })
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 })
-    els.forEach(function (e) { io.observe(e) })
-  })();
-</script>
-
-</body>
+  </body>
 </html>

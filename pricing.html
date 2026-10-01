@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pricing — RampGuide</title>
-<meta name="description" content="RampGuide pricing: one hosted app with the workbench, the maintained FedRAMP content library and your trust center, $6,000 per year per package. Complete adds onboarding at $15,000. Founding customers get 50% off year one.">
-<meta property="og:title" content="RampGuide pricing">
-<meta property="og:description" content="One app with the content library and your trust center inside: $6,000 per package per year; Complete, with onboarding, $15,000. Founding customers: 50% off year one.">
+<meta name="description" content="RampGuide is $6,000 per package per year. Complete adds onboarding assistance at $15,000. The workbench and trust center are included.">
+<meta property="og:title" content="Pricing — RampGuide">
+<meta property="og:description" content="RampGuide is $6,000 per package per year. Complete adds onboarding assistance at $15,000. The workbench and trust center are included.">
 <meta property="og:url" content="https://rampguide.com/pricing.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://rampguide.com/og.png">
@@ -16,210 +16,282 @@
 <link rel="preload" href="fonts/NebulaSans-Book.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/NebulaSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="site.css">
-<style>
-  .pricing-hero { padding: clamp(44px, 6vw, 84px) 0 clamp(20px, 3vw, 36px); }
-  .founding {
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem 1.5rem;
-    background: linear-gradient(180deg, #fff, var(--gold-soft)); color: var(--ink); border: 1px dashed rgba(217, 154, 30, 0.6);
-    border-radius: 12px; padding: 18px 24px; margin-bottom: clamp(28px, 4vw, 48px); position: relative;
-  }
-  .founding b { color: var(--gold-deep); }
-  .founding small { color: var(--ink-3); font-size: 0.78rem; font-family: var(--mono); letter-spacing: 0.02em; }
-  .tiers.two { grid-template-columns: repeat(2, 1fr); }
-  @media (max-width: 900px) { .tiers.two { grid-template-columns: 1fr; } }
-  .unit { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; margin-top: clamp(32px, 4vw, 56px); }
-  .unit div { border-top: 2px solid var(--ink); padding-top: 0.9rem; font-size: 0.95rem; color: var(--ink-2); }
-  .unit div b { display: block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.5rem; }
-  @media (max-width: 700px) { .unit { grid-template-columns: 1fr; } }
-  .faq-wrap { max-width: 56rem; }
-  .tc-band { display: grid; grid-template-columns: 1fr auto; gap: 1rem 2rem; align-items: center; }
-  .tc-band > * { min-width: 0; }
-  @media (max-width: 700px) { .tc-band { grid-template-columns: 1fr; justify-items: start; } }
-
-  /* which frameworks, today: status as a dot beside a word */
-  .fw { list-style: none; margin: clamp(20px, 3vw, 32px) 0 0; padding: 0; background: var(--sheet); border: 1px solid var(--blue-line); border-radius: var(--radius); box-shadow: var(--shadow); }
-  .fw li { display: grid; grid-template-columns: 7.5rem minmax(0, 17rem) 1fr; gap: 0.3rem 1.4rem; align-items: baseline; padding: 1.05rem 1.4rem; border-top: 1px solid var(--line-soft); }
-  .fw li:first-child { border-top: 0; }
-  .fw li > * { min-width: 0; }
-  .fw b { font-weight: 500; letter-spacing: -0.01em; }
-  .fw li > span:last-child { color: var(--ink-2); font-size: 0.95rem; }
-  .fw .st { font-family: var(--mono); font-size: 0.64rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); display: inline-flex; align-items: center; gap: 0.5em; }
-  .fw .st::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
-  .fw .st.built { color: var(--green); }
-  .fw .st.next { color: var(--gold-deep); }
-  @media (max-width: 800px) { .fw li { grid-template-columns: 1fr; padding: 1rem 1.1rem; } }
-</style>
 </head>
 <body>
-
-<header class="nav">
-  <div class="wrap">
-    <a class="wordmark" href="/">rampguide</a>
-    <nav class="nav-links">
-      <a href="/#minute">What it is</a>
-      <a href="product.html">Product tour</a>
-      <a href="trust-center.html">Trust center</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="https://trust.rampguide.com/">Sign in</a>
-      <a class="btn" href="pricing.html">Get started <span class="arrow">→</span></a>
-    </nav>
-  </div>
-</header>
-
-<main>
-
-<section class="pricing-hero">
-  <div class="wrap">
-    <div class="section-head" style="max-width:52rem">
-      <span class="kicker">Pricing</span>
-      <h1 style="margin-top:1rem">One app.<br>One price per package.</h1>
-      <p class="lede">Every plan is the whole app: the workbench where your people answer, the library that writes most of the package, and the trust center agencies read. One price per package per year. No seats, no per-document fees, and your program stays plain files in git, a full copy yours whenever you ask.</p>
-    </div>
-  </div>
-</section>
-
-<section class="tight" id="plans" style="padding-top:0">
-  <div class="wrap">
-    <div id="checkout-notice" class="notice bad" hidden style="margin-bottom:clamp(18px,3vw,28px)"></div>
-    <div class="founding reveal">
-      <div><b>Founding customers:</b> 50% off your first year for the first ten customers who sign before December 31, 2026. Applied automatically at checkout.</div>
-      <small>annual billing · card via Stripe · the owner's invitation minutes after you pay</small>
-    </div>
-
-    <div class="tiers two">
-      <div class="sheet tier featured reveal"><span class="tab ink">Most teams</span><span class="stamp">Founding · 50% off yr 1</span>
-        <div class="name">RampGuide</div>
-        <div class="price">$6,000<small> / year</small></div>
-        <div class="per">per package · $500 a month, billed annually</div>
-        <p class="desc">The hosted app with most of your package already written: the workbench, the library, and your trust center.</p>
-        <ul class="check-list">
-          <li><strong>The whole package</strong>: narratives, policies, procedures, the crypto-module inventory, SDR / CPO / OCR / SCN, OSCAL SSP, document inventory</li>
-          <li><strong>The workbench</strong>: your people answer, review and commit as themselves</li>
-          <li><strong>All 33 packs</strong>: values and pre-written operational prose for 278 of the 323 Rev5 Moderate controls</li>
-          <li><strong>Vendor variants</strong>: Okta or Entra, AWS or Azure. Swap the pack, not your statements</li>
-          <li><strong>Updates as FedRAMP changes</strong>: new rules, baseline transitions, refreshed cryptographic-module data. Your wording wins</li>
-          <li><strong>Your trust center</strong> at trust.rampguide.com: requests, tiers, every read logged</li>
-          <li><strong>Start from your existing Moderate SSP</strong> (Word Appendix A, or its machine-readable OSCAL form)</li>
-          <li><strong>Both FedRAMP programs</strong>: Rev5 Moderate and 20x, from one repository</li>
-        </ul>
-        <form method="post" action="https://trust.rampguide.com/v1/checkout" data-checkout>
-          <input type="hidden" name="plan" value="rampguide">
-          <label>Organization <input name="org" required maxlength="80" autocomplete="organization" placeholder="ACME Corp"></label>
-          <label>Your first package <input name="offering" required maxlength="80" placeholder="NestPortal"></label>
-          <label>Owner's name <input name="name" required maxlength="80" autocomplete="name" placeholder="Avery Collins"></label>
-          <label>Owner's work email <input name="email" type="email" required maxlength="254" autocomplete="email" placeholder="avery@acme.example"></label>
-          <button class="btn block" type="submit">Continue to checkout <span class="arrow">→</span></button>
-        </form>
-        <p class="note">The owner gets the invitation and Stripe's receipt, sets up your package and invites your team. Card details are entered on Stripe's hosted page and never touch rampguide.com.</p>
-      </div>
-
-      <div class="sheet tier reveal d1"><span class="tab">Complete</span>
-        <div class="name">Complete</div>
-        <div class="price">$15,000<small> / year</small></div>
-        <div class="per">per package · billed annually</div>
-        <p class="desc">Everything in RampGuide, plus people: we bring your existing program across with you, map it to the library, and stay on the line through your assessment.</p>
-        <ul class="check-list">
-          <li><strong>Everything in RampGuide</strong></li>
-          <li><strong>A call within one business day</strong> to bring your existing SSP in and go through what the import flagged, with you</li>
-          <li><strong>Pack matching</strong>: we compare your statements with the library and map your program to the packs that fit</li>
-          <li><strong>Priority pack requests</strong>: a tool we don't cover yet goes to the front of the queue</li>
-          <li><strong>Direct support</strong> from the people who write the packs, through your assessment</li>
-        </ul>
-        <form method="post" action="https://trust.rampguide.com/v1/checkout" data-checkout>
-          <input type="hidden" name="plan" value="complete">
-          <label>Organization <input name="org" required maxlength="80" autocomplete="organization" placeholder="ACME Corp"></label>
-          <label>Your first package <input name="offering" required maxlength="80" placeholder="NestPortal"></label>
-          <label>Owner's name <input name="name" required maxlength="80" autocomplete="name" placeholder="Avery Collins"></label>
-          <label>Owner's work email <input name="email" type="email" required maxlength="254" autocomplete="email" placeholder="avery@acme.example"></label>
-          <button class="btn ghost block" type="submit">Continue to checkout <span class="arrow">→</span></button>
-        </form>
-        <p class="note">The owner's invitation comes minutes after you pay; within one business day we offer them a time for the call.</p>
-      </div>
-    </div>
-
-    <div class="sheet reveal" style="margin-top:clamp(24px,3vw,40px);padding:clamp(20px,2.6vw,30px)"><span class="tab green">Included</span>
-      <div class="tc-band">
-        <div>
-          <div style="font-size:1.25rem;font-weight:700;letter-spacing:-.02em">Trust center</div>
-          <p class="muted" style="margin:.4rem 0 0;max-width:60em">The secure window where government customers request, review, and download your package, with every access logged. Required on the 20x track now; on the classic Rev5 track, for new certifications from 2027-01-01 and existing ones by 2027-08-01 (<a href="trust-center.html#dates" style="text-decoration:underline;text-underline-offset:3px">the dates</a>). Live at trust.rampguide.com, with every package, in every plan.</p>
+    <a class="skip-link" href="#main">Skip to content</a>
+<header class="nav"><div class="wrap"><a class="wordmark" href="/">rampguide</a><nav class="nav-links" aria-label="Main navigation"><a href="product.html">Product</a><a href="trust-center.html">Trust center</a><a href="pricing.html">Pricing</a><a class="signin" href="https://trust.rampguide.com/">Sign in</a><a class="btn" href="pricing.html">Get started <span aria-hidden="true">→</span></a></nav></div></header>
+    <main id="main">
+      <section class="story-hero">
+        <div class="wrap">
+          <p class="eyebrow">Pricing</p>
+          <h1>One workspace.<br>One price per package.</h1>
+          <p class="lede">
+            The guided workbench, document generation, company tasks and trust
+            center are included. Choose a product or environment and the
+            framework you are preparing for.
+          </p>
         </div>
-        <a class="btn ghost" href="trust-center.html">Read about it <span class="arrow">→</span></a>
-      </div>
-    </div>
-
-    <div class="unit reveal">
-      <div><b>What's a package?</b> One package: one system, one framework, with its trust center and the library. For FedRAMP it is the cloud service offering FedRAMP authorizes; for CMMC, the systems that hold the Defense Department's information. That's the unit you pay for. A second system or a second framework is a second package in the same company: the same people, the same answers the company gives once, one bill.</div>
-      <div><b>Why a subscription?</b> Compliance content decays. Rules change, baselines transition, cryptographic-module certificates lapse. The maintenance is the product: the packs change as FedRAMP does, and your edits survive every update.</div>
-      <div><b>Why so much less than the platforms?</b> The leading hosted platform lists a FedRAMP Rev5 package at $25,000 to $60,000 a year by impact level, and $55,000 to $125,000 with continuous monitoring (its published prices, read 2026-09-28), and keeps your program inside its database. Yours stays plain files in git, a full copy yours whenever you ask, and one price covers the app, the library and the trust center.</div>
-    </div>
-  </div>
-</section>
-
-<section class="alt" id="frameworks">
-  <div class="wrap">
-    <div class="formrow reveal"><span class="no">02</span><span>Which frameworks, today</span><span class="meta">what it builds, and what it does not yet</span></div>
-    <div class="section-head reveal" style="max-width:52rem"><h2>Exactly what it builds today.</h2>
-      <p class="lede">RampGuide builds FedRAMP and CMMC packages. This is exactly what it compiles and publishes today, and what it does not do yet.</p></div>
-    <ul class="fw reveal">
-      <li><span class="st built">Built</span><b>FedRAMP Rev5 Moderate</b><span>All 323 controls. The library's packs supply the values and the operational prose for 278 of them.</span></li>
-      <li><span class="st built">Built</span><b>FedRAMP 20x</b><span>Built, without the class. The 46 Key Security Indicators compile from the same facts as Rev5; the library reaches 43 through FedRAMP's published crosswalk. The class, and the automated evidence Class C and D require, are not built yet.</span></li>
-      <li><span class="st built">Built</span><b>FedRAMP Rev5 Low and High</b><span>Low’s 156 controls and High’s 410, compiled and published the same way as Moderate; the library’s packs supply the values and the operational prose for 147 and 278 of them.</span></li>
-      <li><span class="st built">Built</span><b>CMMC Level 2</b><span>The Cybersecurity Maturity Model Certification, the Department of Defense’s program for its contractors. All 110 requirements of NIST SP 800-171, asked one at a time in plain words and answered in your own; a self-assessment scored into SPRS or a C3PAO’s certificate; the plan of action with owners, dates and the 180-day close-out; a trust center your prime contractors and your assessor read at their own tiers. The scope statement, the asset inventory and evidence files are next.</span></li>
-      <li><span class="st">Not built</span><b>Department of Defense Impact Levels 4 and 5</b><span>Tell us if you need them.</span></li>
-      <li><span class="st">Not offered</span><b>LI-SaaS</b><span>FedRAMP's 2026 rules no longer name it; a low-impact SaaS goes through 20x Class A.</span></li>
-    </ul>
-  </div>
-</section>
-
-<section>
-  <div class="wrap faq-wrap">
-    <div class="formrow reveal"><span class="no">03</span><span>Questions</span><span class="meta">the short answers</span></div>
-    <div class="faq reveal">
-      <details>
-        <summary>Is the library extra?</summary>
-        <p>No. Every plan includes all 33 packs and their updates. No requirement has to use a pack: RampGuide builds the package from whatever your people answer, and an import brings your existing prose across word for word. Packs are for the requirements where you would rather start from auditor-ready content for the tools everyone runs, and keep it current without writing it yourself.</p>
-      </details>
-      <details>
-        <summary>What happens when FedRAMP changes something?</summary>
-        <p>We update the packs, and the compiler follows FedRAMP's rules, baselines and cryptographic-module data. Your own wording lives beside the pack and survives every update.</p>
-      </details>
-      <details>
-        <summary>Where does my compliance content live?</summary>
-        <p>With us, in the hosted app: plain files in a git repository we store for you. A full copy, a git bundle you clone like any repository, is yours whenever you ask. Builds use no AI.</p>
-      </details>
-      <details>
-        <summary>What happens after I pay?</summary>
-        <p>We set up RampGuide for your company at trust.rampguide.com the moment the payment clears, and the owner you named gets an email invitation within minutes, at the address on your receipt. The owner enrolls with a passkey, sets up your first package (your offering, your existing SSP or the library, the framework, the tools you run), and invites the rest of your team into the workbench. On Complete, we also offer a time, within one business day, for the call that brings your existing SSP in.</p>
-      </details>
-      <details>
-        <summary>Can I cancel?</summary>
-        <p>Yes, any time from the receipt Stripe emails you. The subscription runs to the end of the paid year, then stops. Ask for the full copy of your repository before then; it is yours. Terms and refund details are being finalized; ask us before you buy if they matter to your decision.</p>
-      </details>
-      <details>
-        <summary>Is RampGuide itself FedRAMP authorized?</summary>
-        <p>No. The hosted app is not FedRAMP authorized, and nothing here implies endorsement or certification by FedRAMP or the U.S. General Services Administration. Ask us what your assessor will want to know about the hosted app.</p>
-      </details>
-      <details>
-        <summary>More than a few packages, a purchase order, or a reseller?</summary>
-        <p>Email <a href="mailto:nathan@spiderstrategies.com" style="text-decoration:underline;text-underline-offset:3px">nathan@spiderstrategies.com</a>. Pricing for many packages and invoicing are handled by a human.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<footer>
+      </section>
+      <section class="pricing-body" id="plans">
+        <div class="wrap">
+          <div id="checkout-notice" class="notice bad" hidden></div>
+          <div class="plan-grid">
+            <article class="plan">
+              <p class="eyebrow">RampGuide</p>
+              <h2>$6,000<span> / year</span></h2>
+              <p class="muted">Per package · billed annually</p>
+              <p>
+                The hosted application for your team and the people reviewing
+                your published material.
+              </p>
+              <ul class="plain-list">
+                <li>Guided requirements and company-wide answers</li>
+                <li>Generated documents and program-specific data files</li>
+                <li>Saved-change review, build and explicit publication</li>
+                <li>Assigned tasks and recurring work</li>
+                <li>People, access requests, reading tiers and activity</li>
+                <li>Published package snapshots</li>
+              </ul>
+              <form
+                method="post"
+                action="https://trust.rampguide.com/v1/checkout"
+                data-checkout
+              >
+                <input type="hidden" name="plan" value="rampguide">
+                <label
+                  >Organization<input
+                    name="org"
+                    required
+                    maxlength="80"
+                    autocomplete="organization"
+                    placeholder="Your company"
+                  ></label
+                ><label
+                  >Your first package<input
+                    name="offering"
+                    required
+                    maxlength="80"
+                    placeholder="Product or environment"
+                  ></label
+                ><label
+                  >Owner’s name<input
+                    name="name"
+                    required
+                    maxlength="80"
+                    autocomplete="name"
+                    placeholder="Full name"
+                  ></label
+                ><label
+                  >Owner’s work email<input
+                    name="email"
+                    type="email"
+                    required
+                    maxlength="254"
+                    autocomplete="email"
+                    placeholder="you@company.com"
+                  ></label
+                ><button class="btn block" type="submit">
+                  Continue to checkout <span aria-hidden="true">→</span>
+                </button>
+              </form>
+            </article>
+            <article class="plan">
+              <p class="eyebrow">Complete</p>
+              <h2>$15,000<span> / year</span></h2>
+              <p class="muted">Per package · billed annually</p>
+              <p>
+                The same application, with onboarding assistance to help
+                establish your first package.
+              </p>
+              <ul class="plain-list">
+                <li>Everything in RampGuide</li>
+                <li>A guided onboarding session</li>
+                <li>
+                  Help preparing supported existing SSP content for import
+                </li>
+                <li>Help selecting and adapting available library content</li>
+              </ul>
+              <p class="small muted">
+                Contact us to agree the onboarding scope for your framework and
+                starting documents.
+              </p>
+              <form
+                method="post"
+                action="https://trust.rampguide.com/v1/checkout"
+                data-checkout
+              >
+                <input type="hidden" name="plan" value="complete">
+                <label
+                  >Organization<input
+                    name="org"
+                    required
+                    maxlength="80"
+                    autocomplete="organization"
+                    placeholder="Your company"
+                  ></label
+                ><label
+                  >Your first package<input
+                    name="offering"
+                    required
+                    maxlength="80"
+                    placeholder="Product or environment"
+                  ></label
+                ><label
+                  >Owner’s name<input
+                    name="name"
+                    required
+                    maxlength="80"
+                    autocomplete="name"
+                    placeholder="Full name"
+                  ></label
+                ><label
+                  >Owner’s work email<input
+                    name="email"
+                    type="email"
+                    required
+                    maxlength="254"
+                    autocomplete="email"
+                    placeholder="you@company.com"
+                  ></label
+                ><button class="btn block" type="submit">
+                  Continue to checkout <span aria-hidden="true">→</span>
+                </button>
+              </form>
+            </article>
+          </div>
+          <p class="small muted">
+            Checkout is hosted by Stripe. Confirm the price and any offer on the
+            checkout page before paying. For purchasing questions, onboarding
+            scope or a founding-customer offer,
+            <a class="text-link" href="mailto:nathan@spiderstrategies.com"
+              >contact us</a
+            >.
+          </p>
+        </div>
+      </section>
+      <section class="paper-band" id="frameworks">
+        <div class="wrap">
+          <div class="feature-heading">
+            <div>
+              <p class="eyebrow">Supported preparation workflows</p>
+              <h2>Choose your program.</h2>
+            </div>
+            <p>
+              Each package uses one framework. Document types, questions and
+              status language follow that selection. Your company can maintain
+              additional packages and reuse company-wide answers.
+            </p>
+          </div>
+          <dl class="framework-list">
+            <div>
+              <dt>FedRAMP Rev5</dt>
+              <dd>
+                Low, Moderate and High preparation. Control narratives,
+                supported package documents and OSCAL SSP output. Existing
+                Moderate SSP import is supported for the accepted Word or OSCAL
+                formats.
+              </dd>
+            </div>
+            <div>
+              <dt>FedRAMP 20x</dt>
+              <dd>
+                Key Security Indicator preparation and program-specific package
+                output. Available class choices appear during setup. This is not
+                automated collection of operational evidence.
+              </dd>
+            </div>
+            <div>
+              <dt>CMMC Level 1</dt>
+              <dd>
+                Guided requirements, system description and preparation
+                documents, with a separate recorded affirmation.
+              </dd>
+            </div>
+            <div>
+              <dt>CMMC Level 2</dt>
+              <dd>
+                110 requirements, system description, calculated readiness,
+                corrective plans and an SPRS entry worksheet. Record an actual
+                assessment separately; RampGuide does not perform it or submit
+                it to SPRS.
+              </dd>
+            </div>
+          </dl>
+          <p class="boundary-note">
+            Available library content is a starting point for review. Your team
+            must confirm it describes your implementation. RampGuide does not
+            automatically certify an answer, verify evidence or guarantee an
+            assessment outcome.
+          </p>
+        </div>
+      </section>
+      <section>
+        <div class="wrap faq-wrap">
+          <p class="eyebrow">Before you start</p>
+          <h2>A few practical details.</h2>
+          <div class="faq">
+            <details>
+              <summary>What is a package?</summary>
+              <p>
+                One product or environment prepared against one framework. A
+                second framework or system is a separate package in the same
+                company.
+              </p>
+            </details>
+            <details>
+              <summary>What happens after checkout?</summary>
+              <p>
+                After payment is confirmed, the application creates your company
+                and sends the named owner an invitation. The owner enrolls with
+                a passkey, sets up the package and invites the team. Contact us
+                if your invitation has not arrived.
+              </p>
+            </details>
+            <details>
+              <summary>Will this certify or authorize my product?</summary>
+              <p>
+                No. RampGuide helps prepare, maintain and share documentation.
+                Publication is separate from an assessment, CMMC certification
+                or FedRAMP authorization. RampGuide itself is not FedRAMP
+                authorized.
+              </p>
+            </details>
+            <details>
+              <summary>Can I start with existing documents?</summary>
+              <p>
+                Setup supports importing the accepted FedRAMP Moderate Word
+                Appendix A and OSCAL SSP formats. Import availability depends on
+                your selected framework and source format; it is not a general
+                document or evidence upload service.
+              </p>
+            </details>
+            <details>
+              <summary>
+                What about cancellation, terms or a purchase order?
+              </summary>
+              <p>
+                <a class="text-link" href="mailto:nathan@spiderstrategies.com"
+                  >Contact us</a
+                >
+                to confirm contractual terms, cancellation and refund details,
+                or invoicing before purchasing.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
   <div class="wrap">
     <div class="row">
       <div>
         <div class="wordmark">rampguide</div>
-        <div class="faint" style="margin-top:.4rem">Compliance as code. Your ATO package, compiled.</div>
+        <div class="faint" style="margin-top:.4rem">Prepare with context. Publish with control.</div>
       </div>
       <nav>
         <a href="/#minute">What it is</a>
         <a href="product.html">Product tour</a>
-        <a href="how-it-works.html">Interactive walkthrough</a>
+        <a href="how-it-works.html">How it works</a>
         <a href="trust-center.html">Trust center</a>
         <a href="pricing.html#frameworks">Frameworks</a>
         <a href="api.html">API</a>
@@ -227,22 +299,10 @@
         <a href="mailto:nathan@spiderstrategies.com">Contact</a>
       </nav>
     </div>
-    <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program. Payments are processed by Stripe; card details never touch this site.</p>
+    <p class="legal">© 2026 Spider Strategies, Inc. FedRAMP® is a registered mark of the U.S. General Services Administration. RampGuide is not affiliated with, endorsed by, or certified by GSA or the FedRAMP program.</p>
   </div>
 </footer>
-
-<script>
-  // Reveal-on-scroll. Zero dependencies; reduced motion handled in CSS.
-  (function () {
-    var els = document.querySelectorAll('.reveal')
-    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in') }); return }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target) } })
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 })
-    els.forEach(function (e) { io.observe(e) })
-  })();
-</script>
-<script>
+    <script>
   // Where the app is: trust.rampguide.com, or a local instance when the site is previewed
   // locally (the trust app's `npm run dev`; ?trust=http://localhost:8794 names another).
   // Never anything but trust.rampguide.com on rampguide.com.
@@ -252,23 +312,27 @@
     return new URLSearchParams(location.search).get('trust') || 'http://localhost:8790'
   })()
 </script>
-<script>
-  // Checkout forms post to the app; a checkout that could not start comes back here with a reason.
-  (function () {
-    document.querySelectorAll('form[data-checkout]').forEach(function (f) { f.action = window.RG_APP + '/v1/checkout' })
-    var reasons = {
-      unavailable: 'Online checkout is not open yet. Email nathan@spiderstrategies.com and we will set you up by hand.',
-      form: 'Something was missing from the form. It needs the organization, the first package, the owner\u2019s name (each up to 80 characters) and the owner\u2019s work email.',
-      stripe: 'Our payment provider did not answer. Nothing was charged. Try again in a minute, or email nathan@spiderstrategies.com.'
-    }
-    var reason = reasons[new URLSearchParams(location.search).get('error')]
-    if (!reason) return
-    var n = document.getElementById('checkout-notice')
-    n.textContent = reason
-    n.hidden = false
-    if (history.replaceState) history.replaceState(null, '', location.pathname + '#plans')
-  })()
-</script>
-
-</body>
+    <script>
+    // Checkout forms post to the app; a checkout that could not start comes back here with a reason.
+    (function () {
+      document.querySelectorAll("form[data-checkout]").forEach(function (f) {
+        f.action = window.RG_APP + "/v1/checkout";
+      });
+      var reasons = {
+        unavailable:
+          "Online checkout is not open yet. Email nathan@spiderstrategies.com and we will set you up by hand.",
+        form: "Something was missing from the form. It needs the organization, the first package, the owner\u2019s name (each up to 80 characters) and the owner\u2019s work email.",
+        stripe:
+          "Our payment provider did not answer. Nothing was charged. Try again in a minute, or email nathan@spiderstrategies.com.",
+      };
+      var reason = reasons[new URLSearchParams(location.search).get("error")];
+      if (!reason) return;
+      var n = document.getElementById("checkout-notice");
+      n.textContent = reason;
+      n.hidden = false;
+      if (history.replaceState)
+        history.replaceState(null, "", location.pathname + "#plans");
+    })();
+    </script>
+  </body>
 </html>

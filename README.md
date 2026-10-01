@@ -1,90 +1,68 @@
 # rampguide-site
 
-The rampguide.com website: static pages, no framework, no trackers, no
-external JavaScript. Typeface: Nebula Sans, self-hosted in `fonts/`
-(SIL OFL — license alongside).
+The RampGuide marketing site: static HTML and CSS, self-hosted Nebula Sans,
+no trackers, and no external JavaScript. The product is a hosted workspace
+for preparing, reviewing, publishing and sharing FedRAMP and CMMC packages.
 
-**Edit `src/`, not the root pages.** Each page in `src/` is plain HTML
-with a `<!-- page {…} -->` header (title, description, social text,
-noindex, the footer's extra legal sentence) and `<!-- include: nav -->`
-markers that pull the shared head, navs, footers, and scripts from
-`src/partials/`. Then:
+## Editing and previewing
+
+Edit `src/*.html`, including `src/how-it-works.html`, and the shared
+partials in `src/partials/`. The small build script assembles the pages
+GitHub Pages serves from the repository root:
 
 ```sh
-node tools/build.ts          # writes the root *.html (commit them too —
-                             # GitHub Pages serves the repo as is)
-node tools/build.ts --check  # fails if a root page is stale
+node tools/build.ts
+node tools/build.ts --check
+python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
-No dependencies; Node ≥ 22 runs the script directly. `how-it-works.html`
-is not built — it is a self-contained page and stays edited by hand.
+Node 22.18 or later; no site dependencies. Styles live in `site.css`.
+Preview at http://127.0.0.1:4173. The app runs separately on localhost:8790.
+Checkout forms retain the app's `/v1/checkout` integration; on localhost,
+`src/partials/local-app.html` points them at that local app. An unavailable
+checkout displays the returned error instead of claiming a purchase succeeded.
 
-The site sells one hosted app, with the library and the trust center
-inside it, and never mentions a command line, a library key or
-`rampguide add` (Nate, 2026-09-28), and never sells the app's plumbing
-as a benefit: no "same host", no "not an integration", no builds, repos,
-byte-identical output or word counts the buyer never sees (Nate,
-2026-09-28: "we're hosting it"). A fact is set once in the workbench, an
-owner presses Publish, and readers have the new package; say that. The pictures of the app are drawn in
-the site's own paper (`.app`, `.ui` in `src/index.html`) or are the
-screenshots in `img/`; the dark file windows show files, never a prompt.
+## Current product photography
 
-- `index.html` — the marketing page: hero (a generated document and the
-  Publish steps), what we sell, the storyboard (a value changed in the
-  workbench, reviewed and committed, the documents updated, the package
-  an agency reads), how it works, before/after, the library, the trust
-  center, the alternatives, a pricing strip, the closing call to action.
-- `pricing.html` — two plans (RampGuide and Complete; the trust center is
-  in both), which frameworks it builds today (the full list; the home
-  page's Frameworks card is its short form, and both change the week the
-  app's list does), and the signup forms. Each form
-  posts (`plan`, `org`, `offering`, and the trust center owner's `name`
-  and work `email`) to `https://trust.rampguide.com/v1/checkout`, the
-  app's own checkout (rampguide-trust, README "Buying"), which redirects to
-  Stripe's hosted Checkout. Card data never touches this site. When Stripe
-  says the payment cleared, the app creates the trust center and invites
-  the owner. Until Stripe is set up the checkout sends the buyer back with
-  `?error=unavailable`, which the page words as "Online checkout is not
-  open yet".
-- `welcome.html` — Stripe's success page: RampGuide is on its way
-  (the owner's invitation within minutes, passkeys, setup, the
-  workbench). Static; it shows no key and calls nothing.
-- `product.html` — the product tour of the hosted app: six screenshots
-  (`img/app-*.png`, captured 2026-09-28 from a local instance of
-  rampguide-trust with the fictional ACME RoadRunner tenant) of the
-  workbench (a question, a value chip, review and commit), Publish,
-  Access, and the package as an agency reads it; then the interactive
-  walkthrough embedded.
-- `trust-center.html` — the trust center, live at trust.rampguide.com
-  since 2026-09-23: what an agency does there, what Publish does, where it
-  runs (hosted, one per company with a page per package, in every plan), and an honest list of
-  what is and is not built.
-- `api.html` — the trust center's API for programs: the OpenAPI document,
-  three ways to authenticate, and every route and rule, read live from
-  `trust.rampguide.com/v1/openapi.json` when the page opens (the trust
-  center's own `/docs` redirects here). `?trust=http://localhost:8790`
-  reads a local instance on a local preview.
-- `how-it-works.html` — the interactive dependency-graph demo (canonical;
-  the workspace `rampguide-depgraph.html` is a derived copy).
-- `terms.html`, `privacy.html` — DRAFTS, `noindex`, not linked from any
-  nav until approved (see LAUNCH.md). Since 2026-09-28 they describe the
-  hosted app and the data it holds; the bracketed decisions and a
-  lawyer's read remain.
-- `site.css` — shared styles. `fonts/` — Nebula Sans woff2 + license.
-- `LAUNCH.md` — the human gates and the exact test→live steps.
-- `CNAME` — created automatically by GitHub when the custom domain is set;
-  leave it committed.
+All app images are `img/ews-*-20261001.webp`, captured on October 1, 2026
+from the actual application at 1440 x 1000 and 390 x 844 CSS pixels, at 2x.
+There are 18 current desktop/mobile captures. Old screenshot assets and the
+old animated dependency-graph walkthrough were removed. The walkthrough
+URL now explains the actual answer / review / build / publish workflow.
 
-Local preview: `python3 -m http.server 4173 --bind 127.0.0.1` here, and
-`npm run dev` in rampguide-trust (the app on localhost:8790, with Stripe
-simulated). When served from localhost, the pricing forms post to that
-local app (override with `?trust=http://localhost:<port>`), so a purchase
-runs end to end: the simulated Stripe page, the welcome page, and the
-owner's invitation in the app's `.local/mail.log`.
+The user requested an EWS Group / MoversSuite demonstration. Company and
+product context comes from https://ewsgroup.com/; people, implementation,
+architecture, safeguards and results are fictional. Each screenshot-bearing
+page states that this is an illustrative scenario, not a customer endorsement,
+actual EWS assessment or certification. The application's company name also
+includes “(demo)”. Do not remove those distinctions.
 
-All example content is fictional (ACME Corp, NestPortal). No customer
-names, no pack prose — the library catalog on the page is names,
-variants, and control counts only.
+The local scene has one company and one CMMC Level 2 package, 110 answered
+requirements, six open gaps, eleven tasks, staff/customer/assessor roles,
+access requests and decisions, three snapshots and one private change awaiting
+review. Customers receive the summary and inventory; the SSP, gap plan and
+SPRS data remain assessor-only. No real assessment or SPRS submission is seeded.
+
+Workspace evidence and tools: `../notes/ews-demo-2026-10-01/`.
+`capture.mjs` captures the live app without changing its HTML or CSS.
+`verify-site.mjs` checks all nine pages at five widths and renders `og.png`
+from `tools/og.html`. The social preview also uses a current app capture.
+Run these from the workspace root with the local app and site preview running.
+
+## Content boundaries
+
+- Describe implemented behavior. Answers generate documents; review, build
+  and publication are separate actions. Publication is not certification.
+- Do not promise automatic regulatory updates, automated evidence collection,
+  independent verification, assessment outcomes or automatic SPRS submission.
+- Available library material must be reviewed against the team's actual system.
+- Pricing remains $6,000 or $15,000 per package per year. Complete includes
+  onboarding assistance. Do not promise an automatic discount or delivery time
+  unless checkout configuration and the service agreement support it.
+- API details are linked to the service's current OpenAPI contract. Marketing
+  pages do not present repositories or command-line tools as the customer workflow.
+- Terms and privacy pages remain unapproved drafts, noindex and unlinked from
+  navigation. See `LAUNCH.md` for release gates; this refresh does not approve them.
 
 ## Deployment (GitHub Pages)
 
