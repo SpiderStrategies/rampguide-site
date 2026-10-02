@@ -18,36 +18,64 @@ python3 -m http.server 4173 --bind 127.0.0.1
 
 Node 22.18 or later; no site dependencies. Styles live in `site.css`.
 Preview at http://127.0.0.1:4173. The app runs separately on localhost:8790.
-Checkout forms retain the app's `/v1/checkout` integration; on localhost,
-`src/partials/local-app.html` points them at that local app. An unavailable
-checkout displays the returned error instead of claiming a purchase succeeded.
+All pages load `local-app.js`. On a loopback preview, start with
+`http://localhost:4173/?trust=http://localhost:8790`; this selection follows
+navigation, sign-in and checkout, including new tabs. Only plain loopback
+HTTP(S) origins are accepted. Production ignores preview overrides entirely.
+
+For separate disposable demo ports, start the app with its matching site origin:
+
+```sh
+# From rampguide-trust; use a new state directory for a cold start.
+node tools/dev-server.ts --port 8810 --state /tmp/rampguide-demo-state --site http://localhost:4180
+# From rampguide-site.
+python3 -m http.server 4180 --bind 127.0.0.1
+```
+
+Open `http://localhost:4180/?trust=http://localhost:8810`. `--site` accepts
+only a loopback origin; the app accepts its loopback host aliases on that
+exact port. Checkout forms use the app's `/v1/checkout`. With no Stripe key,
+payment is simulated and email is captured, never sent. The success page
+labels that boundary and links the local captured invitation and enrollment.
+A returned checkout error stays visible. A direct visit to the welcome page
+is not proof of a completed checkout.
+
+Regression checks: `node --test test/*.test.*` and `node tools/build.ts --check`.
+
+Pricing explains the package boundary before asking for a system name. Public
+import and welcome guidance distinguish FedRAMP Word/OSCAL preparation from the
+supported CMMC Level 2 workbook path; neither establishes an assessment result.
+The browser regression uses the sibling app's existing Chrome driver and disposable
+servers; it verifies desktop/phone navigation, visible Sign in, native keyboard
+validation and the actual checkout-to-enrollment links. It does not complete a passkey
+ceremony. The app's `test/local-handoff.test.ts` covers custom preview origins,
+foreign-origin rejection, simulated fulfillment, return URL and captured mail.
 
 ## Current product photography
 
-All app images are `img/ews-*-20261001.webp`, captured on October 1, 2026
-from the actual application at 1440 x 1000 and 390 x 844 CSS pixels, at 2x.
-There are 18 current desktop/mobile captures. Old screenshot assets and the
-old animated dependency-graph walkthrough were removed. The walkthrough
-URL now explains the actual answer / review / build / publish workflow.
+All app images are `img/alderwick-*-20261002.webp`, captured on October 2,
+2026 from the actual application at 1440 x 1000 and 390 x 844 CSS pixels,
+at 2x. There are 18 desktop/mobile captures. The social preview is rendered
+from `tools/og.html` using the same current workbench capture.
 
-The user requested an EWS Group / MoversSuite demonstration. Company and
-product context comes from https://ewsgroup.com/; people, implementation,
-architecture, safeguards and results are fictional. Each screenshot-bearing
-page states that this is an illustrative scenario, not a customer endorsement,
-actual EWS assessment or certification. The application's company name also
-includes “(demo)”. Do not remove those distinctions.
+Alderwick Software and ServiceLedger are entirely fictional. Company,
+product, people, implementation, architecture, safeguards and results are
+illustrative demo data, not a customer endorsement, assessment or certification.
+All screenshot-bearing pages say so. Do not replace these assets with customer
+content or screenshots containing real customer names.
 
-The local scene has one company and one CMMC Level 2 package, 110 answered
-requirements, six open gaps, eleven tasks, staff/customer/assessor roles,
-access requests and decisions, three snapshots and one private change awaiting
-review. Customers receive the summary and inventory; the SSP, gap plan and
-SPRS data remain assessor-only. No real assessment or SPRS submission is seeded.
+The isolated local scene has one company and one CMMC Level 2 package,
+110 answered requirements, six open gaps, eleven tasks, staff/customer/assessor
+roles, access requests and decisions, three snapshots and one private change
+awaiting review. Customers receive the summary and inventory; the system
+security plan, gap plan and SPRS data remain assessor-only. No actual
+assessment or SPRS submission is seeded.
 
-Workspace evidence and tools: `../notes/ews-demo-2026-10-01/`.
-`capture.mjs` captures the live app without changing its HTML or CSS.
-`verify-site.mjs` checks all nine pages at five widths and renders `og.png`
-from `tools/og.html`. The social preview also uses a current app capture.
-Run these from the workspace root with the local app and site preview running.
+Capture and verification evidence: `notes/consolidation-2026-10-02/evidence/site/`
+in the development workspace. The reproducible private fixture/capture scripts
+live separately under `notes/consolidation-2026-10-02/private/site-demo/`; they
+create a fresh local app state and capture its rendered UI without changing
+HTML, CSS or screenshot pixels. Never serve that private state or captured mail.
 
 ## Content boundaries
 
@@ -85,4 +113,3 @@ One-time setup:
 
 Note: publishing Pages from a private repo requires a paid GitHub plan.
 The published site is public regardless of repo visibility.
-

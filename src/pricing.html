@@ -18,8 +18,10 @@
           <h1>One workspace.<br>One price per package.</h1>
           <p class="lede">
             The guided workbench, document generation, company tasks and trust
-            center are included. Choose a product or environment and the
-            framework you are preparing for.
+            center are included. Choose a system and the
+            framework you are preparing for. A package covers one system under one
+            framework. A working system name is enough here; choose the framework
+            during setup.
           </p>
         </div>
       </section>
@@ -62,7 +64,7 @@
                     name="offering"
                     required
                     maxlength="80"
-                    placeholder="Product or environment"
+                    placeholder="System name"
                   ></label
                 ><label
                   >Owner’s name<input
@@ -125,7 +127,7 @@
                     name="offering"
                     required
                     maxlength="80"
-                    placeholder="Product or environment"
+                    placeholder="System name"
                   ></label
                 ><label
                   >Owner’s name<input
@@ -177,10 +179,12 @@
             <div>
               <dt>FedRAMP Rev5</dt>
               <dd>
-                Low, Moderate and High preparation. Control narratives,
-                supported package documents and OSCAL SSP output. Existing
-                Moderate SSP import is supported for the accepted Word or OSCAL
-                formats.
+                Low, Moderate and High preparation. Control-family working documents,
+                control-document Word extracts and supported preparation data files. These
+                are not a complete System Security Plan or the official Appendix A
+                form. Existing Moderate control import supports the accepted
+                Word Appendix A and Open Security Controls Assessment Language
+                (OSCAL) SSP formats; complete OSCAL SSP export is not supported.
               </dd>
             </div>
             <div>
@@ -224,7 +228,7 @@
             <details>
               <summary>What is a package?</summary>
               <p>
-                One product or environment prepared against one framework. A
+                One system prepared against one framework. A
                 second framework or system is a separate package in the same
                 company.
               </p>
@@ -251,8 +255,9 @@
               <summary>Can I start with existing documents?</summary>
               <p>
                 Setup supports importing the accepted FedRAMP Moderate Word
-                Appendix A and OSCAL SSP formats. Import availability depends on
-                your selected framework and source format; it is not a general
+                Appendix A and OSCAL SSP formats, and CMMC Level 2 self-assessment
+                workbooks (.xlsx). Import availability depends on your selected
+                framework and source format; it is not a general
                 document or evidence upload service.
               </p>
             </details>
@@ -273,13 +278,9 @@
       </section>
     </main>
     <!-- include: footer -->
-    <!-- include: local-app -->
     <script>
     // Checkout forms post to the app; a checkout that could not start comes back here with a reason.
     (function () {
-      document.querySelectorAll("form[data-checkout]").forEach(function (f) {
-        f.action = window.RG_APP + "/v1/checkout";
-      });
       var reasons = {
         unavailable:
           "Online checkout is not open yet. Email nathan@spiderstrategies.com and we will set you up by hand.",
@@ -293,7 +294,12 @@
       n.textContent = reason;
       n.hidden = false;
       if (history.replaceState)
-        history.replaceState(null, "", location.pathname + "#plans");
+        {
+          var clean = new URL(location.href);
+          clean.searchParams.delete("error");
+          clean.hash = "plans";
+          history.replaceState(null, "", clean);
+        }
     })();
     </script>
   </body>
