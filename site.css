@@ -653,6 +653,7 @@ footer .legal {
   margin: 26px 0;
 }
 .plan {
+  min-width: 0;
   padding: 36px;
   background: #fff;
   border: 1px solid #d8d9d5;
@@ -683,28 +684,27 @@ footer .legal {
 .plan .plain-list li {
   padding-bottom: 9px;
 }
-.plan form {
-  margin-top: 32px;
-  border-top: 1px solid var(--line);
-  padding-top: 22px;
+.plan .btn {
+  white-space: normal;
+  line-height: 1.4;
 }
-.plan form label {
-  display: block;
-  margin-bottom: 18px;
-  color: var(--ink);
-  font-size: 14px;
+.plan > .small {
+  margin-top: 12px;
+  overflow-wrap: anywhere;
 }
-.plan form input:not([type="hidden"]) {
-  display: block;
-  margin-top: 7px;
-  width: 100%;
-  background: white;
-  border: 1px solid #b5bac0;
-  border-radius: 4px;
-  padding: 12px;
-  color: var(--ink);
-  font: inherit;
-  font-size: 16px;
+.plan-help {
+  padding: 28px 0;
+  max-width: 480px;
+}
+.plan-help h2 {
+  font-size: clamp(28px, 3vw, 36px);
+  margin-bottom: 24px;
+}
+.plan-help h3 {
+  margin-top: 30px;
+}
+.plan-help p {
+  color: var(--ink-2);
 }
 .framework-list {
   margin: 0;

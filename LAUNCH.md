@@ -1,75 +1,60 @@
-# LAUNCH.md — from local simulation to paid checkout
+# LAUNCH.md — contact onboarding and future paid checkout
 
-The site sells the hosted application, with the library and trust center
-included. Each package covers one system under one program. Federal Risk
-and Authorization Management Program (FedRAMP) and Cybersecurity Maturity
-Model Certification (CMMC) work uses separate packages.
+## Current offer
 
-The pricing forms post to `https://trust.rampguide.com/v1/checkout` in
-production. Stripe confirms payment through the app's verified webhook;
-the app then creates the workspace and captures or sends the named owner's
-invitation, according to its mail adapter. Without Stripe configuration,
-online checkout is closed. A local simulation does not establish that live
-payment, delivery of email, or contractual terms are ready.
+One plan: **$3,000 per company per year**, including all current features,
+supported programs and the company’s own packages, unlimited team members and
+invited readers, one 60-minute guided onboarding session, and email support
+with a target initial response within two business days. Assessments and ongoing
+consulting remain separate. Packages retain separate scope, access and publication;
+they are not billing units.
 
-## Release gates
+The legal seller is **Spider Strategies, Inc.** The approved contact for support,
+billing and privacy is **nathan@spiderstrategies.com**. The website starts with
+“Contact us to get started.” There are no payment forms.
 
-- Confirm the legal entity on Stripe, receipts, service terms and privacy
-  notice. The copyright entity is Spider Strategies, Inc.; that alone does
-  not establish the Stripe account's legal entity.
-- Approve the displayed annual prices: RampGuide $6,000 per package and
-  Complete $15,000 per package. Keep source pages, app simulator labels and
-  Stripe products/prices aligned. No automatic founding discount is promised;
-  any offered discount must be configured and verified at checkout.
-- Approve service, cancellation, refund and retention terms. `terms.html`
-  and `privacy.html` are unapproved drafts, noindex and unlinked. Remove
-  those draft markers and link the pages only after approval; set the approved
-  terms URL in Stripe.
-- Confirm the Complete onboarding scope and who schedules the session.
-  The site does not promise a one-business-day response or delivery time.
-- Confirm `nathan@spiderstrategies.com` remains the intended contact.
-- Review current pages for claims about supported import/output formats,
-  library scope and trust-center access. Do not revive removed automatic
-  update, regulatory outcome, competitor-price or personal-history claims.
-- Test real Stripe test-mode payment, signed webhook fulfillment, invitation
-  delivery and the actual passkey ceremony before enabling paid checkout.
-- Obtain Nate's explicit deployment approval. Pushing site `main` deploys
-  GitHub Pages; local implementation and verification do not authorize a push.
+**Stripe setup and payment testing are paused at Nate’s request.** Do not create
+an account, configure prices, enable checkout or run remote payment tests until
+he resumes that work. The app retains a legacy two-plan checkout integration and
+local simulation; those are not the current commercial offer.
 
-## Local simulation
+## Approved policies awaiting implementation
 
-Follow `README.md` for matching site/app ports and an isolated state directory.
-Start from the site homepage with `?trust=<local app origin>`, choose Pricing,
-fill the organization, first system, owner name and fictional email, and
-continue to the visibly simulated checkout. Select **Pay (simulated)**.
+- First annual subscription: 30-day money-back guarantee. No prorated refunds
+  for ordinary cancellations after that window.
+- Automatic annual renewal, with an email reminder 30 days beforehand.
+  Cancellation stops the next renewal and retains access through the paid year.
+- After paid access ends: 30 days of read-only export access, then deletion of
+  the active workspace. Remove remaining customer-content backups within
+  35 days after deletion, at most 65 days after paid access ends.
+- Access/security logs: 400 days, excluding document contents and secrets.
+- Invoices/payment records: Spider Strategies’ existing accounting retention
+  policy. Its actual duration remains unverified; do not invent a deadline.
 
-The welcome page explicitly says no card was charged and no receipt or
-invitation email was sent. Open its captured-mail link, read the owner's
-one-time invitation code, and follow its enrollment link. Complete the
-passkey ceremony and set up the package. Captured mail is a local development
-substitute, not evidence of delivery to a real inbox.
+These decisions do not make the corresponding application behavior implemented.
+Keep `terms.html` and `privacy.html` marked as drafts, noindex and unlinked until
+accurate legal text and the promised behavior are ready. Do not publish renewal,
+retention or deletion promises ahead of implementation.
 
-The simulation exercises the real checkout route, webhook signature verifier,
-workspace creation and invitation logic. It does not test Stripe hosting,
-card processing, receipts, real email delivery or subscription operations at
-Stripe. In-flight simulated checkout sessions are memory-only and must be
-restarted from Pricing after the app restarts.
+## Gates before enabling paid checkout
 
-Run the site regression checks and generated freshness check from `README.md`,
-and the app's billing and local-handoff tests. Review the actual rendered
-site and full onboarding at desktop and phone widths.
+1. Obtain approval to resume Stripe work. Use one annual company price, remove
+   the legacy Complete purchase option and reconcile checkout and simulator copy.
+2. Implement and verify renewal reminders, cancellation, the export window,
+   active-data deletion and backup expiry. Define refund operations and verify
+   accounting retention. Check that logs actually follow the approved policy.
+3. Finalize terms/privacy, effective dates and remaining legal details. Align
+   Stripe’s legal entity, receipts, support details and approved terms link.
+4. Complete real Stripe test-mode payment, signed webhook fulfillment,
+   invitation delivery and passkey enrollment. Local simulation proves only
+   the local path. Never use a real card for an unattended smoke test.
+5. Obtain explicit approval for production payment activation.
 
-## Stripe test mode and live activation
+## Preview and release
 
-Use the app's current `OPERATIONS.md` buying instructions for products,
-recurring prices, webhook configuration and deployment. Any remote deployment
-requires Nate's explicit approval. For local test-mode checkout, set only
-Stripe test credentials and use Stripe CLI webhook forwarding to the selected
-local app port. The local mail adapter still captures invitations.
+Follow `README.md` for isolated local previews. Run `node --test test/*.test.*`
+and `node tools/build.ts --check`; review the actual desktop and phone pages.
+Inspect contact links without sending email.
 
-After the release gates, Nate configures the live products, approved prices,
-webhook secret, legal/support details and receipt settings and deploys the app.
-Check the site's production form targets and observe checkout/fulfillment
-logs without exposing credentials. Never use a real card as an unattended
-smoke test. Refunds, invoicing, purchase orders, negotiated deals and final
-data retention or removal remain explicit operational actions.
+Pushing site `main` deploys GitHub Pages. Obtain Nate’s explicit deployment
+approval; preparing and verifying local changes alone does not authorize a push.

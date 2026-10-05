@@ -37,12 +37,6 @@
   document.querySelectorAll('form[data-checkout]').forEach(function (form) {
     form.action = window.RG_APP + '/v1/checkout'
   })
-  if (local && location.pathname.endsWith('/pricing.html')) {
-    var notice = document.createElement('p')
-    notice.className = 'notice'
-    notice.textContent = 'Local preview: checkout opens the local application. By default it simulates payment and captures invitation email locally; no card is charged and no email is sent.'
-    document.getElementById('checkout-notice').before(notice)
-  }
   if (local && location.pathname.endsWith('/welcome.html')) {
     var simulated = new URLSearchParams(location.search).get('checkout') === 'simulated'
     document.querySelector('h1').textContent = simulated ? 'Your local workspace has been created.' : 'Continue in your local workspace.'

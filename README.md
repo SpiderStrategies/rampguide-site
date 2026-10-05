@@ -20,7 +20,7 @@ Node 22.18 or later; no site dependencies. Styles live in `site.css`.
 Preview at http://127.0.0.1:4173. The app runs separately on localhost:8790.
 All pages load `local-app.js`. On a loopback preview, start with
 `http://localhost:4173/?trust=http://localhost:8790`; this selection follows
-navigation, sign-in and checkout, including new tabs. Only plain loopback
+navigation and sign-in, including new tabs. Only plain loopback
 HTTP(S) origins are accepted. Production ignores preview overrides entirely.
 
 For separate disposable demo ports, start the app with its matching site origin:
@@ -32,24 +32,16 @@ node tools/dev-server.ts --port 8810 --state /tmp/rampguide-demo-state --site ht
 python3 -m http.server 4180 --bind 127.0.0.1
 ```
 
-Open `http://localhost:4180/?trust=http://localhost:8810`. `--site` accepts
-only a loopback origin; the app accepts its loopback host aliases on that
-exact port. Checkout forms use the app's `/v1/checkout`. With no Stripe key,
-payment is simulated and email is captured, never sent. The success page
-labels that boundary and links the local captured invitation and enrollment.
-A returned checkout error stays visible. A direct visit to the welcome page
-is not proof of a completed checkout.
+Open `http://localhost:4180/?trust=http://localhost:8810`. Pricing presents one
+$3,000 annual company subscription and an email contact link; it has no checkout
+forms. Sign-in still opens the selected local app. The app’s legacy payment
+simulation remains available to its own regression tests, independently of the site;
+Stripe setup and payment testing are paused.
 
 Regression checks: `node --test test/*.test.*` and `node tools/build.ts --check`.
-
-Pricing explains the package boundary before asking for a system name. Public
-import and welcome guidance distinguish FedRAMP Word/OSCAL preparation from the
-supported CMMC Level 2 workbook path; neither establishes an assessment result.
-The browser regression uses the sibling app's existing Chrome driver and disposable
-servers; it verifies desktop/phone navigation, visible Sign in, native keyboard
-validation and the actual checkout-to-enrollment links. It does not complete a passkey
-ceremony. The app's `test/local-handoff.test.ts` covers custom preview origins,
-foreign-origin rejection, simulated fulfillment, return URL and captured mail.
+The browser regression uses the sibling app’s Chrome driver and disposable servers.
+It verifies desktop/phone navigation, sign-in destinations, included package scope,
+contact links and the absence of payment forms. It sends no email and makes no payment.
 
 ## Current product photography
 
@@ -84,9 +76,12 @@ HTML, CSS or screenshot pixels. Never serve that private state or captured mail.
 - Do not promise automatic regulatory updates, automated evidence collection,
   independent verification, assessment outcomes or automatic SPRS submission.
 - Available library material must be reviewed against the team's actual system.
-- Pricing remains $6,000 or $15,000 per package per year. Complete includes
-  onboarding assistance. Do not promise an automatic discount or delivery time
-  unless checkout configuration and the service agreement support it.
+- Pricing is $3,000 per company per year, with all current features, supported
+  programs and company packages, unlimited team members/readers, one 60-minute
+  onboarding session and email support targeting an initial response within two
+  business days. There is no Complete tier, per-package fee or online checkout.
+- Approved renewal, cancellation, export and deletion policies are implementation
+  work; do not present unsupported lifecycle behavior as available.
 - API details are linked to the service's current OpenAPI contract. Marketing
   pages do not present repositories or command-line tools as the customer workflow.
 - Terms and privacy pages remain unapproved drafts, noindex and unlinked from

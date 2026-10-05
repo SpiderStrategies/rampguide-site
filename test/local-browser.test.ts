@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict'
 import { createServer } from 'node:http'
-import { readFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { test } from 'node:test'
 import { resolve, extname } from 'node:path'
 import { Chrome, chromePath } from '../../rampguide-trust/test/cdp.ts'
 import { startDevServer } from '../../rampguide-trust/test/dev-server.ts'
 
-test('local website navigation, keyboard validation and simulated onboarding work at desktop and phone widths', { skip: chromePath() === null ? 'Chrome unavailable' : false }, async () => {
+test('contact pricing, included company packages and local sign-in work at desktop and phone widths', { skip: chromePath() === null ? 'Chrome unavailable' : false }, async () => {
 const root = resolve(import.meta.dirname, '..')
 const site = createServer(async (req, res) => {
   const path = new URL(req.url ?? '/', 'http://localhost').pathname
@@ -35,29 +35,41 @@ try {
     assert.equal(await page.eval('window.RG_APP'), app.base)
     await page.click('nav a[href*="pricing.html"]')
     await page.until("location.pathname === '/pricing.html' && document.readyState === 'complete'")
-    assert.equal(await page.eval("document.querySelector('form').action"), app.base + '/v1/checkout')
-    assert.equal(await page.eval('document.documentElement.scrollWidth > innerWidth'), false)
+    assert.equal(await page.eval('document.documentElement.scrollWidth > innerWidth'), false,
+      JSON.stringify(await page.eval("[...document.querySelectorAll('main *')].filter(el=>el.getBoundingClientRect().right>innerWidth).map(el=>({tag:el.tagName,class:el.className,width:el.getBoundingClientRect().width,text:el.textContent.slice(0,70)}))")))
+    assert.equal(await page.eval("document.querySelectorAll('form, [data-checkout]').length"), 0)
+    assert.equal(await page.eval("document.querySelectorAll('article.plan').length"), 1)
+    const pricing = (await page.text('main')).replace(/\s+/g, ' ')
+    assert.match(pricing, /\$3,000/)
+    assert.match(pricing, /Per company/)
+    assert.match(pricing, /Unlimited team members and invited readers/)
+    assert.match(pricing, /60-minute/)
+    assert.match(pricing, /two business days/)
+    assert.doesNotMatch(pricing, /\$6,000|\$15,000|Continue to checkout|Complete subscriptions/)
+    const contact = await page.eval<string>("document.querySelector('article.plan a.btn').href")
+    assert.equal(new URL(contact).protocol, 'mailto:')
+    assert.equal(new URL(contact).pathname, 'nathan@spiderstrategies.com')
+    // Inspect contact without launching an email client or sending anything.
     await page.send('Page.bringToFront')
-    await page.eval("document.querySelector('form button').focus(); true")
+    await page.eval("document.querySelector('.faq summary').focus(); true")
     await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r' })
     await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 })
-    await page.until("document.activeElement?.name === 'org'")
-    await page.until("document.activeElement.getBoundingClientRect().bottom <= innerHeight && document.activeElement.getBoundingClientRect().top >= document.querySelector('.nav').getBoundingClientRect().bottom")
-    const focusVisible = await page.eval("document.activeElement.getBoundingClientRect().top >= document.querySelector('.nav').getBoundingClientRect().bottom && document.activeElement.getBoundingClientRect().bottom <= innerHeight")
-    assert.equal(focusVisible, true, `validation focus clears sticky navigation at ${width}`)
-    const fields = { org: `ACME ${width}`, offering: 'RoadRunner', name: 'Avery Collins', email: `avery-${width}@acme.example` }
-    for (const [name, value] of Object.entries(fields)) await page.type(`form [name="${name}"]`, value)
-    await page.click('form button[type="submit"]')
-    await page.until("location.pathname.startsWith('/dev/stripe/checkout/') && document.readyState === 'complete'")
-    assert.match(await page.text('main'), /Simulated Stripe, local only/)
-    await page.click('button[type="submit"]')
-    await page.until("location.pathname === '/welcome.html' && document.readyState === 'complete'")
-    assert.equal(await page.eval('window.RG_APP'), app.base)
-    assert.match(await page.text('.lede'), /No card was charged/)
-    assert.equal(await page.eval('document.documentElement.scrollWidth > innerWidth'), false)
-    assert.equal(await page.eval("document.querySelector('a[href$=\"/enroll\"]').href"), app.base + '/enroll')
-    await page.click('a[href$="/enroll"]')
-    await page.until("location.pathname === '/enroll' && document.readyState === 'complete'")
+    await page.until("document.querySelector('.faq details').open")
+    assert.match(await page.text('.faq details'), /Both are included in your subscription/)
+    if (process.env.PRICING_SHOTS) {
+      await mkdir(process.env.PRICING_SHOTS, { recursive: true })
+      await page.eval('scrollTo(0, 0)')
+      await writeFile(resolve(process.env.PRICING_SHOTS, `pricing-${width}.png`), await page.screenshot())
+    }
+    await page.click('.signin')
+    await page.until("location.pathname === '/sign-in' && document.readyState === 'complete'")
+    assert.equal(await page.eval('location.origin'), app.base)
+    // Bookmarked checkout failures still lead to the current contact offer.
+    await page.goto(`${preview}/pricing.html?error=unavailable&trust=${encodeURIComponent(app.base)}`)
+    assert.match(await page.text('#checkout-notice'), /Contact us to get started/)
+    assert.equal(await page.eval('document.documentElement.scrollWidth > innerWidth'), false,
+      JSON.stringify(await page.eval("[...document.querySelectorAll('main *')].filter(el=>el.getBoundingClientRect().right>innerWidth).map(el=>({tag:el.tagName,class:el.className,width:el.getBoundingClientRect().width,text:el.textContent.slice(0,70)}))")))
+
   }
 } finally {
   await chrome?.send('Browser.close', {}, undefined, 1000).catch(() => {})
