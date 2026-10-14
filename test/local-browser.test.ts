@@ -3,8 +3,8 @@ import { createServer } from 'node:http'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { test } from 'node:test'
 import { resolve, extname } from 'node:path'
-import { Chrome, chromePath } from '../../rampguide-trust/test/cdp.ts'
-import { startDevServer } from '../../rampguide-trust/test/dev-server.ts'
+import { Chrome, chromePath } from '../../rampguide/test/cdp.ts'
+import { startDevServer } from '../../rampguide/test/dev-server.ts'
 
 test('contact pricing, included company packages and local sign-in work at desktop and phone widths', { skip: chromePath() === null ? 'Chrome unavailable' : false }, async () => {
 const root = resolve(import.meta.dirname, '..')

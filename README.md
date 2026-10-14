@@ -26,7 +26,7 @@ HTTP(S) origins are accepted. Production ignores preview overrides entirely.
 For separate disposable demo ports, start the app with its matching site origin:
 
 ```sh
-# From rampguide-trust; use a new state directory for a cold start.
+# From rampguide (the app); use a new state directory for a cold start.
 node tools/dev-server.ts --port 8810 --state /tmp/rampguide-demo-state --site http://localhost:4180
 # From rampguide-site.
 python3 -m http.server 4180 --bind 127.0.0.1
