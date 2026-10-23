@@ -45,10 +45,12 @@ contact links and the absence of payment forms. It sends no email and makes no p
 
 ## Current product photography
 
-All app images are `img/alderwick-*-20261002.webp`, captured on October 2,
-2026 from the actual application at 1440 x 1000 and 390 x 844 CSS pixels,
-at 2x. There are 18 desktop/mobile captures. The social preview is rendered
-from `tools/og.html` using the same current workbench capture.
+All app images are `img/alderwick-*-20261023.webp`, captured on October 23,
+2026 from the application at its deployed commit (`34c635d`), run locally with
+fictional data, at 1440 CSS pixels wide (1000 tall, or cropped to the part a
+section discusses) and 390 x 844, at 2x. There are 16 desktop/mobile captures.
+The social preview `og.png` is rendered from `tools/og.html` using the same
+workbench capture. Never capture trust.rampguide.com: it holds real customers.
 
 Alderwick Software and ServiceLedger are entirely fictional. Company,
 product, people, implementation, architecture, safeguards and results are
@@ -57,17 +59,16 @@ All screenshot-bearing pages say so. Do not replace these assets with customer
 content or screenshots containing real customer names.
 
 The isolated local scene has one company and one CMMC Level 2 package,
-110 answered requirements, six open gaps, eleven tasks, staff/customer/assessor
-roles, access requests and decisions, three snapshots and one private change
-awaiting review. Customers receive the summary and inventory; the system
-security plan, gap plan and SPRS data remain assessor-only. No actual
-assessment or SPRS submission is seeded.
+110 answered requirements (104 Met, six Not met with plans), eleven tasks,
+five staff, three approved readers, two pending requests, one declined request,
+one published edition, two saved editions and one private change waiting for
+the change log. Customers open the customer summary; the system security plan,
+plan of action, score and SPRS entry remain assessor-only. No actual assessment
+or SPRS submission is recorded.
 
-Capture and verification evidence: `notes/consolidation-2026-10-02/evidence/site/`
-in the development workspace. The reproducible private fixture/capture scripts
-live separately under `notes/consolidation-2026-10-02/private/site-demo/`; they
-create a fresh local app state and capture its rendered UI without changing
-HTML, CSS or screenshot pixels. Never serve that private state or captured mail.
+The seed and capture scripts, and the before/after captures of every page,
+live outside this repository in the development workspace under
+`notes/orchestrator/site-restyle-2026-10-23/`. Never serve that private state.
 
 ## Content boundaries
 
