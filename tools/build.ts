@@ -77,6 +77,10 @@ function build(file: string): { out: string; html: string } {
   )
   // blank lines left by empty variables (no social tags, no robots) collapse
   let html = fill(body, vars).replace(/\n{3,}/g, '\n\n').replace(/^\n+(?=<!doctype)/, '')
+  // the bar marks the place the page is (the application's gold underline)
+  html = html.replace(/<nav class="nav-links"[^>]*>[\s\S]*?<\/nav>/, (bar) =>
+    bar.replace(`<a href="${page.path}">`, `<a href="${page.path}" aria-current="page">`),
+  )
   const headEnd = html.indexOf('</head>')
   html = html.slice(0, headEnd).replace(/\n\n(?=<)/g, '\n') + html.slice(headEnd)
   return { out: page.path === '' ? 'index.html' : page.path, html }
