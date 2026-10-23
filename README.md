@@ -70,6 +70,14 @@ The seed and capture scripts, and the before/after captures of every page,
 live outside this repository in the development workspace under
 `notes/orchestrator/site-restyle-2026-10-23/`. Never serve that private state.
 
+## The look
+
+`site.css` copies the application's design tokens and components (The Brief,
+the app's `design/rampguide.css`): copied, never shared. Warm paper and ink,
+Nebula Sans at 400/500, the warm gradient band on heroes, ink-black primary
+buttons, blue links, gold eyebrows and edges, ruled rows and the program marks.
+Light only, as the application is.
+
 ## Content boundaries
 
 - Describe implemented behavior. Answers generate documents; review, build
