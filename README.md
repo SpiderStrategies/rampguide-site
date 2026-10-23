@@ -39,7 +39,10 @@ simulation remains available to its own regression tests, independently of the s
 Stripe setup and payment testing are paused.
 
 Regression checks: `node --test test/*.test.*` and `node tools/build.ts --check`.
-The browser regression uses the sibling app’s Chrome driver and disposable servers.
+The browser regression uses the app’s Chrome driver and disposable servers. It finds
+the app at `RAMPGUIDE_APP` (the app checkout's root), else beside this checkout at
+`../rampguide`, and skips with a message naming the path when neither exists:
+`RAMPGUIDE_APP=~/dev/rampguide/rampguide node --test test/*.test.*`.
 It verifies desktop/phone navigation, sign-in destinations, included package scope,
 contact links and the absence of payment forms. It sends no email and makes no payment.
 

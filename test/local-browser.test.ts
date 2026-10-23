@@ -1,12 +1,24 @@
 import assert from 'node:assert/strict'
 import { createServer } from 'node:http'
+import { existsSync } from 'node:fs'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { test } from 'node:test'
 import { resolve, extname } from 'node:path'
-import { Chrome, chromePath } from '../../rampguide/test/cdp.ts'
-import { startDevServer } from '../../rampguide/test/dev-server.ts'
+import { pathToFileURL } from 'node:url'
 
-test('contact pricing, included company packages and local sign-in work at desktop and phone widths', { skip: chromePath() === null ? 'Chrome unavailable' : false }, async () => {
+// The Chrome driver and dev server come from the app checkout. RAMPGUIDE_APP
+// names it when this checkout is not beside it (an Orca worktree, say).
+const appRoot = process.env.RAMPGUIDE_APP ? resolve(process.env.RAMPGUIDE_APP) : resolve(import.meta.dirname, '../../rampguide')
+const appHelpers = existsSync(resolve(appRoot, 'test/cdp.ts')) && existsSync(resolve(appRoot, 'test/dev-server.ts'))
+type Cdp = typeof import('../../rampguide/test/cdp.ts')
+type DevServer = typeof import('../../rampguide/test/dev-server.ts')
+const { Chrome, chromePath } = appHelpers ? await import(pathToFileURL(resolve(appRoot, 'test/cdp.ts')).href) as Cdp : {} as Partial<Cdp>
+const { startDevServer } = appHelpers ? await import(pathToFileURL(resolve(appRoot, 'test/dev-server.ts')).href) as DevServer : {} as Partial<DevServer>
+const skip = !appHelpers
+  ? `RampGuide app not found at ${appRoot}: set RAMPGUIDE_APP to the app checkout (the one with test/cdp.ts)`
+  : chromePath!() === null ? 'Chrome unavailable' : false
+
+test('contact pricing, included company packages and local sign-in work at desktop and phone widths', { skip }, async () => {
 const root = resolve(import.meta.dirname, '..')
 const site = createServer(async (req, res) => {
   const path = new URL(req.url ?? '/', 'http://localhost').pathname
@@ -20,10 +32,10 @@ const site = createServer(async (req, res) => {
 })
 await new Promise<void>(r => site.listen(0, '127.0.0.1', r))
 const preview = `http://localhost:${(site.address() as { port: number }).port}`
-const app = await startDevServer(['--site', preview])
-let chrome: Chrome | undefined
+const app = await startDevServer!(['--site', preview])
+let chrome: InstanceType<Cdp['Chrome']> | undefined
 try {
-  chrome = await Chrome.launch()
+  chrome = await Chrome!.launch()
   const page = await chrome.page()
   for (const width of [1440, 390, 320]) {
     await page.viewport(width, width === 1440 ? 1000 : 844)
